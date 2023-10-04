@@ -5,4 +5,4 @@ Images derives from Pixabay site, where they are on free licence and according t
 
 WARNING: This site is in production.
 
-Link to my HouseBay website: 
+Link to my HouseBay website: https://patryk-szewczyk.github.io/HouseBay/housebay.html
