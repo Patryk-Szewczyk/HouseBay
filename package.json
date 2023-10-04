@@ -1,0 +1,15 @@
+{
+  "name": "zielo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "housebay.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "compile": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
