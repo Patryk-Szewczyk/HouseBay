@@ -584,3 +584,83 @@ const slider_Obj: {
 };
 slider_Obj.setWinBdHeight();
 slider_Obj.setAEL_ImgLeftResize();
+
+
+
+
+const productSlider_Obj: {
+    windowWidth: number,
+    windowHeight: number,
+    productsAmount: number,
+    setProductSliderItems: Function
+    evWinLoad: string[],
+    evWinLoadRes: string[],
+    evElClick: string[],
+} = {
+    windowWidth: 0,
+    windowHeight: 0,
+    productsAmount: 15,
+    evWinLoad: ['load'],
+    evWinLoadRes: ['load', 'resize'],
+    evElClick: ['click', 'touchend'],
+    setProductSliderItems() {
+        this.evWinLoadRes.forEach((ev) => {
+            window.addEventListener(ev, () => {
+                this.windowWidth = window.innerWidth;
+                const pdcSldBox: HTMLDivElement = document.querySelector('div.product-slider-box');
+                const pdcSldHng: HTMLDivElement = document.querySelector('div.product-slider-hanger');
+                // Counting values for limit array:
+                const resLimitVals: number[] = [];
+                const productsWide: number[] = [5, 4, 3, 2, 1];
+                let curWidStat: number = 0;
+                let pdcSldItBd_MgnLft: number = 15;    // MARIGN-LEFT
+                // (1200 - (34 * 2)) = navbar width without side elements margin/padding =
+                // ([desktop-navbar-width] - ([side-elements-margin/padding]) * [elements-amunt])
+                let pdcSldItBd_Wdt: number = (((1200 - (34 * 2)) / 5) - ((pdcSldItBd_MgnLft * (productsWide.length - 1)) / 5));  // 214.4   |   depend of nev pseudo-width
+                for (let i: number = 0; i < productsWide.length; i++) {
+                    resLimitVals[i] = ((pdcSldItBd_Wdt * productsWide[i]) + (pdcSldItBd_MgnLft * (productsWide[i] - 1)));
+                };
+                resLimitVals[productsWide.length] = 0;
+                //console.log(resLimitVals);
+                // resSpace: current-slider-item-box-width
+                let resSpace = 350;
+                let oneTime = false;   // I don't know why I must use this...
+                for (let i: number = 0; i < resLimitVals.length; i++) {
+                    if (i === 0 && oneTime === false) {
+                        let val = resLimitVals[i];
+                        pdcSldBox.style.width = val + 'px';
+                        curWidStat = productsWide[i];   /* CURRENT WIDE STATUS - Kiedy będziesz chciał dac więcej image'ów */
+                        oneTime = true;
+                    } else if (i > 0) {
+                        if (this.windowWidth < (resLimitVals[i] + resSpace) && this.windowWidth >= (resLimitVals[i+1] + resSpace)) {
+                            let val = resLimitVals[i];
+                            curWidStat = productsWide[i];
+                            pdcSldBox.style.width = val + 'px';
+                        } else {}
+                    }
+                };
+                // Clear slider items:
+                const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
+                const children: HTMLCollection = itemsHanger.children;
+                let childrenAmount = children.length;
+                if (itemsHanger.childElementCount > 0) {
+                    for (let i = childrenAmount - 1; i >= 0; i--) {
+                        itemsHanger.removeChild(children[i]);
+                    };
+                } else {}
+                // Create slider items:
+                for (let i: number = 0; i < this.productsAmount; i++) {   /*this.productsAmount*/
+                    const pdcSldItBd = document.createElement('div');
+                    pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
+                    pdcSldItBd.style.width = pdcSldItBd_Wdt + 'px';
+                    if (i === 0) {
+                    } else if (i > 0) {
+                        pdcSldItBd.style.marginLeft = pdcSldItBd_MgnLft + 'px';
+                    }
+                    pdcSldHng.appendChild(pdcSldItBd);
+                };
+            }, false);
+        });
+    }
+};
+productSlider_Obj.setProductSliderItems();
