@@ -237,10 +237,10 @@ const slider_Obj: {
         const sldDscTxt: string[] = [
             'Our company will find the house of your dreams for you.',
             'Houses which we offer to clients are building from incredibly tough materials.',
-            'Among our houses can mark out many style types. The once from them is modern style, which is currently hugely popular',
+            'Among our houses can mark out many style types. The once from them is modern style, which is currently hugely popular.',
             'Our houses have rich interior, including substantial performance and abundant furnishings.',
             'All buildings are located in greater agglomerations as well as they be located close environments parks.',
-            'Among a plenty our constructions also are simple type houses. They are perfect choose for averege peoples.',
+            'Among a plenty our constructions also are simple style type houses. They are perfect choose for averege peoples.',
         ];
         const sldTitTN: Text[] = [];
         const sldDscTN: Text[] = [];
@@ -277,8 +277,10 @@ const slider_Obj: {
         // First img animation:
         let el: any = document.querySelectorAll('img.img-slider-img-prp')[0];
         el.style.height = 115 + '%';
+        el.style.filter = 'brightness(100%)';
         setTimeout(() => {
             el.style.height = 100 + '%';
+            el.style.filter = 'brightness(30%)';
             el.style.transitionDuration = 1.4 + 's';
         }, 100);
         //console.table(this.imagesArray);
@@ -442,11 +444,11 @@ const slider_Obj: {
             sliderBut.right.addEventListener(ev, () => {
                 let imgSwitchLimit: number = (this.imageAmount - 1);   // Start = 0. Oper +1 = img_1 znika => img_2 pojawia się
                 if (this.currentImg < imgSwitchLimit && this.blockadeImg === false) {
-                    let siteScrollbarWidth: number = (window.innerWidth - document.documentElement.clientWidth);
+                    let siteScrollbarWidth: number = (window.innerWidth - document.documentElement.clientWidth);   // Stały pasek przewijania na stronie
                     if (siteScrollbarWidth === undefined || siteScrollbarWidth === null) siteScrollbarWidth = 0;
                     // Image:
                     this.imagesArray[this.currentImg].style.left = ((this.windowWidth - siteScrollbarWidth) * -1) + 'px';
-                    this.imagesArray[this.currentImg].style.transitionDuration = 0.9 + 's';
+                    this.imagesArray[this.currentImg].style.transitionDuration = 1.5 + 's';
                     // Info:
                     setTimeout(() => {
                         sldTitELS[this.currentImg].style.top = 0 + 'px';
@@ -467,7 +469,7 @@ const slider_Obj: {
                     this.currentImg += 1;
                     // Image
                     this.imagesArray[this.currentImg].style.left = 0 + 'px';
-                    this.imagesArray[this.currentImg].style.transitionDuration = 0.9 + 's';
+                    this.imagesArray[this.currentImg].style.transitionDuration = 1.5 + 's';
                     // Info:
                     setTimeout(() => {
                         sldTitELS[this.currentImg - 1].style.top = -20 + 'px';
@@ -504,7 +506,7 @@ const slider_Obj: {
                     let siteScrollbarWidth: number = (window.innerWidth - document.documentElement.clientWidth);
                     if (siteScrollbarWidth === undefined || siteScrollbarWidth === null) siteScrollbarWidth = 0;
                     this.imagesArray[this.currentImg].style.left = ((this.windowWidth - siteScrollbarWidth) * 1) + 'px';
-                    this.imagesArray[this.currentImg].style.transitionDuration = 0.9 + 's';
+                    this.imagesArray[this.currentImg].style.transitionDuration = 1.5 + 's';
                     setTimeout(() => {
                         sldTitELS[this.currentImg].style.top = 0 + 'px';
                         sldTitELS[this.currentImg].style.opacity = 1; 
@@ -522,7 +524,7 @@ const slider_Obj: {
                     }, 600);
                     this.currentImg -= 1;
                     this.imagesArray[this.currentImg].style.left = 0 + 'px';
-                    this.imagesArray[this.currentImg].style.transitionDuration = 0.9 + 's';
+                    this.imagesArray[this.currentImg].style.transitionDuration = 1.5 + 's';
                     setTimeout(() => {
                         sldTitELS[this.currentImg + 1].style.top = -20 + 'px';
                         sldTitELS[this.currentImg + 1].style.opacity = 0; 
