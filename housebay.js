@@ -580,3 +580,80 @@ var slider_Obj = {
 };
 slider_Obj.setWinBdHeight();
 slider_Obj.setAEL_ImgLeftResize();
+var productSlider_Obj = {
+    windowWidth: 0,
+    windowHeight: 0,
+    productsAmount: 15,
+    evWinLoad: ['load'],
+    evWinLoadRes: ['load', 'resize'],
+    evElClick: ['click', 'touchend'],
+    setProductSliderItems: function () {
+        var _this = this;
+        this.evWinLoadRes.forEach(function (ev) {
+            window.addEventListener(ev, function () {
+                _this.windowWidth = window.innerWidth;
+                var pdcSldBox = document.querySelector('div.product-slider-box');
+                var pdcSldHng = document.querySelector('div.product-slider-hanger');
+                // Counting values for limit array:
+                var resLimitVals = [];
+                var productsWide = [5, 4, 3, 2, 1];
+                var curWidStat = 0;
+                var pdcSldItBd_MgnLft = 15; // MARIGN-LEFT
+                // (1200 - (34 * 2)) = navbar width without side elements margin/padding =
+                // ([desktop-navbar-width] - ([side-elements-margin/padding]) * [elements-amunt])
+                var pdcSldItBd_Wdt = (((1200 - (34 * 2)) / 5) - ((pdcSldItBd_MgnLft * (productsWide.length - 1)) / 5)); // 214.4   |   depend of nev pseudo-width
+                for (var i = 0; i < productsWide.length; i++) {
+                    resLimitVals[i] = ((pdcSldItBd_Wdt * productsWide[i]) + (pdcSldItBd_MgnLft * (productsWide[i] - 1)));
+                }
+                ;
+                resLimitVals[productsWide.length] = 0;
+                //console.log(resLimitVals);
+                // resSpace: current-slider-item-box-width
+                var resSpace = 350;
+                var oneTime = false; // I don't know why I must use this...
+                for (var i = 0; i < resLimitVals.length; i++) {
+                    if (i === 0 && oneTime === false) {
+                        var val = resLimitVals[i];
+                        pdcSldBox.style.width = val + 'px';
+                        curWidStat = productsWide[i]; /* CURRENT WIDE STATUS - Kiedy będziesz chciał dac więcej image'ów */
+                        oneTime = true;
+                    }
+                    else if (i > 0) {
+                        if (_this.windowWidth < (resLimitVals[i] + resSpace) && _this.windowWidth >= (resLimitVals[i + 1] + resSpace)) {
+                            var val = resLimitVals[i];
+                            curWidStat = productsWide[i];
+                            pdcSldBox.style.width = val + 'px';
+                        }
+                        else { }
+                    }
+                }
+                ;
+                // Clear slider items:
+                var itemsHanger = document.querySelector('div.product-slider-hanger');
+                var children = itemsHanger.children;
+                var childrenAmount = children.length;
+                if (itemsHanger.childElementCount > 0) {
+                    for (var i = childrenAmount - 1; i >= 0; i--) {
+                        itemsHanger.removeChild(children[i]);
+                    }
+                    ;
+                }
+                else { }
+                // Create slider items:
+                for (var i = 0; i < _this.productsAmount; i++) { /*this.productsAmount*/
+                    var pdcSldItBd = document.createElement('div');
+                    pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
+                    pdcSldItBd.style.width = pdcSldItBd_Wdt + 'px';
+                    if (i === 0) {
+                    }
+                    else if (i > 0) {
+                        pdcSldItBd.style.marginLeft = pdcSldItBd_MgnLft + 'px';
+                    }
+                    pdcSldHng.appendChild(pdcSldItBd);
+                }
+                ;
+            }, false);
+        });
+    }
+};
+productSlider_Obj.setProductSliderItems();
