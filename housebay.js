@@ -199,10 +199,10 @@ var slider_Obj = {
         var sldDscTxt = [
             'Our company will find the house of your dreams for you.',
             'Houses which we offer to clients are building from incredibly tough materials.',
-            'Among our houses can mark out many style types. The once from them is modern style, which is currently hugely popular',
+            'Among our houses can mark out many style types. The once from them is modern style, which is currently hugely popular.',
             'Our houses have rich interior, including substantial performance and abundant furnishings.',
             'All buildings are located in greater agglomerations as well as they be located close environments parks.',
-            'Among a plenty our constructions also are simple type houses. They are perfect choose for averege peoples.',
+            'Among a plenty our constructions also are simple style type houses. They are perfect choose for averege peoples.',
         ];
         var sldTitTN = [];
         var sldDscTN = [];
@@ -241,8 +241,10 @@ var slider_Obj = {
         // First img animation:
         var el = document.querySelectorAll('img.img-slider-img-prp')[0];
         el.style.height = 115 + '%';
+        el.style.filter = 'brightness(100%)';
         setTimeout(function () {
             el.style.height = 100 + '%';
+            el.style.filter = 'brightness(30%)';
             el.style.transitionDuration = 1.4 + 's';
         }, 100);
         //console.table(this.imagesArray);
@@ -425,12 +427,12 @@ var slider_Obj = {
             sliderBut.right.addEventListener(ev, function () {
                 var imgSwitchLimit = (_this.imageAmount - 1); // Start = 0. Oper +1 = img_1 znika => img_2 pojawia się
                 if (_this.currentImg < imgSwitchLimit && _this.blockadeImg === false) {
-                    var siteScrollbarWidth = (window.innerWidth - document.documentElement.clientWidth);
+                    var siteScrollbarWidth = (window.innerWidth - document.documentElement.clientWidth); // Stały pasek przewijania na stronie
                     if (siteScrollbarWidth === undefined || siteScrollbarWidth === null)
                         siteScrollbarWidth = 0;
                     // Image:
                     _this.imagesArray[_this.currentImg].style.left = ((_this.windowWidth - siteScrollbarWidth) * -1) + 'px';
-                    _this.imagesArray[_this.currentImg].style.transitionDuration = 0.9 + 's';
+                    _this.imagesArray[_this.currentImg].style.transitionDuration = 1.5 + 's';
                     // Info:
                     setTimeout(function () {
                         sldTitELS[_this.currentImg].style.top = 0 + 'px';
@@ -451,7 +453,7 @@ var slider_Obj = {
                     _this.currentImg += 1;
                     // Image
                     _this.imagesArray[_this.currentImg].style.left = 0 + 'px';
-                    _this.imagesArray[_this.currentImg].style.transitionDuration = 0.9 + 's';
+                    _this.imagesArray[_this.currentImg].style.transitionDuration = 1.5 + 's';
                     // Info:
                     setTimeout(function () {
                         sldTitELS[_this.currentImg - 1].style.top = -20 + 'px';
@@ -492,7 +494,7 @@ var slider_Obj = {
                     if (siteScrollbarWidth === undefined || siteScrollbarWidth === null)
                         siteScrollbarWidth = 0;
                     _this.imagesArray[_this.currentImg].style.left = ((_this.windowWidth - siteScrollbarWidth) * 1) + 'px';
-                    _this.imagesArray[_this.currentImg].style.transitionDuration = 0.9 + 's';
+                    _this.imagesArray[_this.currentImg].style.transitionDuration = 1.5 + 's';
                     setTimeout(function () {
                         sldTitELS[_this.currentImg].style.top = 0 + 'px';
                         sldTitELS[_this.currentImg].style.opacity = 1;
@@ -510,7 +512,7 @@ var slider_Obj = {
                     }, 600);
                     _this.currentImg -= 1;
                     _this.imagesArray[_this.currentImg].style.left = 0 + 'px';
-                    _this.imagesArray[_this.currentImg].style.transitionDuration = 0.9 + 's';
+                    _this.imagesArray[_this.currentImg].style.transitionDuration = 1.5 + 's';
                     setTimeout(function () {
                         sldTitELS[_this.currentImg + 1].style.top = -20 + 'px';
                         sldTitELS[_this.currentImg + 1].style.opacity = 0;
