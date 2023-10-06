@@ -22,8 +22,7 @@ const navbar_Mobile_Obj: {
     eventsClick: string[],
     setNavbar: Function,
     setNavPgTitBxWdt: Function,
-    navMoving: Function,
-    hoverButAEL: Function
+    navMoving: Function
 } = {
     windowWidth: 0,
     isShowed: false,
@@ -137,45 +136,9 @@ const navbar_Mobile_Obj: {
                 }
             }, false);
         });
-    },
-    hoverButAEL() {
-        let hoverAreaELNS: any[] = [];
-        let topStrips: any[] = [];
-        let bottomStrips: any[] = [];
-        let butAm: number = document.querySelectorAll('div.page-desktop-button').length;
-        for (let i = 0; i < butAm; i++) {
-            topStrips[i] = document.querySelectorAll('div.pgDskBut-strip-top')[i];
-            bottomStrips[i] = document.querySelectorAll('div.pgDskBut-strip-bottom')[i];
-            hoverAreaELNS[i] = document.querySelectorAll('div.page-desktop-button')[i];
-            hoverAreaELNS[i].addEventListener('mouseover', (ev) => {
-                let butID: any = ev.currentTarget;   // UWAGA! "currentTarget" - obecny element | "target" - najbardziej zagnieżdżony element
-                let a = butID.id;
-                butID = Number(a);
-                console.log('Button ID: ' + butID);
-                topStrips[butID].style.top = -7 + 'px';
-                topStrips[butID].style.opacity = 1;
-                bottomStrips[butID].style.bottom = -7 + 'px';
-                bottomStrips[butID].style.opacity = 1;
-                topStrips[butID].style.transitionDuration = 0.4 + 's';
-                bottomStrips[butID].style.transitionDuration = 0.4 + 's';
-            }, false);
-            hoverAreaELNS[i].addEventListener('mouseout', (ev) => {
-                let butID: any = ev.currentTarget;
-                let a = butID.id;
-                butID = Number(a);
-                console.log('Button ID: ' + butID);
-                topStrips[butID].style.top = -13 + 'px';
-                topStrips[butID].style.opacity = 0;
-                bottomStrips[butID].style.bottom = -13 + 'px';
-                bottomStrips[butID].style.opacity = 0;
-                topStrips[butID].style.transitionDuration = 0.4 + 's';
-                bottomStrips[butID].style.transitionDuration = 0.4 + 's';
-            }, false);
-        };
     }
 };
 navbar_Mobile_Obj.setNavbar();
-navbar_Mobile_Obj.hoverButAEL();
 
 
 
@@ -250,7 +213,7 @@ const slider_Obj: {
         };
         for (let i = 0; i < this.imageAmount; i++) {
             const sldDimEl: HTMLDivElement = document.createElement('div');
-            const sldPrpEl: HTMLDivElement = document.createElement('img');
+            const sldPrpEl: HTMLImageElement = document.createElement('img');
             const sldInfEL: HTMLDivElement = document.createElement('div');
             const sldInfHngEl: HTMLDivElement = document.createElement('div');
             const sldTitEL: HTMLDivElement = document.createElement('div');
@@ -587,6 +550,47 @@ slider_Obj.setAEL_ImgLeftResize();
 
 
 
+const productSlider_Sources_Obj: {
+    pdcSldSrc_Tit: string[],
+    pdcSldSrc_Dsc: string[]
+} = {
+    pdcSldSrc_Tit: [
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+    ],
+    pdcSldSrc_Dsc: [
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+    ]
+};
+
+
 
 const productSlider_Obj: {
     windowWidth: number,
@@ -607,7 +611,7 @@ const productSlider_Obj: {
 } = {
     windowWidth: 0,
     windowHeight: 0,
-    productsAmount: 50,
+    productsAmount: productSlider_Sources_Obj.pdcSldSrc_Tit.length,   // Amount of products in slider hanger
     curWidStat: 0,   // Amount of visibled items for current product slider box width
     pdcSldItBd_Wdt: 0,   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
     pdcSldItBd_MgnLft: 15,   //  - space betwen items
@@ -663,7 +667,7 @@ const productSlider_Obj: {
                 } else {}
                 // Create slider items:
                 for (let i: number = 0; i < this.curWidStat; i++) {
-                    const pdcSldItBd = document.createElement('div');
+                    const pdcSldItBd: HTMLDivElement = document.createElement('div');
                     pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
                     pdcSldItBd.style.width = this.pdcSldItBd_Wdt + 'px';
                     if (i === 0) {
@@ -682,14 +686,34 @@ const productSlider_Obj: {
         window.addEventListener('load', () => {
             const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
             for (let i: number = 0; i < this.productsAmount; i++) {
-                const pdcSldItBd = document.createElement('div');
-                pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
-                pdcSldItBd.style.width = this.pdcSldItBd_Wdt + 'px';
+                const itBd: HTMLDivElement = document.createElement('div');
+                const itCnt: HTMLDivElement = document.createElement('div');
+                const itClkFld: HTMLDivElement = document.createElement('div');
+                const itImgDim: HTMLDivElement = document.createElement('div');
+                const itImgPrp: HTMLImageElement = document.createElement('img');
+                const itTit: HTMLDivElement = document.createElement('div');
+                const itDes: HTMLDivElement = document.createElement('div');
+                itBd.setAttribute('class', 'pdc-sld-item-body');
+                itCnt.setAttribute('class', 'pdc-sld-item-content');
+                itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
+                itImgDim.setAttribute('class', 'pdc-sld-item-img-dim');
+                itImgPrp.setAttribute('class', 'pdc-sld-item-img-prp');
+                itTit.setAttribute('class', 'pdc-sld-item-title');
+                itDes.setAttribute('class', 'pdc-sld-item-des');
+                itBd.appendChild(itCnt);
+                itBd.style.width = this.pdcSldItBd_Wdt + 'px';
                 if (i === 0) {
                 } else if (i > 0) {
-                    pdcSldItBd.style.marginLeft = this.pdcSldItBd_MgnLft + 'px';
+                    itBd.style.marginLeft = this.pdcSldItBd_MgnLft + 'px';
                 }
-                itemsHanger.appendChild(pdcSldItBd);
+                itCnt.appendChild(itClkFld);
+                itClkFld.appendChild(itImgDim);
+                itClkFld.appendChild(itTit);
+                itClkFld.appendChild(itDes);
+                itImgDim.appendChild(itImgPrp);
+                let itImgDimVal = (this.pdcSldItBd_Wdt * 0.7);
+                itImgDim.style.height = itImgDimVal + 'px';
+                itemsHanger.appendChild(itBd);
             };
         }, false);
         this.reverseResLimVals_Func();
@@ -713,9 +737,11 @@ const productSlider_Obj: {
         let moveVal = 0;
         this.evElClick.forEach((ev) => {
             pdcSldButLft.addEventListener(ev, () => {   // LEFT
-                moveVal += ((this.curPdcSldMovVal + this.pdcSldItBd_MgnLft) * 1);
+                moveVal += ((this.curPdcSldMovVal + this.pdcSldItBd_MgnLft) * 1);   // MEGA WAŻNE!
+                // Trzeba dodać 1x margin-left, gdyż pole widoczności zawiera elemnety łącznie z marginami! 
+                // Inaczej hanger ruszy się na niewystarczającą odległość
                 itemsHanger.style.left = moveVal + 'px';
-                itemsHanger.style.transitionDuration = 0.5 + 's';
+                itemsHanger.style.transitionDuration = 1 + 's';
                 console.log(`LEFT: ${moveVal}`);
             }, false);
         });
@@ -723,7 +749,7 @@ const productSlider_Obj: {
             pdcSldButRgt.addEventListener(ev, () => {   // RIGHT
                 moveVal += ((this.curPdcSldMovVal + this.pdcSldItBd_MgnLft) * -1);
                 itemsHanger.style.left = moveVal + 'px';
-                itemsHanger.style.transitionDuration = 0.5 + 's';
+                itemsHanger.style.transitionDuration = 1 + 's';
                 console.log(`RIGHT: ${moveVal}`);
             }, false);
         });
