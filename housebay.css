@@ -485,46 +485,137 @@ body {
             width: 100%;
             /*min-width: 900px;*/
             height: auto;
-            margin-top: 50px;
+            margin: 80px 0px;
             position: relative;
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            border: 2px solid #333;
+            border: 0px solid #333;
         }
             .product-slider-box {
-                /*width: TS;*/   /*In depended of visibled items amount*/
-                height: 500px;
+                /*width: TS;*/   /*In depended of website window width - MOVING*/   /*To product slider arrows*/
+                height: auto;
                 position: relative;
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-start;
                 align-items: center;
-                overflow: hidden;
                 background-color: transparent;
-                border: 2px solid navy;
-                overflow: hidden;
+                border: 3px solid #666;
             }
+                .product-slider-arrowBox-left-box, .product-slider-arrowBox-right-box {
+                    position: absolute;
+                    width: 45px;
+                    height: 45px;
+                    padding: 0px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    color: hsl(30, 100%, 50%);
+                    font-family: Courier New, sans-serif;
+                    font-size: 140%;
+                    font-weight: 600;
+                    text-shadow: 0px 0px 5px 0px #333;
+                    border-radius: 100px;
+                    /*border: 2px solid rgba(51,51,51,0.3);*/
+                    z-index: 1;
+                }
+                .product-slider-arrowBox-left-box {
+                    left: -75px;
+                }
+                .product-slider-arrowBox-right-box {
+                    right: -75px;
+                }
+                .product-slider-arrowBox-left-box:hover {
+                    cursor: pointer;
+                }
+                .product-slider-arrowBox-right-box:hover {
+                    cursor: pointer;
+                }
+                    .ps-arrowBox-bcg {
+                        width: 100%;
+                        height: 100%;
+                        position: relative;
+                        display: inherit;
+                        flex-direction: inherit;
+                        justify-content: inherit;
+                        align-items: inherit;
+                        background-color: #CCC;
+                        border-radius: inherit;
+                        overflow: hidden;
+                        transition-duration: 0.3s;
+                    }
+                        .ps-arrowBox-fillBox-left, .ps-arrowBox-fillBox-right {
+                            width: 45px;
+                            height: 45px;
+                            position: absolute;
+                            background-color: #333;
+                            transition-duration: inherit;
+                        }
+                        .ps-arrowBox-fillBox-left {
+                            right: -45px;
+                        }
+                        .ps-arrowBox-fillBox-right {
+                            left: -45px;
+                        }
+                        .product-slider-arrowBox-left-box:hover .ps-arrowBox-fillBox-left {
+                            right: 0px;
+                            transition-duration: inherit;
+                        }
+                        .product-slider-arrowBox-right-box:hover .ps-arrowBox-fillBox-right {
+                            left: 0px;
+                            transition-duration: inherit;
+                        }
+                        .ps-arrowBox-content-left,  .ps-arrowBox-content-right{
+                            width: calc(100% - 4px);
+                            height: calc(100% - 4px);
+                            position: absolute;
+                            display: inherit;
+                            flex-direction: inherit;
+                            justify-content: inherit;
+                            align-items: inherit;
+                            background-color: whitesmoke;
+                            border-radius: inherit;
+                        }
+                        .product-slider-arrowBox-left-box:active .ps-arrowBox-content-left {
+                            background-color: rgb(235, 235, 235);
+                        }
+                        .product-slider-arrowBox-right-box:active .ps-arrowBox-content-right {
+                            background-color: rgb(235, 235, 235);
+                        }
+                .product-slider-visibleArea {   /*To product slider items*/
+                    width: 100%;
+                    height: auto;
+                    position: relative;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    background-color: transparent;
+                    border: 3px solid #AAA;
+                    overflow: hidden;
+                }
                 .product-slider-hanger {
-                    width: auto;   /*In depended of all items width*/
+                    width: auto;   /*In depended of all items width - FIXED*/
                     /*width: 4000px;*/
-                    height: 100%;
+                    height: auto;
                     position: relative;
                     left: 0px;
                     display: flex;
                     flex-direction: row;
                     justify-content: flex-start;
                     align-items: center;
-                    border: 2px solid red;
+                    border: 3px solid lime;
                 }
                     .pdc-sld-item-body {
                         /*width: TS;*/
                         /*width: 186.4px;*/   /*186.4*/
                         height: 300px;
                         position: relative;
-                        background-color: rgba(255,100,100,0.4);
-                        border: 3px solid limegreen;
+                        background-color: rgba(100, 172, 255, 0.4);
+                        border: 3px solid red;
                     }
 }
 
