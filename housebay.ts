@@ -551,42 +551,60 @@ slider_Obj.setAEL_ImgLeftResize();
 
 
 const productSlider_Sources_Obj: {
-    pdcSldSrc_Tit: string[],
-    pdcSldSrc_Dsc: string[]
+    pdcSldSrc_Prc: string[],
+    pdcSldSrc_Dsc: string[],
+    pdcSldSrc_Area: string[]
 } = {
-    pdcSldSrc_Tit: [
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
+    pdcSldSrc_Prc: [
+        '830 000 PLN',
+        '770 000 PLN',
+        '1 230 000 PLN',
+        '850 000 PLN',
+        '560 000 PLN',
+        '1 310 000 PLN',
+        '890 000 PLN',
+        '715 000 PLN',
+        '699 000 PLN',
+        '835 000 PLN',
+        '910 000 PLN',
+        '1 105 000 PLN',
+        '1 110 000 PLN',
+        '735 000 PLN',
+        '750 000 PLN'
     ],
     pdcSldSrc_Dsc: [
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15'
+    ],
+    pdcSldSrc_Area: [
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15'
     ]
 };
 
@@ -611,7 +629,7 @@ const productSlider_Obj: {
 } = {
     windowWidth: 0,
     windowHeight: 0,
-    productsAmount: productSlider_Sources_Obj.pdcSldSrc_Tit.length,   // Amount of products in slider hanger
+    productsAmount: productSlider_Sources_Obj.pdcSldSrc_Prc.length,   // Amount of products in slider hanger
     curWidStat: 0,   // Amount of visibled items for current product slider box width
     pdcSldItBd_Wdt: 0,   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
     pdcSldItBd_MgnLft: 15,   //  - space betwen items
@@ -667,14 +685,7 @@ const productSlider_Obj: {
                 } else {}
                 // Create slider items:
                 for (let i: number = 0; i < this.curWidStat; i++) {
-                    const pdcSldItBd: HTMLDivElement = document.createElement('div');
-                    pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
-                    pdcSldItBd.style.width = this.pdcSldItBd_Wdt + 'px';
-                    if (i === 0) {
-                    } else if (i > 0) {
-                        pdcSldItBd.style.marginLeft = this.pdcSldItBd_MgnLft + 'px';
-                    }
-                    pdcSldHng.appendChild(pdcSldItBd);
+                    // IS NOT DONE IN BOTTOM
                 };*/
                 //console.log('Product slider box width - according to window width:');
                 //console.table(this.resLimitVals);   /* Product slider hanger will moving according to this value of index array BUT from 0 to penultimate index, because las index = (-) value*/
@@ -691,15 +702,21 @@ const productSlider_Obj: {
                 const itClkFld: HTMLDivElement = document.createElement('div');
                 const itImgDim: HTMLDivElement = document.createElement('div');
                 const itImgPrp: HTMLImageElement = document.createElement('img');
-                const itTit: HTMLDivElement = document.createElement('div');
+                const itPrc: HTMLDivElement = document.createElement('div');
+                const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[i]);
                 const itDes: HTMLDivElement = document.createElement('div');
+                const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[i]);
+                const itArea: HTMLDivElement = document.createElement('div');
+                const itAreaTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[i]);
                 itBd.setAttribute('class', 'pdc-sld-item-body');
                 itCnt.setAttribute('class', 'pdc-sld-item-content');
                 itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
                 itImgDim.setAttribute('class', 'pdc-sld-item-img-dim');
                 itImgPrp.setAttribute('class', 'pdc-sld-item-img-prp');
-                itTit.setAttribute('class', 'pdc-sld-item-title');
+                itImgPrp.setAttribute('src', 'hb-images-product-slider/img_' + (i + 1) + '.jpg');
+                itPrc.setAttribute('class', 'pdc-sld-item-price');
                 itDes.setAttribute('class', 'pdc-sld-item-des');
+                itArea.setAttribute('class', 'pdc-sld-item-area');
                 itBd.appendChild(itCnt);
                 itBd.style.width = this.pdcSldItBd_Wdt + 'px';
                 if (i === 0) {
@@ -708,9 +725,13 @@ const productSlider_Obj: {
                 }
                 itCnt.appendChild(itClkFld);
                 itClkFld.appendChild(itImgDim);
-                itClkFld.appendChild(itTit);
+                itPrc.appendChild(itPrcTN);
+                itClkFld.appendChild(itPrc);
+                itDes.appendChild(itDesTN);
                 itClkFld.appendChild(itDes);
                 itImgDim.appendChild(itImgPrp);
+                itArea.appendChild(itAreaTN);
+                itClkFld.appendChild(itArea);
                 let itImgDimVal = (this.pdcSldItBd_Wdt * 0.7);
                 itImgDim.style.height = itImgDimVal + 'px';
                 itemsHanger.appendChild(itBd);
