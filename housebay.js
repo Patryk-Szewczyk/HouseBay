@@ -121,46 +121,9 @@ var navbar_Mobile_Obj = {
                 }
             }, false);
         });
-    },
-    hoverButAEL: function () {
-        var hoverAreaELNS = [];
-        var topStrips = [];
-        var bottomStrips = [];
-        var butAm = document.querySelectorAll('div.page-desktop-button').length;
-        for (var i = 0; i < butAm; i++) {
-            topStrips[i] = document.querySelectorAll('div.pgDskBut-strip-top')[i];
-            bottomStrips[i] = document.querySelectorAll('div.pgDskBut-strip-bottom')[i];
-            hoverAreaELNS[i] = document.querySelectorAll('div.page-desktop-button')[i];
-            hoverAreaELNS[i].addEventListener('mouseover', function (ev) {
-                var butID = ev.currentTarget; // UWAGA! "currentTarget" - obecny element | "target" - najbardziej zagnieżdżony element
-                var a = butID.id;
-                butID = Number(a);
-                console.log('Button ID: ' + butID);
-                topStrips[butID].style.top = -7 + 'px';
-                topStrips[butID].style.opacity = 1;
-                bottomStrips[butID].style.bottom = -7 + 'px';
-                bottomStrips[butID].style.opacity = 1;
-                topStrips[butID].style.transitionDuration = 0.4 + 's';
-                bottomStrips[butID].style.transitionDuration = 0.4 + 's';
-            }, false);
-            hoverAreaELNS[i].addEventListener('mouseout', function (ev) {
-                var butID = ev.currentTarget;
-                var a = butID.id;
-                butID = Number(a);
-                console.log('Button ID: ' + butID);
-                topStrips[butID].style.top = -13 + 'px';
-                topStrips[butID].style.opacity = 0;
-                bottomStrips[butID].style.bottom = -13 + 'px';
-                bottomStrips[butID].style.opacity = 0;
-                topStrips[butID].style.transitionDuration = 0.4 + 's';
-                bottomStrips[butID].style.transitionDuration = 0.4 + 's';
-            }, false);
-        }
-        ;
     }
 };
 navbar_Mobile_Obj.setNavbar();
-navbar_Mobile_Obj.hoverButAEL();
 var slider_Obj = {
     // UWAGA: Wywołanie właściwość "length" spowoduje, iż typem wynikowym bęzie "number",
     // a nie "HTMLDivElement" w przypadku braku właściwości "length".
@@ -580,10 +543,46 @@ var slider_Obj = {
 };
 slider_Obj.setWinBdHeight();
 slider_Obj.setAEL_ImgLeftResize();
+var productSlider_Sources_Obj = {
+    pdcSldSrc_Tit: [
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+    ],
+    pdcSldSrc_Dsc: [
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+    ]
+};
 var productSlider_Obj = {
     windowWidth: 0,
     windowHeight: 0,
-    productsAmount: 50,
+    productsAmount: productSlider_Sources_Obj.pdcSldSrc_Tit.length,
     curWidStat: 0,
     pdcSldItBd_Wdt: 0,
     pdcSldItBd_MgnLft: 15,
@@ -644,7 +643,7 @@ var productSlider_Obj = {
                 } else {}
                 // Create slider items:
                 for (let i: number = 0; i < this.curWidStat; i++) {
-                    const pdcSldItBd = document.createElement('div');
+                    const pdcSldItBd: HTMLDivElement = document.createElement('div');
                     pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
                     pdcSldItBd.style.width = this.pdcSldItBd_Wdt + 'px';
                     if (i === 0) {
@@ -664,15 +663,35 @@ var productSlider_Obj = {
         window.addEventListener('load', function () {
             var itemsHanger = document.querySelector('div.product-slider-hanger');
             for (var i = 0; i < _this.productsAmount; i++) {
-                var pdcSldItBd = document.createElement('div');
-                pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
-                pdcSldItBd.style.width = _this.pdcSldItBd_Wdt + 'px';
+                var itBd = document.createElement('div');
+                var itCnt = document.createElement('div');
+                var itClkFld = document.createElement('div');
+                var itImgDim = document.createElement('div');
+                var itImgPrp = document.createElement('img');
+                var itTit = document.createElement('div');
+                var itDes = document.createElement('div');
+                itBd.setAttribute('class', 'pdc-sld-item-body');
+                itCnt.setAttribute('class', 'pdc-sld-item-content');
+                itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
+                itImgDim.setAttribute('class', 'pdc-sld-item-img-dim');
+                itImgPrp.setAttribute('class', 'pdc-sld-item-img-prp');
+                itTit.setAttribute('class', 'pdc-sld-item-title');
+                itDes.setAttribute('class', 'pdc-sld-item-des');
+                itBd.appendChild(itCnt);
+                itBd.style.width = _this.pdcSldItBd_Wdt + 'px';
                 if (i === 0) {
                 }
                 else if (i > 0) {
-                    pdcSldItBd.style.marginLeft = _this.pdcSldItBd_MgnLft + 'px';
+                    itBd.style.marginLeft = _this.pdcSldItBd_MgnLft + 'px';
                 }
-                itemsHanger.appendChild(pdcSldItBd);
+                itCnt.appendChild(itClkFld);
+                itClkFld.appendChild(itImgDim);
+                itClkFld.appendChild(itTit);
+                itClkFld.appendChild(itDes);
+                itImgDim.appendChild(itImgPrp);
+                var itImgDimVal = (_this.pdcSldItBd_Wdt * 0.7);
+                itImgDim.style.height = itImgDimVal + 'px';
+                itemsHanger.appendChild(itBd);
             }
             ;
         }, false);
@@ -699,9 +718,11 @@ var productSlider_Obj = {
         var moveVal = 0;
         this.evElClick.forEach(function (ev) {
             pdcSldButLft.addEventListener(ev, function () {
-                moveVal += ((_this.curPdcSldMovVal + _this.pdcSldItBd_MgnLft) * 1);
+                moveVal += ((_this.curPdcSldMovVal + _this.pdcSldItBd_MgnLft) * 1); // MEGA WAŻNE!
+                // Trzeba dodać 1x margin-left, gdyż pole widoczności zawiera elemnety łącznie z marginami! 
+                // Inaczej hanger ruszy się na niewystarczającą odległość
                 itemsHanger.style.left = moveVal + 'px';
-                itemsHanger.style.transitionDuration = 0.5 + 's';
+                itemsHanger.style.transitionDuration = 1 + 's';
                 console.log("LEFT: ".concat(moveVal));
             }, false);
         });
@@ -709,7 +730,7 @@ var productSlider_Obj = {
             pdcSldButRgt.addEventListener(ev, function () {
                 moveVal += ((_this.curPdcSldMovVal + _this.pdcSldItBd_MgnLft) * -1);
                 itemsHanger.style.left = moveVal + 'px';
-                itemsHanger.style.transitionDuration = 0.5 + 's';
+                itemsHanger.style.transitionDuration = 1 + 's';
                 console.log("RIGHT: ".concat(moveVal));
             }, false);
         });
