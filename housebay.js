@@ -584,10 +584,13 @@ var productSlider_Obj = {
     windowWidth: 0,
     windowHeight: 0,
     productsAmount: 15,
-    evWinLoad: ['load'],
+    curWidStat: 0,
+    pdcSldItBd_Wdt: 0,
+    pdcSldItBd_MgnLft: 15,
+    resSpace: 350,
     evWinLoadRes: ['load', 'resize'],
     evElClick: ['click', 'touchend'],
-    setProductSliderItems: function () {
+    setVisibleAreaWidth: function () {
         var _this = this;
         this.evWinLoadRes.forEach(function (ev) {
             window.addEventListener(ev, function () {
@@ -597,63 +600,78 @@ var productSlider_Obj = {
                 // Counting values for limit array:
                 var resLimitVals = [];
                 var productsWide = [5, 4, 3, 2, 1];
-                var curWidStat = 0;
-                var pdcSldItBd_MgnLft = 15; // MARIGN-LEFT
                 // (1200 - (34 * 2)) = navbar width without side elements margin/padding =
                 // ([desktop-navbar-width] - ([side-elements-margin/padding]) * [elements-amunt])
-                var pdcSldItBd_Wdt = (((1200 - (34 * 2)) / 5) - ((pdcSldItBd_MgnLft * (productsWide.length - 1)) / 5)); // 214.4   |   depend of nev pseudo-width
+                _this.pdcSldItBd_Wdt = (((1200 - (34 * 2)) / 5) - ((_this.pdcSldItBd_MgnLft * (productsWide.length - 1)) / 5)); // 214.4   |   depend of nev pseudo-width
                 for (var i = 0; i < productsWide.length; i++) {
-                    resLimitVals[i] = ((pdcSldItBd_Wdt * productsWide[i]) + (pdcSldItBd_MgnLft * (productsWide[i] - 1)));
+                    resLimitVals[i] = ((_this.pdcSldItBd_Wdt * productsWide[i]) + (_this.pdcSldItBd_MgnLft * (productsWide[i] - 1)));
                 }
                 ;
-                resLimitVals[productsWide.length] = 0;
+                resLimitVals[productsWide.length] = (_this.pdcSldItBd_Wdt * -1); // Naprawione niechciane rozszerzanie się bloku slidera
                 //console.log(resLimitVals);
                 // resSpace: current-slider-item-box-width
-                var resSpace = 350;
-                var oneTime = false; // I don't know why I must use this...
+                var oneTime = true; // I don't know why I must use this...
                 for (var i = 0; i < resLimitVals.length; i++) {
-                    if (i === 0 && oneTime === false) {
+                    if (i === 0 && oneTime === true) {
+                        oneTime = false;
                         var val = resLimitVals[i];
                         pdcSldBox.style.width = val + 'px';
-                        curWidStat = productsWide[i]; /* CURRENT WIDE STATUS - Kiedy będziesz chciał dac więcej image'ów */
-                        oneTime = true;
+                        _this.curWidStat = productsWide[i]; /* CURRENT WIDE STATUS - When you want to be add mowe images  */
                     }
                     else if (i > 0) {
-                        if (_this.windowWidth < (resLimitVals[i] + resSpace) && _this.windowWidth >= (resLimitVals[i + 1] + resSpace)) {
+                        oneTime = true;
+                        if (_this.windowWidth < (resLimitVals[i] + _this.resSpace) && _this.windowWidth >= (resLimitVals[i + 1] + _this.resSpace)) {
                             var val = resLimitVals[i];
-                            curWidStat = productsWide[i];
                             pdcSldBox.style.width = val + 'px';
+                            _this.curWidStat = productsWide[i]; /* CURRENT WIDE STATUS - When you want to be add mowe images */
                         }
                         else { }
                     }
                 }
                 ;
-                // Clear slider items:
-                var itemsHanger = document.querySelector('div.product-slider-hanger');
-                var children = itemsHanger.children;
-                var childrenAmount = children.length;
+                console.log("CURRENT WIDE STATUS: ".concat(_this.curWidStat));
+                // THIS OPERATIONS IS ALLOWED FOR RESIZE SLIDER ITEMS DEPEND OF WEBSITE WINDOW WIDTH: (scope: 5 - 1)
+                /*// Clear slider items:
+                const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
+                const children: HTMLCollection = itemsHanger.children;
+                let childrenAmount = children.length;
                 if (itemsHanger.childElementCount > 0) {
-                    for (var i = childrenAmount - 1; i >= 0; i--) {
+                    for (let i = childrenAmount - 1; i >= 0; i--) {
                         itemsHanger.removeChild(children[i]);
-                    }
-                    ;
-                }
-                else { }
+                    };
+                } else {}
                 // Create slider items:
-                for (var i = 0; i < _this.productsAmount; i++) { /*this.productsAmount*/
-                    var pdcSldItBd = document.createElement('div');
+                for (let i: number = 0; i < this.curWidStat; i++) {
+                    const pdcSldItBd = document.createElement('div');
                     pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
                     pdcSldItBd.style.width = pdcSldItBd_Wdt + 'px';
                     if (i === 0) {
-                    }
-                    else if (i > 0) {
+                    } else if (i > 0) {
                         pdcSldItBd.style.marginLeft = pdcSldItBd_MgnLft + 'px';
                     }
                     pdcSldHng.appendChild(pdcSldItBd);
-                }
-                ;
+                };*/
             }, false);
         });
+        this.createItems_fixedAmount();
+    },
+    createItems_fixedAmount: function () {
+        var _this = this;
+        window.addEventListener('load', function () {
+            var itemsHanger = document.querySelector('div.product-slider-hanger');
+            for (var i = 0; i < _this.productsAmount; i++) {
+                var pdcSldItBd = document.createElement('div');
+                pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
+                pdcSldItBd.style.width = _this.pdcSldItBd_Wdt + 'px';
+                if (i === 0) {
+                }
+                else if (i > 0) {
+                    pdcSldItBd.style.marginLeft = _this.pdcSldItBd_MgnLft + 'px';
+                }
+                itemsHanger.appendChild(pdcSldItBd);
+            }
+            ;
+        }, false);
     }
 };
-productSlider_Obj.setProductSliderItems();
+productSlider_Obj.setVisibleAreaWidth();
