@@ -612,12 +612,89 @@ body {
                 }
                     .pdc-sld-item-body {
                         /*width: TS;*/
-                        /*width: 186.4px;*/   /*186.4*/
-                        height: 300px;
+                        height: auto;
+                        padding: 4px 4px 8px;
                         position: relative;
-                        background-color: rgba(100, 172, 255, 0.4);
+                        background-color: transparent;
                         border: 0px solid red;
                     }
+                        .pdc-sld-item-content {
+                            width: 100%;
+                            height: 100%;
+                            position: relative;
+                            background-color: white;
+                            border-radius: 0px;
+                            border: 3px blueviolet;
+                            box-shadow: 0px 3px 5px #AAA;
+                        }
+                            .pdc-sld-item-clickField {
+                                width: 100%;
+                                height: 100%;
+                                position: relative;
+                            }
+                                .pdc-sld-item-img-dim {
+                                    width: 100%;
+                                    /*height: ;*/   /*Depend of product slider item width*/
+                                    position: relative;
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: center;
+                                    align-items: center;
+                                    overflow: hidden;
+                                }
+                                    .pdc-sld-item-img-prp {
+                                        width: 100%;
+                                        height: 100%;
+                                        position: relative;
+                                        background-color: red;
+                                        background-repeat: no-repeat;
+                                        background-size: 100% 100%;
+                                        background-position: center;
+                                        filter: brightness(100%);
+                                        transition-duration: 0.4s;
+                                    }
+                                    .pdc-sld-item-clickField:hover .pdc-sld-item-img-prp {
+                                        width: 110%;
+                                        height: 110%;
+                                        filter: brightness(90%);
+                                        transition-duration: 0.4s;
+                                    }
+                                .pdc-sld-item-title {
+                                    width: 100%;
+                                    height: auto;
+                                    position: relative;
+                                    padding: 20px;
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: center;
+                                    align-items: center;
+                                    background-color: transparent;
+                                    color: #333;
+                                    font-family: 'Courier New', Courier, monospace;
+                                    font-size: 125%;
+                                    font-weight: 600;
+                                    text-align: center;
+                                    text-transform: capitalize;
+                                    border: 2px solid deepskyblue;
+                                }
+                                .pdc-sld-item-des {
+                                    width: 100%;
+                                    height: auto;
+                                    position: relative;
+                                    padding: 0px 20px 20px;
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: center;
+                                    align-items: center;
+                                    background-color: transparent;
+                                    color: #333;
+                                    font-family: 'Courier New', Courier, monospace;
+                                    font-size: 125%;
+                                    font-weight: 600;
+                                    text-align: center;
+                                    text-transform: capitalize;
+                                    border: 2px solid lime;
+                                }
 }
 
 @media only screen and (min-width: 900px) {
@@ -664,24 +741,13 @@ body {
                 background-color: inherit;
                 border: 0px solid indigo;
             }
-                .page-button-hanger {
+                .page-desktop-button {
                     width: auto;
                     height: calc(100% - 30px);
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: inherit;
-                }
-                .page-desktop-button {
-                    width: 100%;
-                    height: 100%;
-                    /*height: calc(100% - 30px);*/
                     padding: 0px 14px;
                     position: relative;
                     display: flex;
-                    flex-direction: row;
+                    flex-direction: column;
                     justify-content: center;
                     align-items: center;
                     background-color: inherit;
@@ -690,38 +756,9 @@ body {
                 }
                 .page-desktop-button:hover {
                     cursor: pointer;
+                    color: white;
+                    transition-duration: 0.4s;
                 }
-                    .pgDskBut-strip-top, .pgDskBut-strip-bottom {
-                        width: 100%;
-                        height: 15px;
-                        position: absolute;
-                        left: 0px;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        background-color: transparent;
-                        opacity: 0;
-                    }
-                    .pgDskBut-strip-top {
-                        top: -12px;
-                    }
-                    .pgDskBut-strip-bottom {
-                        bottom: -12px;
-                    }
-                        .pgDskBut-strip-content {
-                            width: 100%;
-                            height: 4px;
-                            position: relative;
-                            background-color: #333;
-                        }
-                        .pgDskBut-strip-space {
-                            width: 100%;
-                            height: calc(100% - 4px);
-                            position: relative;
-                            background-color: transparent;
-                        }
-                /*   /*Nie mogę użyć ::before & :: after, gdyż nie można w nie wsadzać dodatkowych elementów*/   /*
                 .page-desktop-button::before, .page-desktop-button::after {
                     content: '';
                     width: 100%;
@@ -731,6 +768,7 @@ body {
                     left: 0px;
                     background-color: #333;
                     opacity: 0;
+                    z-index: -1;
                 }
                 .page-desktop-button::before {
                     top: -15px;
@@ -749,7 +787,7 @@ body {
                     bottom: -8px;
                     opacity: 1;
                     transition-duration: 0.4s;
-                }*/
+                }
                     .pgDskBut-background {
                         width: 0%;
                         height: 0%;
@@ -788,7 +826,7 @@ body {
                     }
                     .pgDskBut-text::selection {
                         background-color: inherit;
-                        color: white;
+                        color: #333;
                     }
 
         .iscb-leftArrow-proper, .iscb-rightArrow-proper {
