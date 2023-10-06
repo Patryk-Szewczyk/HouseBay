@@ -281,7 +281,7 @@ var slider_Obj = {
             window.addEventListener(ev, function () {
                 // Ustawienie szerokości bloku opisu, względem szerkości bloku tytułowego slidera (+ ~100px)
                 var sldDescELS = [];
-                console.log(sldDescELS);
+                //console.log(sldDescELS);
                 var sldTitWdtVALS = [];
                 for (var i = 0; i < _this.imageAmount; i++) {
                     sldDescELS[i] = document.querySelectorAll('div.img-slider-description')[i];
@@ -583,11 +583,13 @@ slider_Obj.setAEL_ImgLeftResize();
 var productSlider_Obj = {
     windowWidth: 0,
     windowHeight: 0,
-    productsAmount: 15,
+    productsAmount: 50,
     curWidStat: 0,
     pdcSldItBd_Wdt: 0,
     pdcSldItBd_MgnLft: 15,
     resSpace: 350,
+    resLimitVals: [],
+    curPdcSldMovVal: [],
     evWinLoadRes: ['load', 'resize'],
     evElClick: ['click', 'touchend'],
     setVisibleAreaWidth: function () {
@@ -598,30 +600,30 @@ var productSlider_Obj = {
                 var pdcSldBox = document.querySelector('div.product-slider-box');
                 var pdcSldHng = document.querySelector('div.product-slider-hanger');
                 // Counting values for limit array:
-                var resLimitVals = [];
+                //const resLimitVals: number[] = [];   // Global variable
                 var productsWide = [5, 4, 3, 2, 1];
                 // (1200 - (34 * 2)) = navbar width without side elements margin/padding =
                 // ([desktop-navbar-width] - ([side-elements-margin/padding]) * [elements-amunt])
                 _this.pdcSldItBd_Wdt = (((1200 - (34 * 2)) / 5) - ((_this.pdcSldItBd_MgnLft * (productsWide.length - 1)) / 5)); // 214.4   |   depend of nev pseudo-width
                 for (var i = 0; i < productsWide.length; i++) {
-                    resLimitVals[i] = ((_this.pdcSldItBd_Wdt * productsWide[i]) + (_this.pdcSldItBd_MgnLft * (productsWide[i] - 1)));
+                    _this.resLimitVals[i] = ((_this.pdcSldItBd_Wdt * productsWide[i]) + (_this.pdcSldItBd_MgnLft * (productsWide[i] - 1)));
                 }
                 ;
-                resLimitVals[productsWide.length] = (_this.pdcSldItBd_Wdt * -1); // Naprawione niechciane rozszerzanie się bloku slidera
-                //console.log(resLimitVals);
+                _this.resLimitVals[productsWide.length] = (_this.pdcSldItBd_Wdt * -1); // Naprawione niechciane rozszerzanie się bloku slidera
+                console.log(_this.resLimitVals);
                 // resSpace: current-slider-item-box-width
                 var oneTime = true; // I don't know why I must use this...
-                for (var i = 0; i < resLimitVals.length; i++) {
+                for (var i = 0; i < _this.resLimitVals.length; i++) {
                     if (i === 0 && oneTime === true) {
                         oneTime = false;
-                        var val = resLimitVals[i];
+                        var val = _this.resLimitVals[i];
                         pdcSldBox.style.width = val + 'px';
                         _this.curWidStat = productsWide[i]; /* CURRENT WIDE STATUS - When you want to be add mowe images  */
                     }
                     else if (i > 0) {
                         oneTime = true;
-                        if (_this.windowWidth < (resLimitVals[i] + _this.resSpace) && _this.windowWidth >= (resLimitVals[i + 1] + _this.resSpace)) {
-                            var val = resLimitVals[i];
+                        if (_this.windowWidth < (_this.resLimitVals[i] + _this.resSpace) && _this.windowWidth >= (_this.resLimitVals[i + 1] + _this.resSpace)) {
+                            var val = _this.resLimitVals[i];
                             pdcSldBox.style.width = val + 'px';
                             _this.curWidStat = productsWide[i]; /* CURRENT WIDE STATUS - When you want to be add mowe images */
                         }
@@ -644,13 +646,15 @@ var productSlider_Obj = {
                 for (let i: number = 0; i < this.curWidStat; i++) {
                     const pdcSldItBd = document.createElement('div');
                     pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
-                    pdcSldItBd.style.width = pdcSldItBd_Wdt + 'px';
+                    pdcSldItBd.style.width = this.pdcSldItBd_Wdt + 'px';
                     if (i === 0) {
                     } else if (i > 0) {
-                        pdcSldItBd.style.marginLeft = pdcSldItBd_MgnLft + 'px';
+                        pdcSldItBd.style.marginLeft = this.pdcSldItBd_MgnLft + 'px';
                     }
                     pdcSldHng.appendChild(pdcSldItBd);
                 };*/
+                //console.log('Product slider box width - according to window width:');
+                //console.table(this.resLimitVals);   /* Product slider hanger will moving according to this value of index array BUT from 0 to penultimate index, because las index = (-) value*/
             }, false);
         });
         this.createItems_fixedAmount();
@@ -672,6 +676,43 @@ var productSlider_Obj = {
             }
             ;
         }, false);
+        this.reverseResLimVals_Func();
+    },
+    reverseResLimVals_Func: function () {
+        var _this = this;
+        // Iterujemy tą tablicą "this.curWidStat" po tej "this.resLimitVals" i w ten sposób mamy aktualną wartość przesunięcia produktu względem odpowiedniego rozstawy tychże produktów
+        this.evWinLoadRes.forEach(function (ev) {
+            window.addEventListener(ev, function () {
+                var reverseResLimVals = _this.resLimitVals.reverse();
+                _this.curPdcSldMovVal = reverseResLimVals[_this.curWidStat];
+                //console.log(`CURRENT PRODUCT SLIDER MOVING: ${this.curPdcSldMovVal}`);
+                //this.setAEL_PdcSldMoving();
+            }, false);
+        });
+        this.setAEL_PdcSldMoving();
+    },
+    setAEL_PdcSldMoving: function () {
+        var _this = this;
+        var pdcSldButLft = document.querySelector('div.product-slider-arrowBox-left-box');
+        var pdcSldButRgt = document.querySelector('div.product-slider-arrowBox-right-box');
+        var itemsHanger = document.querySelector('div.product-slider-hanger');
+        var moveVal = 0;
+        this.evElClick.forEach(function (ev) {
+            pdcSldButLft.addEventListener(ev, function () {
+                moveVal += ((_this.curPdcSldMovVal + _this.pdcSldItBd_MgnLft) * 1);
+                itemsHanger.style.left = moveVal + 'px';
+                itemsHanger.style.transitionDuration = 0.5 + 's';
+                console.log("LEFT: ".concat(moveVal));
+            }, false);
+        });
+        this.evElClick.forEach(function (ev) {
+            pdcSldButRgt.addEventListener(ev, function () {
+                moveVal += ((_this.curPdcSldMovVal + _this.pdcSldItBd_MgnLft) * -1);
+                itemsHanger.style.left = moveVal + 'px';
+                itemsHanger.style.transitionDuration = 0.5 + 's';
+                console.log("RIGHT: ".concat(moveVal));
+            }, false);
+        });
     }
 };
 productSlider_Obj.setVisibleAreaWidth();
