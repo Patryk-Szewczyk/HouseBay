@@ -78,7 +78,7 @@ const navbar_Mobile_Obj: {
         });*/
         this.navMoving();
     },
-    navMoving() {
+    navMoving() {   // - mobile nav button
         const navBut: HTMLDivElement = document.querySelector('div.page-dropdown-button-proper');
         const navCntBx: HTMLDivElement = document.querySelector('div.navbar-mobile-content-box');
         const topStrip: HTMLDivElement = document.querySelector('div.bs-top');
@@ -592,18 +592,25 @@ const productSlider_Obj: {
     windowWidth: number,
     windowHeight: number,
     productsAmount: number,
-    setProductSliderItems: Function
-    evWinLoad: string[],
+    curWidStat: number,
+    pdcSldItBd_Wdt: number,
+    pdcSldItBd_MgnLft: number,
+    resSpace: number,
     evWinLoadRes: string[],
     evElClick: string[],
+    setVisibleAreaWidth: Function,
+    createItems_fixedAmount: Function
 } = {
     windowWidth: 0,
     windowHeight: 0,
     productsAmount: 15,
-    evWinLoad: ['load'],
+    curWidStat: 0,
+    pdcSldItBd_Wdt: 0,   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
+    pdcSldItBd_MgnLft: 15,   //  - space betwen items
+    resSpace: 350,   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
     evWinLoadRes: ['load', 'resize'],
     evElClick: ['click', 'touchend'],
-    setProductSliderItems() {
+    setVisibleAreaWidth() {
         this.evWinLoadRes.forEach((ev) => {
             window.addEventListener(ev, () => {
                 this.windowWidth = window.innerWidth;
@@ -612,34 +619,34 @@ const productSlider_Obj: {
                 // Counting values for limit array:
                 const resLimitVals: number[] = [];
                 const productsWide: number[] = [5, 4, 3, 2, 1];
-                let curWidStat: number = 0;
-                let pdcSldItBd_MgnLft: number = 15;    // MARIGN-LEFT
                 // (1200 - (34 * 2)) = navbar width without side elements margin/padding =
                 // ([desktop-navbar-width] - ([side-elements-margin/padding]) * [elements-amunt])
-                let pdcSldItBd_Wdt: number = (((1200 - (34 * 2)) / 5) - ((pdcSldItBd_MgnLft * (productsWide.length - 1)) / 5));  // 214.4   |   depend of nev pseudo-width
+                this.pdcSldItBd_Wdt = (((1200 - (34 * 2)) / 5) - ((this.pdcSldItBd_MgnLft * (productsWide.length - 1)) / 5));  // 214.4   |   depend of nev pseudo-width
                 for (let i: number = 0; i < productsWide.length; i++) {
-                    resLimitVals[i] = ((pdcSldItBd_Wdt * productsWide[i]) + (pdcSldItBd_MgnLft * (productsWide[i] - 1)));
+                    resLimitVals[i] = ((this.pdcSldItBd_Wdt * productsWide[i]) + (this.pdcSldItBd_MgnLft * (productsWide[i] - 1)));
                 };
-                resLimitVals[productsWide.length] = 0;
+                resLimitVals[productsWide.length] = (this.pdcSldItBd_Wdt * -1);   // Naprawione niechciane rozszerzanie się bloku slidera
                 //console.log(resLimitVals);
                 // resSpace: current-slider-item-box-width
-                let resSpace = 350;
-                let oneTime = false;   // I don't know why I must use this...
+                let oneTime = true;   // I don't know why I must use this...
                 for (let i: number = 0; i < resLimitVals.length; i++) {
-                    if (i === 0 && oneTime === false) {
+                    if (i === 0 && oneTime === true) {
+                        oneTime = false;
                         let val = resLimitVals[i];
                         pdcSldBox.style.width = val + 'px';
-                        curWidStat = productsWide[i];   /* CURRENT WIDE STATUS - Kiedy będziesz chciał dac więcej image'ów */
-                        oneTime = true;
+                        this.curWidStat = productsWide[i];   /* CURRENT WIDE STATUS - When you want to be add mowe images  */
                     } else if (i > 0) {
-                        if (this.windowWidth < (resLimitVals[i] + resSpace) && this.windowWidth >= (resLimitVals[i+1] + resSpace)) {
+                        oneTime = true;
+                        if (this.windowWidth < (resLimitVals[i] + this.resSpace) && this.windowWidth >= (resLimitVals[i+1] + this.resSpace)) {
                             let val = resLimitVals[i];
-                            curWidStat = productsWide[i];
                             pdcSldBox.style.width = val + 'px';
+                            this.curWidStat = productsWide[i];   /* CURRENT WIDE STATUS - When you want to be add mowe images */
                         } else {}
                     }
                 };
-                // Clear slider items:
+                console.log(`CURRENT WIDE STATUS: ${this.curWidStat}`);
+                // THIS OPERATIONS IS ALLOWED FOR RESIZE SLIDER ITEMS DEPEND OF WEBSITE WINDOW WIDTH: (scope: 5 - 1)
+                /*// Clear slider items:
                 const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
                 const children: HTMLCollection = itemsHanger.children;
                 let childrenAmount = children.length;
@@ -649,7 +656,7 @@ const productSlider_Obj: {
                     };
                 } else {}
                 // Create slider items:
-                for (let i: number = 0; i < this.productsAmount; i++) {   /*this.productsAmount*/
+                for (let i: number = 0; i < this.curWidStat; i++) {
                     const pdcSldItBd = document.createElement('div');
                     pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
                     pdcSldItBd.style.width = pdcSldItBd_Wdt + 'px';
@@ -658,9 +665,25 @@ const productSlider_Obj: {
                         pdcSldItBd.style.marginLeft = pdcSldItBd_MgnLft + 'px';
                     }
                     pdcSldHng.appendChild(pdcSldItBd);
-                };
+                };*/
             }, false);
         });
+        this.createItems_fixedAmount();
+    },
+    createItems_fixedAmount() {
+        window.addEventListener('load', () => {
+            const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
+            for (let i: number = 0; i < this.productsAmount; i++) {
+                const pdcSldItBd = document.createElement('div');
+                pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
+                pdcSldItBd.style.width = this.pdcSldItBd_Wdt + 'px';
+                if (i === 0) {
+                } else if (i > 0) {
+                    pdcSldItBd.style.marginLeft = this.pdcSldItBd_MgnLft + 'px';
+                }
+                itemsHanger.appendChild(pdcSldItBd);
+            };
+        }, false);
     }
 };
-productSlider_Obj.setProductSliderItems();
+productSlider_Obj.setVisibleAreaWidth();
