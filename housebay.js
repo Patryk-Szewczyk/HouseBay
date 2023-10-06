@@ -544,45 +544,62 @@ var slider_Obj = {
 slider_Obj.setWinBdHeight();
 slider_Obj.setAEL_ImgLeftResize();
 var productSlider_Sources_Obj = {
-    pdcSldSrc_Tit: [
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
+    pdcSldSrc_Prc: [
+        '830 000 PLN',
+        '770 000 PLN',
+        '1 230 000 PLN',
+        '850 000 PLN',
+        '560 000 PLN',
+        '1 310 000 PLN',
+        '890 000 PLN',
+        '715 000 PLN',
+        '699 000 PLN',
+        '835 000 PLN',
+        '910 000 PLN',
+        '1 105 000 PLN',
+        '1 110 000 PLN',
+        '735 000 PLN',
+        '750 000 PLN'
     ],
     pdcSldSrc_Dsc: [
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15'
+    ],
+    pdcSldSrc_Area: [
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15'
     ]
 };
 var productSlider_Obj = {
     windowWidth: 0,
     windowHeight: 0,
-    productsAmount: productSlider_Sources_Obj.pdcSldSrc_Tit.length,
+    productsAmount: productSlider_Sources_Obj.pdcSldSrc_Prc.length,
     curWidStat: 0,
     pdcSldItBd_Wdt: 0,
     pdcSldItBd_MgnLft: 15,
@@ -643,14 +660,7 @@ var productSlider_Obj = {
                 } else {}
                 // Create slider items:
                 for (let i: number = 0; i < this.curWidStat; i++) {
-                    const pdcSldItBd: HTMLDivElement = document.createElement('div');
-                    pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
-                    pdcSldItBd.style.width = this.pdcSldItBd_Wdt + 'px';
-                    if (i === 0) {
-                    } else if (i > 0) {
-                        pdcSldItBd.style.marginLeft = this.pdcSldItBd_MgnLft + 'px';
-                    }
-                    pdcSldHng.appendChild(pdcSldItBd);
+                    // IS NOT DONE IN BOTTOM
                 };*/
                 //console.log('Product slider box width - according to window width:');
                 //console.table(this.resLimitVals);   /* Product slider hanger will moving according to this value of index array BUT from 0 to penultimate index, because las index = (-) value*/
@@ -668,15 +678,21 @@ var productSlider_Obj = {
                 var itClkFld = document.createElement('div');
                 var itImgDim = document.createElement('div');
                 var itImgPrp = document.createElement('img');
-                var itTit = document.createElement('div');
+                var itPrc = document.createElement('div');
+                var itPrcTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[i]);
                 var itDes = document.createElement('div');
+                var itDesTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[i]);
+                var itArea = document.createElement('div');
+                var itAreaTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[i]);
                 itBd.setAttribute('class', 'pdc-sld-item-body');
                 itCnt.setAttribute('class', 'pdc-sld-item-content');
                 itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
                 itImgDim.setAttribute('class', 'pdc-sld-item-img-dim');
                 itImgPrp.setAttribute('class', 'pdc-sld-item-img-prp');
-                itTit.setAttribute('class', 'pdc-sld-item-title');
+                itImgPrp.setAttribute('src', 'hb-images-product-slider/img_' + (i + 1) + '.jpg');
+                itPrc.setAttribute('class', 'pdc-sld-item-price');
                 itDes.setAttribute('class', 'pdc-sld-item-des');
+                itArea.setAttribute('class', 'pdc-sld-item-area');
                 itBd.appendChild(itCnt);
                 itBd.style.width = _this.pdcSldItBd_Wdt + 'px';
                 if (i === 0) {
@@ -686,9 +702,13 @@ var productSlider_Obj = {
                 }
                 itCnt.appendChild(itClkFld);
                 itClkFld.appendChild(itImgDim);
-                itClkFld.appendChild(itTit);
+                itPrc.appendChild(itPrcTN);
+                itClkFld.appendChild(itPrc);
+                itDes.appendChild(itDesTN);
                 itClkFld.appendChild(itDes);
                 itImgDim.appendChild(itImgPrp);
+                itArea.appendChild(itAreaTN);
+                itClkFld.appendChild(itArea);
                 var itImgDimVal = (_this.pdcSldItBd_Wdt * 0.7);
                 itImgDim.style.height = itImgDimVal + 'px';
                 itemsHanger.appendChild(itBd);
