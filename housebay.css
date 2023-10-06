@@ -632,6 +632,9 @@ body {
                                 height: 100%;
                                 position: relative;
                             }
+                            .pdc-sld-item-clickField:hover {
+                                cursor: pointer;
+                            }
                                 .pdc-sld-item-img-dim {
                                     width: 100%;
                                     /*height: ;*/   /*Depend of product slider item width*/
@@ -651,49 +654,74 @@ body {
                                         background-size: 100% 100%;
                                         background-position: center;
                                         filter: brightness(100%);
-                                        transition-duration: 0.4s;
+                                        transition-duration: 0.25s;
                                     }
                                     .pdc-sld-item-clickField:hover .pdc-sld-item-img-prp {
-                                        width: 110%;
-                                        height: 110%;
-                                        filter: brightness(90%);
-                                        transition-duration: 0.4s;
+                                        width: 107%;
+                                        height: 107%;
+                                        filter: brightness(85%);
+                                        transition-duration: 0.25s;
                                     }
-                                .pdc-sld-item-title {
+                                .pdc-sld-item-price {
                                     width: 100%;
                                     height: auto;
+                                    padding: 12px;
                                     position: relative;
-                                    padding: 20px;
                                     display: flex;
                                     flex-direction: row;
                                     justify-content: center;
                                     align-items: center;
                                     background-color: transparent;
                                     color: #333;
-                                    font-family: 'Courier New', Courier, monospace;
+                                    font-family: 'Montserrat', sans-serif;
                                     font-size: 125%;
                                     font-weight: 600;
                                     text-align: center;
                                     text-transform: capitalize;
-                                    border: 2px solid deepskyblue;
+                                    border-top: 2px solid transparent;
+                                    border-bottom: 2px solid hsl(30, 100%, 50%);
+                                    transition-duration: 0.2s;
+                                }
+                                .pdc-sld-item-price:hover {
+                                    background-color: hsl(30, 100%, 50%);
+                                    color: white;
+                                    transition-duration: 0.2s;
                                 }
                                 .pdc-sld-item-des {
                                     width: 100%;
-                                    height: auto;
+                                    height: 53px;
+                                    padding: 0px 12px;
                                     position: relative;
-                                    padding: 0px 20px 20px;
                                     display: flex;
                                     flex-direction: row;
                                     justify-content: center;
                                     align-items: center;
                                     background-color: transparent;
                                     color: #333;
-                                    font-family: 'Courier New', Courier, monospace;
-                                    font-size: 125%;
+                                    font-family: 'Montserrat', sans-serif;
+                                    font-size: 110%;
                                     font-weight: 600;
                                     text-align: center;
                                     text-transform: capitalize;
-                                    border: 2px solid lime;
+                                    border: 0px solid lime;
+                                }
+                                .pdc-sld-item-area {
+                                    width: 100%;
+                                    height: auto;
+                                    padding: 6px 12px 14px;
+                                    position: relative;
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: center;
+                                    align-items: flex-start;
+                                    background-color: transparent;
+                                    color: #333;
+                                    font-family: 'Montserrat', sans-serif;
+                                    font-size: 90%;
+                                    font-weight: 500;
+                                    text-align: center;
+                                    text-transform: capitalize;
+                                    border: 0px solid chocolate;
                                 }
 }
 
