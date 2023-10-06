@@ -313,7 +313,7 @@ const slider_Obj: {
             window.addEventListener(ev, () => {
                 // Ustawienie szerokości bloku opisu, względem szerkości bloku tytułowego slidera (+ ~100px)
                 const sldDescELS: any[] = [];
-                console.log(sldDescELS);
+                //console.log(sldDescELS);
                 const sldTitWdtVALS: any[] = [];
                 for (let i = 0; i < this.imageAmount; i++) {
                     sldDescELS[i] = document.querySelectorAll('div.img-slider-description')[i];
@@ -596,18 +596,24 @@ const productSlider_Obj: {
     pdcSldItBd_Wdt: number,
     pdcSldItBd_MgnLft: number,
     resSpace: number,
+    resLimitVals: number[],
+    curPdcSldMovVal: number[],
     evWinLoadRes: string[],
     evElClick: string[],
     setVisibleAreaWidth: Function,
-    createItems_fixedAmount: Function
+    createItems_fixedAmount: Function,
+    reverseResLimVals_Func: Function,
+    setAEL_PdcSldMoving: Function
 } = {
     windowWidth: 0,
     windowHeight: 0,
-    productsAmount: 15,
-    curWidStat: 0,
+    productsAmount: 50,
+    curWidStat: 0,   // Amount of visibled items for current product slider box width
     pdcSldItBd_Wdt: 0,   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
     pdcSldItBd_MgnLft: 15,   //  - space betwen items
     resSpace: 350,   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
+    resLimitVals: [],   // Values of slider box width, which are calculate form items for current product slider box width
+    curPdcSldMovVal: [],   // Values of current product slider moving distance on once move action (reverse "resLimitVals" array)
     evWinLoadRes: ['load', 'resize'],
     evElClick: ['click', 'touchend'],
     setVisibleAreaWidth() {
@@ -617,28 +623,28 @@ const productSlider_Obj: {
                 const pdcSldBox: HTMLDivElement = document.querySelector('div.product-slider-box');
                 const pdcSldHng: HTMLDivElement = document.querySelector('div.product-slider-hanger');
                 // Counting values for limit array:
-                const resLimitVals: number[] = [];
+                //const resLimitVals: number[] = [];   // Global variable
                 const productsWide: number[] = [5, 4, 3, 2, 1];
                 // (1200 - (34 * 2)) = navbar width without side elements margin/padding =
                 // ([desktop-navbar-width] - ([side-elements-margin/padding]) * [elements-amunt])
                 this.pdcSldItBd_Wdt = (((1200 - (34 * 2)) / 5) - ((this.pdcSldItBd_MgnLft * (productsWide.length - 1)) / 5));  // 214.4   |   depend of nev pseudo-width
                 for (let i: number = 0; i < productsWide.length; i++) {
-                    resLimitVals[i] = ((this.pdcSldItBd_Wdt * productsWide[i]) + (this.pdcSldItBd_MgnLft * (productsWide[i] - 1)));
+                    this.resLimitVals[i] = ((this.pdcSldItBd_Wdt * productsWide[i]) + (this.pdcSldItBd_MgnLft * (productsWide[i] - 1)));
                 };
-                resLimitVals[productsWide.length] = (this.pdcSldItBd_Wdt * -1);   // Naprawione niechciane rozszerzanie się bloku slidera
-                //console.log(resLimitVals);
+                this.resLimitVals[productsWide.length] = (this.pdcSldItBd_Wdt * -1);   // Naprawione niechciane rozszerzanie się bloku slidera
+                console.log(this.resLimitVals);
                 // resSpace: current-slider-item-box-width
                 let oneTime = true;   // I don't know why I must use this...
-                for (let i: number = 0; i < resLimitVals.length; i++) {
+                for (let i: number = 0; i < this.resLimitVals.length; i++) {
                     if (i === 0 && oneTime === true) {
                         oneTime = false;
-                        let val = resLimitVals[i];
+                        let val = this.resLimitVals[i];
                         pdcSldBox.style.width = val + 'px';
                         this.curWidStat = productsWide[i];   /* CURRENT WIDE STATUS - When you want to be add mowe images  */
                     } else if (i > 0) {
                         oneTime = true;
-                        if (this.windowWidth < (resLimitVals[i] + this.resSpace) && this.windowWidth >= (resLimitVals[i+1] + this.resSpace)) {
-                            let val = resLimitVals[i];
+                        if (this.windowWidth < (this.resLimitVals[i] + this.resSpace) && this.windowWidth >= (this.resLimitVals[i+1] + this.resSpace)) {
+                            let val = this.resLimitVals[i];
                             pdcSldBox.style.width = val + 'px';
                             this.curWidStat = productsWide[i];   /* CURRENT WIDE STATUS - When you want to be add mowe images */
                         } else {}
@@ -659,13 +665,15 @@ const productSlider_Obj: {
                 for (let i: number = 0; i < this.curWidStat; i++) {
                     const pdcSldItBd = document.createElement('div');
                     pdcSldItBd.setAttribute('class', 'pdc-sld-item-body');
-                    pdcSldItBd.style.width = pdcSldItBd_Wdt + 'px';
+                    pdcSldItBd.style.width = this.pdcSldItBd_Wdt + 'px';
                     if (i === 0) {
                     } else if (i > 0) {
-                        pdcSldItBd.style.marginLeft = pdcSldItBd_MgnLft + 'px';
+                        pdcSldItBd.style.marginLeft = this.pdcSldItBd_MgnLft + 'px';
                     }
                     pdcSldHng.appendChild(pdcSldItBd);
                 };*/
+                //console.log('Product slider box width - according to window width:');
+                //console.table(this.resLimitVals);   /* Product slider hanger will moving according to this value of index array BUT from 0 to penultimate index, because las index = (-) value*/
             }, false);
         });
         this.createItems_fixedAmount();
@@ -684,6 +692,41 @@ const productSlider_Obj: {
                 itemsHanger.appendChild(pdcSldItBd);
             };
         }, false);
+        this.reverseResLimVals_Func();
+    },
+    reverseResLimVals_Func() {
+        // Iterujemy tą tablicą "this.curWidStat" po tej "this.resLimitVals" i w ten sposób mamy aktualną wartość przesunięcia produktu względem odpowiedniego rozstawy tychże produktów
+        this.evWinLoadRes.forEach((ev) => {
+            window.addEventListener(ev, () => {
+                let reverseResLimVals: number[] = this.resLimitVals.reverse();
+                this.curPdcSldMovVal = reverseResLimVals[this.curWidStat];
+                //console.log(`CURRENT PRODUCT SLIDER MOVING: ${this.curPdcSldMovVal}`);
+                //this.setAEL_PdcSldMoving();
+            }, false);
+        });
+        this.setAEL_PdcSldMoving();
+    },
+    setAEL_PdcSldMoving() {
+        const pdcSldButLft: HTMLDivElement = document.querySelector('div.product-slider-arrowBox-left-box');
+        const pdcSldButRgt: HTMLDivElement = document.querySelector('div.product-slider-arrowBox-right-box');
+        const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
+        let moveVal = 0;
+        this.evElClick.forEach((ev) => {
+            pdcSldButLft.addEventListener(ev, () => {   // LEFT
+                moveVal += ((this.curPdcSldMovVal + this.pdcSldItBd_MgnLft) * 1);
+                itemsHanger.style.left = moveVal + 'px';
+                itemsHanger.style.transitionDuration = 0.5 + 's';
+                console.log(`LEFT: ${moveVal}`);
+            }, false);
+        });
+        this.evElClick.forEach((ev) => {
+            pdcSldButRgt.addEventListener(ev, () => {   // RIGHT
+                moveVal += ((this.curPdcSldMovVal + this.pdcSldItBd_MgnLft) * -1);
+                itemsHanger.style.left = moveVal + 'px';
+                itemsHanger.style.transitionDuration = 0.5 + 's';
+                console.log(`RIGHT: ${moveVal}`);
+            }, false);
+        });
     }
 };
 productSlider_Obj.setVisibleAreaWidth();
