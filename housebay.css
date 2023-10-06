@@ -502,7 +502,7 @@ body {
                 justify-content: flex-start;
                 align-items: center;
                 background-color: transparent;
-                border: 3px solid #666;
+                border: 0px solid #666;
             }
                 .product-slider-arrowBox-left-box, .product-slider-arrowBox-right-box {
                     position: absolute;
@@ -523,10 +523,10 @@ body {
                     z-index: 1;
                 }
                 .product-slider-arrowBox-left-box {
-                    left: -75px;
+                    left: -60px;
                 }
                 .product-slider-arrowBox-right-box {
-                    right: -75px;
+                    right: -60px;
                 }
                 .product-slider-arrowBox-left-box:hover {
                     cursor: pointer;
@@ -589,12 +589,12 @@ body {
                     width: 100%;
                     height: auto;
                     position: relative;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: flex-start;
-                    align-items: center;
+                    display: inherit;
+                    flex-direction: inherit;
+                    justify-content: inherit;
+                    align-items: inherit;
                     background-color: transparent;
-                    border: 3px solid #AAA;
+                    border: 0px solid #AAA;
                     overflow: hidden;
                 }
                 .product-slider-hanger {
@@ -607,7 +607,8 @@ body {
                     flex-direction: row;
                     justify-content: flex-start;
                     align-items: center;
-                    border: 3px solid lime;
+                    border: 0px solid lime;
+                    transition-duration: 0.5s;
                 }
                     .pdc-sld-item-body {
                         /*width: TS;*/
@@ -615,7 +616,7 @@ body {
                         height: 300px;
                         position: relative;
                         background-color: rgba(100, 172, 255, 0.4);
-                        border: 3px solid red;
+                        border: 0px solid red;
                     }
 }
 
