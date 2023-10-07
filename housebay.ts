@@ -541,60 +541,72 @@ slider_Obj.setAEL_ImgLeftResize();
 
 
 const productSlider_Sources_Obj: {
-    pdcSldSrc_Prc: string[],
-    pdcSldSrc_Dsc: string[],
-    pdcSldSrc_Area: string[]
+    pdcSldSrc_Prc: string[][],
+    pdcSldSrc_Dsc: string[][],
+    pdcSldSrc_Area: string[][]
 } = {
     pdcSldSrc_Prc: [
-        '830 000 PLN',
-        '770 000 PLN',
-        '1 230 000 PLN',
-        '850 000 PLN',
-        '560 000 PLN',
-        '1 310 000 PLN',
-        '890 000 PLN',
-        '715 000 PLN',
-        '699 000 PLN',
-        '835 000 PLN',
-        '910 000 PLN',
-        '1 105 000 PLN',
-        '1 110 000 PLN',
-        '735 000 PLN',
-        '750 000 PLN'
+        [   // Prooduct slider #1
+            '830 000 PLN',
+            '770 000 PLN',
+            '1 230 000 PLN',
+            '850 000 PLN',
+            '560 000 PLN',
+            '1 310 000 PLN',
+            '890 000 PLN',
+            '715 000 PLN',
+            '699 000 PLN',
+            '835 000 PLN',
+            '910 000 PLN',
+            '1 105 000 PLN',
+            '1 110 000 PLN',
+            '735 000 PLN',
+            '750 000 PLN'
+        ],
+        [],
+        []
     ],
     pdcSldSrc_Dsc: [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-        '13',
-        '14',
-        '15'
+        [   // Prooduct slider #1
+            'Dom na sprzedaż: Łódź, Wapienna 4',
+            'Dom na sprzedaż: Toruń, Drzymały 23',
+            'Dom na sprzedaż: Łódź, Rukocka 11',
+            'Dom na sprzedaż: Piaseczno, Mała 3',
+            'Dom na sprzedaż: Poznań, Perłowa 93',
+            'Dom na sprzedaż: Puck, Długa 10',
+            'Dom na sprzedaż: Kraków, Zamkowa 2',
+            'Dom na sprzedaż: Kraków, Podła 55',
+            'Dom na sprzedaż: Łódź, Drewnowska 9',
+            'Dom na sprzedaż: Zwoleń, Alejkowa 7',
+            'Dom na sprzedaż: Kozienice, Gruba 77',
+            'Dom na sprzedaż: Pionki, Piękna 42',
+            'Dom na sprzedaż: Warszawa, Zielona 4',
+            'Dom na sprzedaż: Warszawa, Maja 93',
+            'Dom na sprzedaż: Radom, Stara 237'
+        ],
+        [],
+        []
     ],
     pdcSldSrc_Area: [
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-        '13',
-        '14',
-        '15'
+        [   // Prooduct slider #1
+            '179.3 m',
+            '162.4 m',
+            '204.0 m',
+            '170.1 m',
+            '105.4 m',
+            '228.8 m',
+            '168.9 m',
+            '135.0 m',
+            '124.2 m',
+            '142.6 m',
+            '138.0 m',
+            '252.4 m',
+            '158.3 m',
+            '151.5 m',
+            '166.0 m'
+        ],
+        [],
+        []
     ]
 };
 
@@ -603,7 +615,9 @@ const productSlider_Sources_Obj: {
 const productSlider_Obj: {
     windowWidth: number,
     windowHeight: number,
-    productsAmount: number,
+    productsAmount_S1: number,
+    productsAmount_S2: number,
+    productsAmount_S3: number,
     curWidStat: number,
     pdcSldItBd_Wdt: number,
     pdcSldItBd_MgnLft: number,
@@ -611,6 +625,8 @@ const productSlider_Obj: {
     itemsPage: number,
     pdcSldmoveVal: number;
     pageStartLimit: number,
+    statBallsAmount: number,
+    currentPage: number,
     resLimitVals: number[],
     curPdcSldMovVal: number[],
     evWinLoadRes: string[],
@@ -618,17 +634,22 @@ const productSlider_Obj: {
     setVisibleAreaWidth: Function,
     createItems_fixedAmount: Function,
     reverseResLimVals_Func: Function,
-    setAEL_PdcSldMoving: Function
+    setAEL_PdcSldMoving: Function,
+    createPdcSldPageStatus: Function
 } = {
     windowWidth: 0,
     windowHeight: 0,
-    productsAmount: productSlider_Sources_Obj.pdcSldSrc_Prc.length,   // Amount of products in slider hanger
+    productsAmount_S1: productSlider_Sources_Obj.pdcSldSrc_Prc[0].length,   // Amount of products in product slider 1 hanger
+    productsAmount_S2: productSlider_Sources_Obj.pdcSldSrc_Prc[1].length,   // Amount of products in product slider 2 hanger
+    productsAmount_S3: productSlider_Sources_Obj.pdcSldSrc_Prc[2].length,   // Amount of products in product slider 3 hanger
     curWidStat: 0,   // Amount of visibled items for current product slider box width
     pdcSldItBd_Wdt: 0,   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
     pdcSldItBd_MgnLft: 15,   //  - space betwen items
     resSpace: 350,   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
     itemsPage: 0,
     pdcSldmoveVal: 0,
+    statBallsAmount: 0,
+    currentPage: 0,
     pageStartLimit: this.curWidStat,
     resLimitVals: [],   // Values of slider box width, which are calculate form items for current product slider box width
     curPdcSldMovVal: [],   // Values of current product slider moving distance on once move action (reverse "resLimitVals" array)
@@ -681,29 +702,73 @@ const productSlider_Obj: {
                 } else {}
                 // Create slider items:
                 for (let i: number = 0; i < this.curWidStat; i++) {
-                    // IS NOT DONE IN BOTTOM
+                    const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
+                    for (let i: number = 0; i < this.productsAmount_S1; i++) {
+                        const itBd: HTMLDivElement = document.createElement('div');
+                        const itCnt: HTMLDivElement = document.createElement('div');
+                        const itClkFld: HTMLDivElement = document.createElement('div');
+                        const itImgDim: HTMLDivElement = document.createElement('div');
+                        const itImgPrp: HTMLImageElement = document.createElement('img');
+                        const itPrc: HTMLDivElement = document.createElement('div');
+                        const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[i]);
+                        const itDes: HTMLDivElement = document.createElement('div');
+                        const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[i]);
+                        const itArea: HTMLDivElement = document.createElement('div');
+                        const itAreaTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[i]);
+                        itBd.setAttribute('class', 'pdc-sld-item-body');
+                        itCnt.setAttribute('class', 'pdc-sld-item-content');
+                        itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
+                        itImgDim.setAttribute('class', 'pdc-sld-item-img-dim');
+                        itImgPrp.setAttribute('class', 'pdc-sld-item-img-prp');
+                        itImgPrp.setAttribute('src', 'hb-images-product-slider/img_' + (i + 1) + '.jpg');
+                        itPrc.setAttribute('class', 'pdc-sld-item-price');
+                        itDes.setAttribute('class', 'pdc-sld-item-des');
+                        itArea.setAttribute('class', 'pdc-sld-item-area');
+                        itBd.appendChild(itCnt);
+                        itBd.style.width = this.pdcSldItBd_Wdt + 'px';
+                        if (i === 0) {
+                        } else if (i > 0) {
+                            itBd.style.marginLeft = this.pdcSldItBd_MgnLft + 'px';
+                        }
+                        itCnt.appendChild(itClkFld);
+                        itClkFld.appendChild(itImgDim);
+                        itPrc.appendChild(itPrcTN);
+                        itClkFld.appendChild(itPrc);
+                        itDes.appendChild(itDesTN);
+                        itClkFld.appendChild(itDes);
+                        itImgDim.appendChild(itImgPrp);
+                        itArea.appendChild(itAreaTN);
+                        itClkFld.appendChild(itArea);
+                        let itImgDimVal = (this.pdcSldItBd_Wdt * 0.7);
+                        itImgDim.style.height = itImgDimVal + 'px';
+                        itemsHanger.appendChild(itBd);
+                    };
                 };*/
                 //console.log('Product slider box width - according to window width:');
                 //console.table(this.resLimitVals);   /* Product slider hanger will moving according to this value of index array BUT from 0 to penultimate index, because las index = (-) value*/
             }, false);
         });
-        this.createItems_fixedAmount();
+        //this.reverseResLimVals_Func();   // MOVING AMOUNT OF ITEMS (depend to website window width)
+        this.createItems_fixedAmount();   // FIXED AMOUNT OF TEMS
     },
     createItems_fixedAmount(): void {
         window.addEventListener('load', () => {
             const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
-            for (let i: number = 0; i < this.productsAmount; i++) {
+            for (let i: number = 0; i < this.productsAmount_S1; i++) {
                 const itBd: HTMLDivElement = document.createElement('div');
                 const itCnt: HTMLDivElement = document.createElement('div');
                 const itClkFld: HTMLDivElement = document.createElement('div');
                 const itImgDim: HTMLDivElement = document.createElement('div');
                 const itImgPrp: HTMLImageElement = document.createElement('img');
                 const itPrc: HTMLDivElement = document.createElement('div');
-                const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[i]);
+                const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[0][i]);
                 const itDes: HTMLDivElement = document.createElement('div');
-                const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[i]);
+                const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[0][i]);
                 const itArea: HTMLDivElement = document.createElement('div');
-                const itAreaTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[i]);
+                const itAreaText: HTMLDivElement = document.createElement('div');
+                const itAreaTextTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[0][i]);
+                const itAreaSup: HTMLElement = document.createElement('sup');
+                const itAreaSupTN: Text = document.createTextNode('2');
                 itBd.setAttribute('class', 'pdc-sld-item-body');
                 itCnt.setAttribute('class', 'pdc-sld-item-content');
                 itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
@@ -713,6 +778,8 @@ const productSlider_Obj: {
                 itPrc.setAttribute('class', 'pdc-sld-item-price');
                 itDes.setAttribute('class', 'pdc-sld-item-des');
                 itArea.setAttribute('class', 'pdc-sld-item-area');
+                itAreaText.setAttribute('class', 'pdc-sld-item-area-text');
+                itAreaSup.setAttribute('class', 'pdc-sld-item-area-sup');
                 itBd.appendChild(itCnt);
                 itBd.style.width = this.pdcSldItBd_Wdt + 'px';
                 if (i === 0) {
@@ -726,8 +793,11 @@ const productSlider_Obj: {
                 itDes.appendChild(itDesTN);
                 itClkFld.appendChild(itDes);
                 itImgDim.appendChild(itImgPrp);
-                itArea.appendChild(itAreaTN);
                 itClkFld.appendChild(itArea);
+                itArea.appendChild(itAreaText);
+                itAreaText.appendChild(itAreaTextTN);
+                itArea.appendChild(itAreaSup);
+                itAreaSup.appendChild(itAreaSupTN);
                 let itImgDimVal = (this.pdcSldItBd_Wdt * 0.7);
                 itImgDim.style.height = itImgDimVal + 'px';
                 itemsHanger.appendChild(itBd);
@@ -744,12 +814,13 @@ const productSlider_Obj: {
                 //console.log(`CURRENT PRODUCT SLIDER MOVING: ${this.curPdcSldMovVal}`);
             }, false);
         });
+        this.setAEL_PdcSldMoving();
     },
     setAEL_PdcSldMoving(): void {
         const pdcSldButLft: HTMLDivElement = document.querySelector('div.product-slider-arrowBox-left-box');
         const pdcSldButRgt: HTMLDivElement = document.querySelector('div.product-slider-arrowBox-right-box');
         const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
-        let pageEndLimit: number = this.productsAmount;
+        let pageEndLimit: number = this.productsAmount_S1;
         let isMoved: boolean = false;
         let tnsDur_Timeout = 1000;
         let tnsDur_Style = (tnsDur_Timeout / 1000);
@@ -782,6 +853,21 @@ const productSlider_Obj: {
                         isMoved = false;
                     }, tnsDur_Timeout);
                 }
+                let stsBallAR: any[] = [];
+                this.currentPage = this.itemsPage / this.curWidStat;   // [current-item-page-value] / [current-wide-status (slider-hanger-position-in-click-steps)] = [current-page-number] !!! with decimal
+                this.currentPage = Math.ceil(this.currentPage);   // Clean decimal by round up this value
+                for (let i: number = 0; i < this.statBallsAmount; i++) {
+                    stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
+                    if (i === this.currentPage) {
+                        stsBallAR[i].style.backgroundColor = 'rgb(235,235,235)';
+                        stsBallAR[i].style.border = '2px solid #333';
+                        stsBallAR[i].style.transitionDuration = '0.1s';
+                    } else {
+                        stsBallAR[i].style.backgroundColor = 'whitesmoke';
+                        stsBallAR[i].style.border = '2px solid #CCC';
+                        stsBallAR[i].style.transitionDuration = '0.1s';
+                    }
+                };
             }, false);
         });
         this.evElClick.forEach((ev) => {
@@ -799,9 +885,65 @@ const productSlider_Obj: {
                         isMoved = false;
                     }, tnsDur_Timeout);
                 } else {}
+
+                let stsBallAR: any[] = [];
+                this.currentPage = this.itemsPage / this.curWidStat;
+                this.currentPage = Math.ceil(this.currentPage);
+                for (let i: number = 0; i < this.statBallsAmount; i++) {
+                    stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
+                    if (i === this.currentPage) {
+                        stsBallAR[i].style.backgroundColor = 'rgb(235,235,235)';
+                        stsBallAR[i].style.border = '2px solid #333';
+                        stsBallAR[i].style.transitionDuration = '0.1s';
+                    } else {
+                        stsBallAR[i].style.backgroundColor = 'whitesmoke';
+                        stsBallAR[i].style.border = '2px solid #CCC';
+                        stsBallAR[i].style.transitionDuration = '0.1s';
+                    }
+                };
             }, false);
         });
+        this.createPdcSldPageStatus();
+    },
+    createPdcSldPageStatus(): void {
+        this.evWinLoadRes.forEach((ev) => {
+            window.addEventListener(ev, () => {
+                const statusBox: HTMLDivElement = document.querySelector('div.product-slider-status-box');
+                const stBxChildren: HTMLCollection = statusBox.children;
+                if (statusBox.childElementCount > 0) {
+                    for (let i = stBxChildren.length - 1; i >= 0; i--) {
+                        statusBox.removeChild(stBxChildren[i]);
+                    };
+                } else {}
+                this.statBallsAmount = this.productsAmount_S1 / this.curWidStat;
+                this.statBallsAmount = Math.ceil(this.statBallsAmount);
+                console.log('STATUS BALL AMOUNT: ' + this.statBallsAmount);
+                if (this.curWidStat > 1) {
+                    for (let i: number = 0; i < this.statBallsAmount; i++) {
+                        const statusBall: HTMLDivElement = document.createElement('div');
+                        statusBall.setAttribute('class', 'ps-status-ball');
+                        statusBox.appendChild(statusBall);
+                    };
+                } else if (this.curWidStat === 1) {}
+            }, false);
+        });
+        window.addEventListener('load', () => {
+            let stsBallAR: any[] = [];
+            this.currentPage = this.itemsPage / this.curWidStat;
+            this.currentPage = Math.ceil(this.currentPage);
+            for (let i: number = 0; i < this.statBallsAmount; i++) {
+                stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
+                if (i === this.currentPage) {
+                    stsBallAR[i].style.backgroundColor = 'rgb(235,235,235)';
+                    stsBallAR[i].style.border = '2px solid #333';
+                    stsBallAR[i].style.transitionDuration = '0.1s';
+                } else {
+                    stsBallAR[i].style.backgroundColor = 'whitesmoke';
+                    stsBallAR[i].style.border = '2px solid #CCC';
+                    stsBallAR[i].style.transitionDuration = '0.1s';
+                }
+            };
+        }, false);
     }
 };
 productSlider_Obj.setVisibleAreaWidth();
-productSlider_Obj.setAEL_PdcSldMoving();
