@@ -484,7 +484,7 @@ body {
         .product-slider-area {
             width: 100%;
             height: auto;
-            margin: 20px 0px;
+            margin: 0px 0px 45px;   /*ZMIEŃ NA 30!*/
             position: relative;
             display: flex;
             flex-direction: row;
@@ -584,6 +584,27 @@ body {
                         .product-slider-arrowBox-right-box:active .ps-arrowBox-content-right {
                             background-color: rgb(235, 235, 235);
                         }
+                .product-slider-status-box {
+                    width: auto;
+                    height: 17px;
+                    position: absolute;
+                    bottom: -30px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 100;
+                }
+                    .ps-status-ball {
+                        width: 17px;
+                        height: 17px;
+                        margin: 0px 5px;
+                        position: relative;
+                        border-radius: 50px;
+                        background-color: inherit;
+                        border: 2px solid #CCC;
+                        transition-duration: 0.1s;
+                    }
                 .product-slider-visibleArea {   /*To product slider items*/
                     width: 100%;
                     height: auto;
@@ -652,13 +673,13 @@ body {
                                         background-size: 100% 100%;
                                         background-position: center;
                                         filter: brightness(100%);
-                                        transition-duration: 0.25s;
+                                        transition-duration: 0.20s;
                                     }
                                     .pdc-sld-item-clickField:hover .pdc-sld-item-img-prp {
-                                        width: 102%;
-                                        height: 102%;
+                                        width: 100%;
+                                        height: 100%;
                                         filter: brightness(85%);
-                                        transition-duration: 0.25s;
+                                        transition-duration: 0.20s;
                                     }
                                 .pdc-sld-item-price {
                                     width: 100%;
@@ -687,7 +708,7 @@ body {
                                 }
                                 .pdc-sld-item-des {
                                     width: 100%;
-                                    height: 53px;
+                                    height: 70px;
                                     padding: 0px 12px;
                                     position: relative;
                                     display: flex;
@@ -697,16 +718,17 @@ body {
                                     background-color: transparent;
                                     color: #333;
                                     font-family: 'Montserrat', sans-serif;
-                                    font-size: 110%;
+                                    font-size: 102%;
                                     font-weight: 600;
                                     text-align: center;
                                     text-transform: capitalize;
+                                    line-height: 1.3em;
                                     border: 0px solid lime;
                                 }
                                 .pdc-sld-item-area {
                                     width: 100%;
                                     height: auto;
-                                    padding: 6px 12px 14px;
+                                    padding: 4px 12px 14px;
                                     position: relative;
                                     display: flex;
                                     flex-direction: row;
@@ -715,16 +737,21 @@ body {
                                     background-color: transparent;
                                     color: #333;
                                     font-family: 'Montserrat', sans-serif;
-                                    font-size: 90%;
                                     font-weight: 500;
                                     text-align: center;
                                     text-transform: capitalize;
                                     border: 0px solid chocolate;
                                 }
-        .warning-info {
+                                    .pdc-sld-item-area-text {
+                                        font-size: 85%;
+                                    }
+                                    .pdc-sld-item-area-sup {
+                                        font-size: 65%;
+                                    }
+        .product-slider-infoTitle {
             width: 100%;
             height: 100%;
-            padding: 80px 34px 0px;
+            padding: 50px 34px 15px;
             position: relative;
             display: flex;
             flex-direction: row;
@@ -732,7 +759,7 @@ body {
             align-items: center;
             color: #333;
             font-family: 'Montserrat', sans-serif;
-            font-size: 240%;
+            font-size: 175%;
             font-weight: 600;
             text-align: center;
             text-transform: uppercase;
@@ -868,7 +895,7 @@ body {
                     }
                     .pgDskBut-text::selection {
                         background-color: inherit;
-                        color: #333;
+                        /*color: white;*/
                     }
 
         .iscb-leftArrow-proper, .iscb-rightArrow-proper {
@@ -879,5 +906,10 @@ body {
         }
         .img-slider-description {
             font-size: 150%;
+        }
+
+        .warning-info {
+            padding: 60px 34px 20px;
+            font-size: 240%;
         }
 }
