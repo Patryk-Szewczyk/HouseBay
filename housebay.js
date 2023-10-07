@@ -604,6 +604,9 @@ var productSlider_Obj = {
     pdcSldItBd_Wdt: 0,
     pdcSldItBd_MgnLft: 15,
     resSpace: 350,
+    itemsPage: 0,
+    pdcSldmoveVal: 0,
+    pageStartLimit: this.curWidStat,
     resLimitVals: [],
     curPdcSldMovVal: [],
     evWinLoadRes: ['load', 'resize'],
@@ -725,35 +728,69 @@ var productSlider_Obj = {
                 var reverseResLimVals = _this.resLimitVals.reverse();
                 _this.curPdcSldMovVal = reverseResLimVals[_this.curWidStat];
                 //console.log(`CURRENT PRODUCT SLIDER MOVING: ${this.curPdcSldMovVal}`);
-                //this.setAEL_PdcSldMoving();
             }, false);
         });
-        this.setAEL_PdcSldMoving();
     },
     setAEL_PdcSldMoving: function () {
         var _this = this;
         var pdcSldButLft = document.querySelector('div.product-slider-arrowBox-left-box');
         var pdcSldButRgt = document.querySelector('div.product-slider-arrowBox-right-box');
         var itemsHanger = document.querySelector('div.product-slider-hanger');
-        var moveVal = 0;
+        var pageEndLimit = this.productsAmount;
+        var isMoved = false;
+        var tnsDur_Timeout = 1000;
+        var tnsDur_Style = (tnsDur_Timeout / 1000);
+        console.log('PAGE_END_LIMIT:' + pageEndLimit);
+        console.log('PAGE_START_LIMIT:' + this.pageStartLimit);
         this.evElClick.forEach(function (ev) {
             pdcSldButLft.addEventListener(ev, function () {
-                moveVal += ((_this.curPdcSldMovVal + _this.pdcSldItBd_MgnLft) * 1); // MEGA WAŻNE!
-                // Trzeba dodać 1x margin-left, gdyż pole widoczności zawiera elemnety łącznie z marginami! 
-                // Inaczej hanger ruszy się na niewystarczającą odległość
-                itemsHanger.style.left = moveVal + 'px';
-                itemsHanger.style.transitionDuration = 1 + 's';
-                console.log("LEFT: ".concat(moveVal));
+                _this.pageStartLimit = _this.curWidStat;
+                // Limit of second statement operand are moving according to "this.curWidStat"
+                if (_this.itemsPage >= _this.pageStartLimit && isMoved === false) { // Example: 4 >= 3 = true | 3 >= true   -> Result: element.style.left = moveVal + 'px';
+                    _this.itemsPage -= _this.curWidStat;
+                    isMoved = true;
+                    _this.pdcSldmoveVal += ((_this.curPdcSldMovVal + _this.pdcSldItBd_MgnLft) * 1); // MEGA WAŻNE!
+                    // Trzeba dodać 1x margin-left, gdyż pole widoczności zawiera elemnety łącznie z marginami! 
+                    // Inaczej hanger ruszy się na niewystarczającą odległość
+                    itemsHanger.style.left = _this.pdcSldmoveVal + 'px';
+                    itemsHanger.style.transitionDuration = tnsDur_Style + 's';
+                    console.log("LEFT: ".concat(_this.pdcSldmoveVal));
+                    setTimeout(function () {
+                        isMoved = false;
+                    }, tnsDur_Timeout);
+                }
+                else if ((_this.itemsPage < _this.pageStartLimit && (_this.itemsPage % _this.pageStartLimit) > 0) === true && (isMoved === false)) { // Example: 3 < 2 = true   [&]   (3 / 2) > 0 = true
+                    _this.itemsPage = 0;
+                    isMoved = true;
+                    _this.pdcSldmoveVal = 0;
+                    itemsHanger.style.left = _this.pdcSldmoveVal + 'px';
+                    itemsHanger.style.transitionDuration = tnsDur_Style + 's';
+                    console.log("LEFT: ".concat(_this.pdcSldmoveVal));
+                    setTimeout(function () {
+                        isMoved = false;
+                    }, tnsDur_Timeout);
+                }
             }, false);
         });
         this.evElClick.forEach(function (ev) {
+            _this.pageStartLimit = _this.curWidStat;
             pdcSldButRgt.addEventListener(ev, function () {
-                moveVal += ((_this.curPdcSldMovVal + _this.pdcSldItBd_MgnLft) * -1);
-                itemsHanger.style.left = moveVal + 'px';
-                itemsHanger.style.transitionDuration = 1 + 's';
-                console.log("RIGHT: ".concat(moveVal));
+                // Limit of second statement operand are moving according to "this.curWidStat"
+                if (_this.itemsPage < (pageEndLimit - _this.curWidStat) && isMoved === false) {
+                    _this.itemsPage += _this.curWidStat;
+                    isMoved = true;
+                    _this.pdcSldmoveVal += ((_this.curPdcSldMovVal + _this.pdcSldItBd_MgnLft) * -1);
+                    itemsHanger.style.left = _this.pdcSldmoveVal + 'px';
+                    itemsHanger.style.transitionDuration = tnsDur_Style + 's';
+                    console.log("RIGHT: ".concat(_this.pdcSldmoveVal));
+                    setTimeout(function () {
+                        isMoved = false;
+                    }, tnsDur_Timeout);
+                }
+                else { }
             }, false);
         });
     }
 };
 productSlider_Obj.setVisibleAreaWidth();
+productSlider_Obj.setAEL_PdcSldMoving();
