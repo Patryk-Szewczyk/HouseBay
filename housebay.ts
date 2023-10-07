@@ -859,11 +859,9 @@ const productSlider_Obj: {
                 for (let i: number = 0; i < this.statBallsAmount; i++) {
                     stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
                     if (i === this.currentPage) {
-                        stsBallAR[i].style.backgroundColor = 'rgb(235,235,235)';
                         stsBallAR[i].style.border = '2px solid #333';
                         stsBallAR[i].style.transitionDuration = '0.1s';
                     } else {
-                        stsBallAR[i].style.backgroundColor = 'whitesmoke';
                         stsBallAR[i].style.border = '2px solid #CCC';
                         stsBallAR[i].style.transitionDuration = '0.1s';
                     }
@@ -892,11 +890,9 @@ const productSlider_Obj: {
                 for (let i: number = 0; i < this.statBallsAmount; i++) {
                     stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
                     if (i === this.currentPage) {
-                        stsBallAR[i].style.backgroundColor = 'rgb(235,235,235)';
                         stsBallAR[i].style.border = '2px solid #333';
                         stsBallAR[i].style.transitionDuration = '0.1s';
                     } else {
-                        stsBallAR[i].style.backgroundColor = 'whitesmoke';
                         stsBallAR[i].style.border = '2px solid #CCC';
                         stsBallAR[i].style.transitionDuration = '0.1s';
                     }
@@ -934,11 +930,9 @@ const productSlider_Obj: {
             for (let i: number = 0; i < this.statBallsAmount; i++) {
                 stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
                 if (i === this.currentPage) {
-                    stsBallAR[i].style.backgroundColor = 'rgb(235,235,235)';
                     stsBallAR[i].style.border = '2px solid #333';
                     stsBallAR[i].style.transitionDuration = '0.1s';
                 } else {
-                    stsBallAR[i].style.backgroundColor = 'whitesmoke';
                     stsBallAR[i].style.border = '2px solid #CCC';
                     stsBallAR[i].style.transitionDuration = '0.1s';
                 }
