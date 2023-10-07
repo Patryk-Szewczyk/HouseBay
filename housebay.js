@@ -217,7 +217,7 @@ var slider_Obj = {
     returnSliderTitELS: function () {
         var sldTitELS = [];
         for (var i = 0; i < this.imageAmount; i++) {
-            sldTitELS[i] = document.querySelectorAll('div.img-slider-title');
+            sldTitELS[i] = document.querySelectorAll('div.img-slider-title')[i];
         }
         ;
         return sldTitELS;
@@ -225,7 +225,7 @@ var slider_Obj = {
     returnSliderDescELS: function () {
         var sldDescELS = [];
         for (var i = 0; i < this.imageAmount; i++) {
-            sldDescELS[i] = document.querySelectorAll('div.img-slider-description');
+            sldDescELS[i] = document.querySelectorAll('div.img-slider-description')[i];
         }
         ;
         return sldDescELS;
@@ -233,7 +233,7 @@ var slider_Obj = {
     returnSliderButELS: function () {
         var sldButELS = [];
         for (var i = 0; i < this.imageAmount; i++) {
-            sldButELS[i] = document.querySelectorAll('div.img-slider-button');
+            sldButELS[i] = document.querySelectorAll('div.img-slider-button')[i];
         }
         ;
         return sldButELS;
@@ -243,12 +243,12 @@ var slider_Obj = {
         slider_Obj.eventsWindowTable.forEach(function (ev) {
             window.addEventListener(ev, function () {
                 // Ustawienie szerokości bloku opisu, względem szerkości bloku tytułowego slidera (+ ~100px)
-                var sldDescELS = [];
+                var sldDescELS = _this.returnSliderDescELS();
+                var sldTitELS = _this.returnSliderTitELS();
                 //console.log(sldDescELS);
                 var sldTitWdtVALS = [];
                 for (var i = 0; i < _this.imageAmount; i++) {
-                    sldDescELS[i] = document.querySelectorAll('div.img-slider-description')[i];
-                    var sldTitWdtVALS_CSS_Obj = window.getComputedStyle(document.querySelectorAll('div.img-slider-title')[i], null);
+                    var sldTitWdtVALS_CSS_Obj = window.getComputedStyle(sldTitELS[i], null);
                     var sldTitWdtVALS_CSS_Val_Str = sldTitWdtVALS_CSS_Obj.getPropertyValue('width');
                     var sldTitWdtVALS_CSS_Val_Num = Number(sldTitWdtVALS_CSS_Val_Str.slice(0, -2));
                     sldTitWdtVALS[i] = sldTitWdtVALS_CSS_Val_Num;
@@ -306,15 +306,9 @@ var slider_Obj = {
         var _this = this;
         ['load'].forEach(function (ev) {
             window.addEventListener(ev, function () {
-                var sldTitELS = [];
-                var sldDescELS = [];
-                var sldButELS = [];
-                for (var i = 0; i < _this.imageAmount; i++) {
-                    sldTitELS[i] = document.querySelectorAll('div.img-slider-title')[i];
-                    sldDescELS[i] = document.querySelectorAll('div.img-slider-description')[i];
-                    sldButELS[i] = document.querySelectorAll('div.img-slider-button')[i];
-                }
-                ;
+                var sldTitELS = _this.returnSliderTitELS();
+                var sldDescELS = _this.returnSliderDescELS();
+                var sldButELS = _this.returnSliderButELS();
                 _this.windowWidth = window.innerWidth;
                 var siteScrollbarWidth = (window.innerWidth - document.documentElement.clientWidth + 10); // Szerokość stałego scrollbar'a strony
                 if (siteScrollbarWidth === undefined || siteScrollbarWidth === null)
@@ -378,15 +372,9 @@ var slider_Obj = {
         };
         console.log('Aktualny obraz: ' + (this.currentImg + 1));
         this.eventsClickTable.forEach(function (ev) {
-            var sldTitELS = [];
-            var sldDescELS = [];
-            var sldButELS = [];
-            for (var i = 0; i < _this.imageAmount; i++) {
-                sldTitELS[i] = document.querySelectorAll('div.img-slider-title')[i];
-                sldDescELS[i] = document.querySelectorAll('div.img-slider-description')[i];
-                sldButELS[i] = document.querySelectorAll('div.img-slider-button')[i];
-            }
-            ;
+            var sldTitELS = _this.returnSliderTitELS();
+            var sldDescELS = _this.returnSliderDescELS();
+            var sldButELS = _this.returnSliderButELS();
             sliderBut.right.addEventListener(ev, function () {
                 var imgSwitchLimit = (_this.imageAmount - 1); // Start = 0. Oper +1 = img_1 znika => img_2 pojawia się
                 if (_this.currentImg < imgSwitchLimit && _this.blockadeImg === false) {
