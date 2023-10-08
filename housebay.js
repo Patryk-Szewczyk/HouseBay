@@ -610,13 +610,10 @@ var productSlider_Sources_Obj = {
 };
 ;
 var ProductSlider = /** @class */ (function () {
-    function ProductSlider(arg_1, arg_2, arg_3) {
+    function ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6) {
         this.windowWidth = 0;
         this.windowHeight = 0;
         this.curWidStat = 0; // Amount of visibled items for current product slider box width
-        this.pdcSldItBd_Wdt = 0; // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
-        this.pdcSldItBd_MgnLft = 15; //  - space betwen items
-        this.resSpace = 350; // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
         this.itemsPage = 0;
         this.pdcSldmoveVal = 0;
         this.statBallsAmount = 0;
@@ -629,6 +626,9 @@ var ProductSlider = /** @class */ (function () {
         this.productsAmount = arg_1;
         this.sldStlIdxNumToWdt = arg_2;
         this.sldInfoNum = arg_3;
+        this.pdcSldItBd_Wdt = arg_4;
+        this.pdcSldItBd_MgnLft = arg_5;
+        this.resSpace = arg_6;
     }
     ProductSlider.prototype.setVisibleAreaWidth = function () {
         var _this = this;
@@ -672,7 +672,7 @@ var ProductSlider = /** @class */ (function () {
                 console.log("CURRENT WIDE STATUS: ".concat(_this.curWidStat));
                 // THIS OPERATIONS IS ALLOWED FOR RESIZE SLIDER ITEMS DEPEND OF WEBSITE WINDOW WIDTH: (scope: 5 - 1)
                 /*// Clear slider items:
-                const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
+                const itemsHanger: any = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
                 const children: HTMLCollection = itemsHanger.children;
                 let childrenAmount = children.length;
                 if (itemsHanger.childElementCount > 0) {
@@ -758,6 +758,7 @@ var ProductSlider = /** @class */ (function () {
                 itImgDim.setAttribute('class', 'pdc-sld-item-img-dim');
                 itImgPrp.setAttribute('class', 'pdc-sld-item-img-prp');
                 itImgPrp.setAttribute('src', 'hb-images-product-slider/img_' + (i + 1) + '.jpg');
+                itImgPrp.setAttribute('alt', productSlider_Sources_Obj.pdcSldSrc_Dsc[_this.sldInfoNum][i]);
                 itPrc.setAttribute('class', 'pdc-sld-item-price');
                 itDes.setAttribute('class', 'pdc-sld-item-des');
                 itArea.setAttribute('class', 'pdc-sld-item-area');
@@ -848,12 +849,21 @@ var ProductSlider = /** @class */ (function () {
                 }
                 var stsBallAR = [];
                 _this.currentPage = _this.itemsPage / _this.curWidStat; // [current-item-page-value] / [current-wide-status (slider-hanger-position-in-click-steps)] = [current-page-number] !!! with decimal
-                _this.currentPage = Math.ceil(_this.currentPage); // Clean decimal by round up this value
+                _this.currentPage = Math.ceil(_this.currentPage);
+                console.log("CURRENT PAGE: ".concat(_this.currentPage)); /*IMPORTANT SHORTTIME INFO*/
+                console.log("ITEMS PAGE: ".concat(_this.itemsPage)); /*IMPORTANT SHORTTIME INFO*/
+                //if (this.currentPage % 2 > 0) {   // Clean decimal by round up this value
+                /*if (this.lastArrowStatus === 'LEFT') {
+                    this.currentPage = Math.ceil(this.currentPage);
+                } else if (this.lastArrowStatus === 'RIGHT') {
+                    this.currentPage = Math.floor(this.currentPage);
+                }*/
+                //} else {}
                 if (_this.curWidStat > 1) {
                     var statusBox = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
                     var stBxChildren = statusBox.children;
                     if (statusBox.childElementCount > 0) {
-                        for (var i = 0; i < stBxChildren.length; i++) {
+                        for (var i = stBxChildren.length - 1; i >= 0; i--) {
                             stsBallAR[i] = stBxChildren[i];
                         }
                         ;
@@ -893,11 +903,20 @@ var ProductSlider = /** @class */ (function () {
                 var stsBallAR = [];
                 _this.currentPage = _this.itemsPage / _this.curWidStat;
                 _this.currentPage = Math.ceil(_this.currentPage);
+                console.log("ITEMS PAGE: ".concat(_this.itemsPage)); /*IMPORTANT SHORTTIME INFO*/
+                console.log("CURRENT PAGE: ".concat(_this.currentPage)); /*IMPORTANT SHORTTIME INFO*/
+                //if (this.currentPage % 2 > 0) {
+                /*if (this.lastArrowStatus === 'LEFT') {
+                    this.currentPage = Math.ceil(this.currentPage);
+                } else if (this.lastArrowStatus === 'RIGHT') {
+                    this.currentPage = Math.floor(this.currentPage);
+                }*/
+                //} else {}
                 if (_this.curWidStat > 1) {
                     var statusBox = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
                     var stBxChildren = statusBox.children;
                     if (statusBox.childElementCount > 0) {
-                        for (var i = 0; i < stBxChildren.length; i++) {
+                        for (var i = stBxChildren.length - 1; i >= 0; i--) {
                             stsBallAR[i] = stBxChildren[i];
                         }
                         ;
@@ -935,7 +954,8 @@ var ProductSlider = /** @class */ (function () {
                 }
                 else { }
                 _this.statBallsAmount = _this.productsAmount / _this.curWidStat;
-                _this.statBallsAmount = Math.ceil(_this.statBallsAmount);
+                _this.currentPage = _this.itemsPage / _this.curWidStat;
+                _this.currentPage = Math.ceil(_this.currentPage);
                 console.log('STATUS BALL AMOUNT: ' + _this.statBallsAmount);
                 if (_this.curWidStat > 1) {
                     for (var i = 0; i < _this.statBallsAmount; i++) {
@@ -946,14 +966,21 @@ var ProductSlider = /** @class */ (function () {
                     ;
                 }
                 else if (_this.curWidStat === 1) { }
-                var stsBallAR = [];
                 _this.currentPage = _this.itemsPage / _this.curWidStat;
                 _this.currentPage = Math.ceil(_this.currentPage);
+                console.log("CURRENT PAGE: ".concat(_this.currentPage)); /*IMPORTANT SHORTTIME INFO*/
+                console.log("ITEMS PAGE: ".concat(_this.itemsPage)); /*IMPORTANT SHORTTIME INFO*/
+                /*if (this.lastArrowStatus === 'LEFT') {
+                    this.currentPage = Math.floor(this.currentPage);
+                } else if (this.lastArrowStatus === 'RIGHT') {
+                    this.currentPage = Math.floor(this.currentPage);
+                }*/
+                var stsBallAR = [];
                 if (_this.curWidStat > 1) {
                     var statusBox_1 = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
                     var stBxChildren_1 = statusBox_1.children;
                     if (statusBox_1.childElementCount > 0) {
-                        for (var i = 0; i < stBxChildren_1.length; i++) {
+                        for (var i = stBxChildren_1.length - 1; i >= 0; i--) {
                             stsBallAR[i] = stBxChildren_1[i];
                         }
                         ;
@@ -978,11 +1005,55 @@ var ProductSlider = /** @class */ (function () {
     ;
     return ProductSlider;
 }());
-var arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[0].length;
-var productSlider_1 = new ProductSlider(arg_1, 0, 0);
+// SERIES PRODUCTION: FACTORY
+var sliderFactory_Obj = {
+    sliderAmount: document.querySelectorAll('div.product-slider-area').length,
+    sliderAR: [],
+    createSliders: function (arg_2, arg_3, arg_4, arg_5, arg_6) {
+        for (var i = 0; i < this.sliderAmount; i++) {
+            var arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[i].length; // Amount of products in product, which has been in choosed slider
+            var productSlider = new ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6);
+            productSlider.setVisibleAreaWidth();
+            productSlider.createItems_fixedAmount();
+            productSlider.reverseResLimVals_Func();
+            productSlider.setAEL_PdcSldMoving();
+            productSlider.createPdcSldPageStatus();
+            this.sliderAR.push(productSlider);
+        }
+        ;
+        console.log(sliderFactory_Obj.sliderAR);
+    }
+};
+// SERIES PRODUCTION: ARGUMENTS
+// arg_1 - This argument is in FORM lop, because they require steady iteration
+var arg_2 = 0; // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
+var arg_3 = 0; // Informations from slider info object. WARNING: Begin is from 0!
+var arg_4 = 0; // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
+var arg_5 = 15; //  - space betwen items
+var arg_6 = 350; // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
+sliderFactory_Obj.createSliders(arg_2, arg_3, arg_4, arg_5, arg_6);
+// HAND CREATING
+/*let arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[0].length;
+let productSlider_1 = new ProductSlider(arg_1, 0, 0, 0, 15, 350);
 productSlider_1.setVisibleAreaWidth();
 productSlider_1.createItems_fixedAmount();
 productSlider_1.reverseResLimVals_Func();
 productSlider_1.setAEL_PdcSldMoving();
 productSlider_1.createPdcSldPageStatus();
-console.log(productSlider_1);
+console.log(productSlider_1);*/
+// Domknięcie - tzw. "Curring". Wiem o co w tym chodzi, ale ciężko mi jesst to opisać.
+// Po prostu zwracana funkcja zagnieżdżona ma zapisany zakres funkcji, w której została 
+// zadeklarowana i w ten sposób się domyka - coś w tym stylu i dzięki temu można 
+// swobodnie korzystać z uprzednio zadeklarowanych parametrów w funkcji "func_1".
+//let a: number = 2;
+//let b: number = 4;
+//let c: number = 6;
+function func_1(a, b) {
+    return function func_2(c) {
+        return ((a + c) / b);
+    };
+}
+;
+var one = func_1(2, 4);
+var two = one(6);
+console.log(two);
