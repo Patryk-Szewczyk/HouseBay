@@ -901,25 +901,23 @@ var productSlider_Obj = {
                     ;
                 }
                 else if (_this.curWidStat === 1) { }
+                var stsBallAR = [];
+                _this.currentPage = _this.itemsPage / _this.curWidStat;
+                _this.currentPage = Math.ceil(_this.currentPage);
+                for (var i = 0; i < _this.statBallsAmount; i++) {
+                    stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
+                    if (i === _this.currentPage) {
+                        stsBallAR[i].style.border = '2px solid #333';
+                        stsBallAR[i].style.transitionDuration = '0.1s';
+                    }
+                    else {
+                        stsBallAR[i].style.border = '2px solid #CCC';
+                        stsBallAR[i].style.transitionDuration = '0.1s';
+                    }
+                }
+                ;
             }, false);
         });
-        window.addEventListener('load', function () {
-            var stsBallAR = [];
-            _this.currentPage = _this.itemsPage / _this.curWidStat;
-            _this.currentPage = Math.ceil(_this.currentPage);
-            for (var i = 0; i < _this.statBallsAmount; i++) {
-                stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
-                if (i === _this.currentPage) {
-                    stsBallAR[i].style.border = '2px solid #333';
-                    stsBallAR[i].style.transitionDuration = '0.1s';
-                }
-                else {
-                    stsBallAR[i].style.border = '2px solid #CCC';
-                    stsBallAR[i].style.transitionDuration = '0.1s';
-                }
-            }
-            ;
-        }, false);
     }
 };
 productSlider_Obj.setVisibleAreaWidth();
