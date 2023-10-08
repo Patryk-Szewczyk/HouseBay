@@ -12,7 +12,7 @@ var navbar_Mobile_Obj = {
     eventsClick: ['click', 'touchend'],
     setNavbar: function () {
         var _this = this;
-        var navbarEL = document.querySelector('div.navbar-box');
+        var navbarEL = document.querySelector('nav.navbar-box');
         this.eventsPageLoad.forEach(function (ev) {
             window.addEventListener(ev, function () {
                 if (_this.windowWidth < RWD_info_Obj.desktop) {
@@ -190,6 +190,7 @@ var slider_Obj = {
             sldDscEL.setAttribute('class', 'img-slider-description');
             sldButEL.setAttribute('class', 'img-slider-button');
             sldPrpEl.setAttribute('src', 'hb-images-slider/img_' + (i + 1) + '.jpg');
+            sldPrpEl.setAttribute('alt', sldTitTxt[i]);
             sldDimEl.appendChild(sldPrpEl);
             sldTitEL.appendChild(sldTitTN[i]);
             sldInfHngEl.appendChild(sldTitEL);
@@ -610,7 +611,7 @@ var productSlider_Sources_Obj = {
 };
 ;
 var ProductSlider = /** @class */ (function () {
-    function ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6) {
+    function ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7) {
         this.windowWidth = 0;
         this.windowHeight = 0;
         this.curWidStat = 0; // Amount of visibled items for current product slider box width
@@ -629,6 +630,7 @@ var ProductSlider = /** @class */ (function () {
         this.pdcSldItBd_Wdt = arg_4;
         this.pdcSldItBd_MgnLft = arg_5;
         this.resSpace = arg_6;
+        this.sldImgFileNum = arg_7;
     }
     ProductSlider.prototype.setVisibleAreaWidth = function () {
         var _this = this;
@@ -757,7 +759,7 @@ var ProductSlider = /** @class */ (function () {
                 itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
                 itImgDim.setAttribute('class', 'pdc-sld-item-img-dim');
                 itImgPrp.setAttribute('class', 'pdc-sld-item-img-prp');
-                itImgPrp.setAttribute('src', 'hb-images-product-slider/img_' + (i + 1) + '.jpg');
+                itImgPrp.setAttribute('src', 'hb-images-product-slider-' + (_this.sldImgFileNum + 1) + '/img_' + (i + 1) + '.jpg');
                 itImgPrp.setAttribute('alt', productSlider_Sources_Obj.pdcSldSrc_Dsc[_this.sldInfoNum][i]);
                 itPrc.setAttribute('class', 'pdc-sld-item-price');
                 itDes.setAttribute('class', 'pdc-sld-item-des');
@@ -1012,7 +1014,8 @@ var sliderFactory_Obj = {
     createSliders: function (arg_2, arg_3, arg_4, arg_5, arg_6) {
         for (var i = 0; i < this.sliderAmount; i++) {
             var arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[i].length; // Amount of products in product, which has been in choosed slider
-            var productSlider = new ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6);
+            var arg_7 = i; // - number of slider images file
+            var productSlider = new ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7);
             productSlider.setVisibleAreaWidth();
             productSlider.createItems_fixedAmount();
             productSlider.reverseResLimVals_Func();
