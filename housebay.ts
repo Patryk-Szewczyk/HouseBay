@@ -921,23 +921,21 @@ const productSlider_Obj: {
                         statusBox.appendChild(statusBall);
                     };
                 } else if (this.curWidStat === 1) {}
+                let stsBallAR: any[] = [];
+                this.currentPage = this.itemsPage / this.curWidStat;
+                this.currentPage = Math.ceil(this.currentPage);
+                for (let i: number = 0; i < this.statBallsAmount; i++) {
+                    stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
+                    if (i === this.currentPage) {
+                        stsBallAR[i].style.border = '2px solid #333';
+                        stsBallAR[i].style.transitionDuration = '0.1s';
+                    } else {
+                        stsBallAR[i].style.border = '2px solid #CCC';
+                        stsBallAR[i].style.transitionDuration = '0.1s';
+                    }
+                };
             }, false);
         });
-        window.addEventListener('load', () => {
-            let stsBallAR: any[] = [];
-            this.currentPage = this.itemsPage / this.curWidStat;
-            this.currentPage = Math.ceil(this.currentPage);
-            for (let i: number = 0; i < this.statBallsAmount; i++) {
-                stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
-                if (i === this.currentPage) {
-                    stsBallAR[i].style.border = '2px solid #333';
-                    stsBallAR[i].style.transitionDuration = '0.1s';
-                } else {
-                    stsBallAR[i].style.border = '2px solid #CCC';
-                    stsBallAR[i].style.transitionDuration = '0.1s';
-                }
-            };
-        }, false);
     }
 };
 productSlider_Obj.setVisibleAreaWidth();
