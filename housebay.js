@@ -550,8 +550,12 @@ var productSlider_Sources_Obj = {
             '735 000 PLN',
             '750 000 PLN'
         ],
-        [],
-        []
+        [ // Prooduct slider #2
+        //
+        ],
+        [ // Prooduct slider #3
+        //
+        ]
     ],
     pdcSldSrc_Dsc: [
         [
@@ -571,8 +575,12 @@ var productSlider_Sources_Obj = {
             'Dom na sprzedaż: Warszawa, Maja 93',
             'Dom na sprzedaż: Radom, Stara 237'
         ],
-        [],
-        []
+        [ // Prooduct slider #2
+        //
+        ],
+        [ // Prooduct slider #3
+        //
+        ]
     ],
     pdcSldSrc_Area: [
         [
@@ -592,36 +600,43 @@ var productSlider_Sources_Obj = {
             '151.5 m',
             '166.0 m'
         ],
-        [],
-        []
+        [ // Prooduct slider #2
+        //
+        ],
+        [ // Prooduct slider #3
+        //
+        ]
     ]
 };
-var productSlider_Obj = {
-    windowWidth: 0,
-    windowHeight: 0,
-    productsAmount_S1: productSlider_Sources_Obj.pdcSldSrc_Prc[0].length,
-    productsAmount_S2: productSlider_Sources_Obj.pdcSldSrc_Prc[1].length,
-    productsAmount_S3: productSlider_Sources_Obj.pdcSldSrc_Prc[2].length,
-    curWidStat: 0,
-    pdcSldItBd_Wdt: 0,
-    pdcSldItBd_MgnLft: 15,
-    resSpace: 350,
-    itemsPage: 0,
-    pdcSldmoveVal: 0,
-    statBallsAmount: 0,
-    currentPage: 0,
-    pageStartLimit: this.curWidStat,
-    resLimitVals: [],
-    curPdcSldMovVal: [],
-    evWinLoadRes: ['load', 'resize'],
-    evElClick: ['click', 'touchend'],
-    setVisibleAreaWidth: function () {
+;
+var ProductSlider = /** @class */ (function () {
+    function ProductSlider(arg_1, arg_2, arg_3) {
+        this.windowWidth = 0;
+        this.windowHeight = 0;
+        this.curWidStat = 0; // Amount of visibled items for current product slider box width
+        this.pdcSldItBd_Wdt = 0; // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
+        this.pdcSldItBd_MgnLft = 15; //  - space betwen items
+        this.resSpace = 350; // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
+        this.itemsPage = 0;
+        this.pdcSldmoveVal = 0;
+        this.statBallsAmount = 0;
+        this.currentPage = 0;
+        this.pageStartLimit = this.curWidStat;
+        this.resLimitVals = []; // Values of slider box width, which are calculate form items for current product slider box width
+        this.curPdcSldMovVal = []; // Values of current product slider moving distance on once move action (reverse "resLimitVals" array)
+        this.evWinLoadRes = ['load', 'resize'];
+        this.evElClick = ['click', 'touchend'];
+        this.productsAmount = arg_1;
+        this.sldStlIdxNumToWdt = arg_2;
+        this.sldInfoNum = arg_3;
+    }
+    ProductSlider.prototype.setVisibleAreaWidth = function () {
         var _this = this;
         this.evWinLoadRes.forEach(function (ev) {
             window.addEventListener(ev, function () {
                 _this.windowWidth = window.innerWidth;
-                var pdcSldBox = document.querySelector('div.product-slider-box');
-                var pdcSldHng = document.querySelector('div.product-slider-hanger');
+                var pdcSldBox = document.querySelectorAll('div.product-slider-box')[_this.sldStlIdxNumToWdt];
+                var pdcSldHng = document.querySelectorAll('div.product-slider-hanger')[_this.sldStlIdxNumToWdt];
                 // Counting values for limit array:
                 //const resLimitVals: number[] = [];   // Global variable
                 var productsWide = [5, 4, 3, 2, 1];
@@ -668,18 +683,18 @@ var productSlider_Obj = {
                 // Create slider items:
                 for (let i: number = 0; i < this.curWidStat; i++) {
                     const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
-                    for (let i: number = 0; i < this.productsAmount_S1; i++) {
+                    for (let i: number = 0; i < this.productsAmount; i++) {
                         const itBd: HTMLDivElement = document.createElement('div');
                         const itCnt: HTMLDivElement = document.createElement('div');
                         const itClkFld: HTMLDivElement = document.createElement('div');
                         const itImgDim: HTMLDivElement = document.createElement('div');
                         const itImgPrp: HTMLImageElement = document.createElement('img');
                         const itPrc: HTMLDivElement = document.createElement('div');
-                        const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[i]);
+                        const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[this.sldInfoNum][i]);
                         const itDes: HTMLDivElement = document.createElement('div');
-                        const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[i]);
+                        const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[this.sldInfoNum][i]);
                         const itArea: HTMLDivElement = document.createElement('div');
-                        const itAreaTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[i]);
+                        const itAreaTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[this.sldInfoNum][i]);
                         itBd.setAttribute('class', 'pdc-sld-item-body');
                         itCnt.setAttribute('class', 'pdc-sld-item-content');
                         itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
@@ -713,26 +728,28 @@ var productSlider_Obj = {
                 //console.table(this.resLimitVals);   /* Product slider hanger will moving according to this value of index array BUT from 0 to penultimate index, because las index = (-) value*/
             }, false);
         });
-        //this.reverseResLimVals_Func();   // MOVING AMOUNT OF ITEMS (depend to website window width)
-        this.createItems_fixedAmount(); // FIXED AMOUNT OF TEMS
-    },
-    createItems_fixedAmount: function () {
+        // YOU CAN CHOOSE ONLY ONE FROM FOLLOWWING:
+        //this.reverseResLimVals_Func();   // MOVING AMOUNT OF ITEMS (depend to website window width). IF YOU CHOOSE IT, GET IN COMMENT NEXT (on bottom) FUNCTION CALL
+        //this.createItems_fixedAmount();   // FIXED AMOUNT OF TEMS
+    };
+    ;
+    ProductSlider.prototype.createItems_fixedAmount = function () {
         var _this = this;
         window.addEventListener('load', function () {
             var itemsHanger = document.querySelector('div.product-slider-hanger');
-            for (var i = 0; i < _this.productsAmount_S1; i++) {
+            for (var i = 0; i < _this.productsAmount; i++) {
                 var itBd = document.createElement('div');
                 var itCnt = document.createElement('div');
                 var itClkFld = document.createElement('div');
                 var itImgDim = document.createElement('div');
                 var itImgPrp = document.createElement('img');
                 var itPrc = document.createElement('div');
-                var itPrcTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[0][i]);
+                var itPrcTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[_this.sldInfoNum][i]);
                 var itDes = document.createElement('div');
-                var itDesTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[0][i]);
+                var itDesTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[_this.sldInfoNum][i]);
                 var itArea = document.createElement('div');
                 var itAreaText = document.createElement('div');
-                var itAreaTextTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[0][i]);
+                var itAreaTextTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[_this.sldInfoNum][i]);
                 var itAreaSup = document.createElement('sup');
                 var itAreaSupTN = document.createTextNode('2');
                 itBd.setAttribute('class', 'pdc-sld-item-body');
@@ -771,26 +788,31 @@ var productSlider_Obj = {
             }
             ;
         }, false);
-        this.reverseResLimVals_Func();
-    },
-    reverseResLimVals_Func: function () {
+        //this.reverseResLimVals_Func();
+    };
+    ;
+    ProductSlider.prototype.reverseResLimVals_Func = function () {
         var _this = this;
         // Iterujemy tą tablicą "this.curWidStat" po tej "this.resLimitVals" i w ten sposób mamy aktualną wartość przesunięcia produktu względem odpowiedniego rozstawy tychże produktów
         this.evWinLoadRes.forEach(function (ev) {
             window.addEventListener(ev, function () {
                 var reverseResLimVals = _this.resLimitVals.reverse();
-                _this.curPdcSldMovVal = reverseResLimVals[_this.curWidStat];
-                //console.log(`CURRENT PRODUCT SLIDER MOVING: ${this.curPdcSldMovVal}`);
+                var val = reverseResLimVals[_this.curWidStat];
+                _this.curPdcSldMovVal = val;
+                //console.log(`CURRENT PRODUCT SLIDER MOVING: ${this.curPdcSldMovVal}`);   // OK
+                //console.log(typeof this.curPdcSldMovVal);   // OK
+                //console.log(Number(this.curPdcSldMovVal) + 15);   // OK
             }, false);
         });
-        this.setAEL_PdcSldMoving();
-    },
-    setAEL_PdcSldMoving: function () {
+        //this.setAEL_PdcSldMoving();
+    };
+    ;
+    ProductSlider.prototype.setAEL_PdcSldMoving = function () {
         var _this = this;
-        var pdcSldButLft = document.querySelector('div.product-slider-arrowBox-left-box');
-        var pdcSldButRgt = document.querySelector('div.product-slider-arrowBox-right-box');
-        var itemsHanger = document.querySelector('div.product-slider-hanger');
-        var pageEndLimit = this.productsAmount_S1;
+        var pdcSldButLft = document.querySelectorAll('div.product-slider-arrowBox-left-box')[this.sldStlIdxNumToWdt];
+        var pdcSldButRgt = document.querySelectorAll('div.product-slider-arrowBox-right-box')[this.sldStlIdxNumToWdt];
+        var itemsHanger = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
+        var pageEndLimit = this.productsAmount;
         var isMoved = false;
         var tnsDur_Timeout = 1000;
         var tnsDur_Style = (tnsDur_Timeout / 1000);
@@ -803,7 +825,7 @@ var productSlider_Obj = {
                 if (_this.itemsPage >= _this.pageStartLimit && isMoved === false) { // Example: 4 >= 3 = true | 3 >= true   -> Result: element.style.left = moveVal + 'px';
                     _this.itemsPage -= _this.curWidStat;
                     isMoved = true;
-                    _this.pdcSldmoveVal += ((_this.curPdcSldMovVal + _this.pdcSldItBd_MgnLft) * 1); // MEGA WAŻNE!
+                    _this.pdcSldmoveVal += ((Number(_this.curPdcSldMovVal) + _this.pdcSldItBd_MgnLft) * 1); // MEGA WAŻNE!
                     // Trzeba dodać 1x margin-left, gdyż pole widoczności zawiera elemnety łącznie z marginami! 
                     // Inaczej hanger ruszy się na niewystarczającą odległość
                     itemsHanger.style.left = _this.pdcSldmoveVal + 'px';
@@ -827,18 +849,29 @@ var productSlider_Obj = {
                 var stsBallAR = [];
                 _this.currentPage = _this.itemsPage / _this.curWidStat; // [current-item-page-value] / [current-wide-status (slider-hanger-position-in-click-steps)] = [current-page-number] !!! with decimal
                 _this.currentPage = Math.ceil(_this.currentPage); // Clean decimal by round up this value
-                for (var i = 0; i < _this.statBallsAmount; i++) {
-                    stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
-                    if (i === _this.currentPage) {
-                        stsBallAR[i].style.border = '2px solid #333';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
+                if (_this.curWidStat > 1) {
+                    var statusBox = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
+                    var stBxChildren = statusBox.children;
+                    if (statusBox.childElementCount > 0) {
+                        for (var i = 0; i < stBxChildren.length; i++) {
+                            stsBallAR[i] = stBxChildren[i];
+                        }
+                        ;
                     }
-                    else {
-                        stsBallAR[i].style.border = '2px solid #CCC';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
+                    else { }
+                    for (var i = 0; i < _this.statBallsAmount; i++) {
+                        if (i === _this.currentPage) {
+                            stsBallAR[i].style.border = '2px solid #333';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        }
+                        else {
+                            stsBallAR[i].style.border = '2px solid #CCC';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        }
                     }
+                    ;
                 }
-                ;
+                else { }
             }, false);
         });
         this.evElClick.forEach(function (ev) {
@@ -848,7 +881,7 @@ var productSlider_Obj = {
                 if (_this.itemsPage < (pageEndLimit - _this.curWidStat) && isMoved === false) {
                     _this.itemsPage += _this.curWidStat;
                     isMoved = true;
-                    _this.pdcSldmoveVal += ((_this.curPdcSldMovVal + _this.pdcSldItBd_MgnLft) * -1);
+                    _this.pdcSldmoveVal += ((Number(_this.curPdcSldMovVal) + _this.pdcSldItBd_MgnLft) * -1);
                     itemsHanger.style.left = _this.pdcSldmoveVal + 'px';
                     itemsHanger.style.transitionDuration = tnsDur_Style + 's';
                     console.log("RIGHT: ".concat(_this.pdcSldmoveVal));
@@ -860,27 +893,39 @@ var productSlider_Obj = {
                 var stsBallAR = [];
                 _this.currentPage = _this.itemsPage / _this.curWidStat;
                 _this.currentPage = Math.ceil(_this.currentPage);
-                for (var i = 0; i < _this.statBallsAmount; i++) {
-                    stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
-                    if (i === _this.currentPage) {
-                        stsBallAR[i].style.border = '2px solid #333';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
+                if (_this.curWidStat > 1) {
+                    var statusBox = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
+                    var stBxChildren = statusBox.children;
+                    if (statusBox.childElementCount > 0) {
+                        for (var i = 0; i < stBxChildren.length; i++) {
+                            stsBallAR[i] = stBxChildren[i];
+                        }
+                        ;
                     }
-                    else {
-                        stsBallAR[i].style.border = '2px solid #CCC';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
+                    else { }
+                    for (var i = 0; i < _this.statBallsAmount; i++) {
+                        if (i === _this.currentPage) {
+                            stsBallAR[i].style.border = '2px solid #333';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        }
+                        else {
+                            stsBallAR[i].style.border = '2px solid #CCC';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        }
                     }
+                    ;
                 }
-                ;
+                else { }
             }, false);
         });
-        this.createPdcSldPageStatus();
-    },
-    createPdcSldPageStatus: function () {
+        //this.createPdcSldPageStatus();
+    };
+    ;
+    ProductSlider.prototype.createPdcSldPageStatus = function () {
         var _this = this;
         this.evWinLoadRes.forEach(function (ev) {
             window.addEventListener(ev, function () {
-                var statusBox = document.querySelector('div.product-slider-status-box');
+                var statusBox = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
                 var stBxChildren = statusBox.children;
                 if (statusBox.childElementCount > 0) {
                     for (var i = stBxChildren.length - 1; i >= 0; i--) {
@@ -889,7 +934,7 @@ var productSlider_Obj = {
                     ;
                 }
                 else { }
-                _this.statBallsAmount = _this.productsAmount_S1 / _this.curWidStat;
+                _this.statBallsAmount = _this.productsAmount / _this.curWidStat;
                 _this.statBallsAmount = Math.ceil(_this.statBallsAmount);
                 console.log('STATUS BALL AMOUNT: ' + _this.statBallsAmount);
                 if (_this.curWidStat > 1) {
@@ -904,20 +949,40 @@ var productSlider_Obj = {
                 var stsBallAR = [];
                 _this.currentPage = _this.itemsPage / _this.curWidStat;
                 _this.currentPage = Math.ceil(_this.currentPage);
-                for (var i = 0; i < _this.statBallsAmount; i++) {
-                    stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
-                    if (i === _this.currentPage) {
-                        stsBallAR[i].style.border = '2px solid #333';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
+                if (_this.curWidStat > 1) {
+                    var statusBox_1 = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
+                    var stBxChildren_1 = statusBox_1.children;
+                    if (statusBox_1.childElementCount > 0) {
+                        for (var i = 0; i < stBxChildren_1.length; i++) {
+                            stsBallAR[i] = stBxChildren_1[i];
+                        }
+                        ;
                     }
-                    else {
-                        stsBallAR[i].style.border = '2px solid #CCC';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
+                    else { }
+                    for (var i = 0; i < _this.statBallsAmount; i++) {
+                        if (i === _this.currentPage) {
+                            stsBallAR[i].style.border = '2px solid #333';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        }
+                        else {
+                            stsBallAR[i].style.border = '2px solid #CCC';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        }
                     }
+                    ;
                 }
-                ;
+                else { }
             }, false);
         });
-    }
-};
-productSlider_Obj.setVisibleAreaWidth();
+    };
+    ;
+    return ProductSlider;
+}());
+var arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[0].length;
+var productSlider_1 = new ProductSlider(arg_1, 0, 0);
+productSlider_1.setVisibleAreaWidth();
+productSlider_1.createItems_fixedAmount();
+productSlider_1.reverseResLimVals_Func();
+productSlider_1.setAEL_PdcSldMoving();
+productSlider_1.createPdcSldPageStatus();
+console.log(productSlider_1);
