@@ -563,8 +563,12 @@ const productSlider_Sources_Obj: {
             '735 000 PLN',
             '750 000 PLN'
         ],
-        [],
-        []
+        [   // Prooduct slider #2
+            //
+        ],
+        [   // Prooduct slider #3
+            //
+        ]
     ],
     pdcSldSrc_Dsc: [
         [   // Prooduct slider #1
@@ -584,8 +588,12 @@ const productSlider_Sources_Obj: {
             'Dom na sprzedaż: Warszawa, Maja 93',
             'Dom na sprzedaż: Radom, Stara 237'
         ],
-        [],
-        []
+        [   // Prooduct slider #2
+            //
+        ],
+        [   // Prooduct slider #3
+            //
+        ]
     ],
     pdcSldSrc_Area: [
         [   // Prooduct slider #1
@@ -605,19 +613,18 @@ const productSlider_Sources_Obj: {
             '151.5 m',
             '166.0 m'
         ],
-        [],
-        []
+        [   // Prooduct slider #2
+            //
+        ],
+        [   // Prooduct slider #3
+            //
+        ]
     ]
 };
 
-
-
-const productSlider_Obj: {
+interface pdcSld_Interface {
     windowWidth: number,
     windowHeight: number,
-    productsAmount_S1: number,
-    productsAmount_S2: number,
-    productsAmount_S3: number,
     curWidStat: number,
     pdcSldItBd_Wdt: number,
     pdcSldItBd_MgnLft: number,
@@ -627,40 +634,50 @@ const productSlider_Obj: {
     pageStartLimit: number,
     statBallsAmount: number,
     currentPage: number,
+    productsAmount: number,
+    sldStlIdxNumToWdt: number,
+    sldInfoNum: number,
     resLimitVals: number[],
     curPdcSldMovVal: number[],
     evWinLoadRes: string[],
     evElClick: string[],
-    setVisibleAreaWidth: Function,
-    createItems_fixedAmount: Function,
-    reverseResLimVals_Func: Function,
-    setAEL_PdcSldMoving: Function,
-    createPdcSldPageStatus: Function
-} = {
-    windowWidth: 0,
-    windowHeight: 0,
-    productsAmount_S1: productSlider_Sources_Obj.pdcSldSrc_Prc[0].length,   // Amount of products in product slider 1 hanger
-    productsAmount_S2: productSlider_Sources_Obj.pdcSldSrc_Prc[1].length,   // Amount of products in product slider 2 hanger
-    productsAmount_S3: productSlider_Sources_Obj.pdcSldSrc_Prc[2].length,   // Amount of products in product slider 3 hanger
-    curWidStat: 0,   // Amount of visibled items for current product slider box width
-    pdcSldItBd_Wdt: 0,   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
-    pdcSldItBd_MgnLft: 15,   //  - space betwen items
-    resSpace: 350,   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
-    itemsPage: 0,
-    pdcSldmoveVal: 0,
-    statBallsAmount: 0,
-    currentPage: 0,
-    pageStartLimit: this.curWidStat,
-    resLimitVals: [],   // Values of slider box width, which are calculate form items for current product slider box width
-    curPdcSldMovVal: [],   // Values of current product slider moving distance on once move action (reverse "resLimitVals" array)
-    evWinLoadRes: ['load', 'resize'],
-    evElClick: ['click', 'touchend'],
-    setVisibleAreaWidth(): void {
+    setVisibleAreaWidth(): void;
+    createItems_fixedAmount(): void;
+    reverseResLimVals_Func(): void;
+    setAEL_PdcSldMoving(): void;
+    createPdcSldPageStatus(): void;
+};
+
+class ProductSlider implements pdcSld_Interface {
+    productsAmount: number;
+    sldStlIdxNumToWdt: number;   // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
+    sldInfoNum: number   // Informations from slider info object. WARNING: Begin is from 0!
+    constructor(arg_1: number, arg_2: number, arg_3) {   // Amount of products in product choosed slider
+        this.productsAmount = arg_1;
+        this.sldStlIdxNumToWdt = arg_2;
+        this.sldInfoNum = arg_3;
+    }
+    windowWidth = 0;
+    windowHeight = 0;
+    curWidStat = 0;   // Amount of visibled items for current product slider box width
+    pdcSldItBd_Wdt = 0;   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
+    pdcSldItBd_MgnLft = 15;   //  - space betwen items
+    resSpace = 350;   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
+    itemsPage = 0;
+    pdcSldmoveVal = 0;
+    statBallsAmount = 0;
+    currentPage = 0;
+    pageStartLimit = this.curWidStat;
+    resLimitVals = [];   // Values of slider box width, which are calculate form items for current product slider box width
+    curPdcSldMovVal = [];   // Values of current product slider moving distance on once move action (reverse "resLimitVals" array)
+    evWinLoadRes = ['load', 'resize'];
+    evElClick = ['click', 'touchend'];
+    public setVisibleAreaWidth() {
         this.evWinLoadRes.forEach((ev) => {
             window.addEventListener(ev, () => {
                 this.windowWidth = window.innerWidth;
-                const pdcSldBox: HTMLDivElement = document.querySelector('div.product-slider-box');
-                const pdcSldHng: HTMLDivElement = document.querySelector('div.product-slider-hanger');
+                const pdcSldBox: any = document.querySelectorAll('div.product-slider-box')[this.sldStlIdxNumToWdt];
+                const pdcSldHng: any = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
                 // Counting values for limit array:
                 //const resLimitVals: number[] = [];   // Global variable
                 const productsWide: number[] = [5, 4, 3, 2, 1];
@@ -703,18 +720,18 @@ const productSlider_Obj: {
                 // Create slider items:
                 for (let i: number = 0; i < this.curWidStat; i++) {
                     const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
-                    for (let i: number = 0; i < this.productsAmount_S1; i++) {
+                    for (let i: number = 0; i < this.productsAmount; i++) {
                         const itBd: HTMLDivElement = document.createElement('div');
                         const itCnt: HTMLDivElement = document.createElement('div');
                         const itClkFld: HTMLDivElement = document.createElement('div');
                         const itImgDim: HTMLDivElement = document.createElement('div');
                         const itImgPrp: HTMLImageElement = document.createElement('img');
                         const itPrc: HTMLDivElement = document.createElement('div');
-                        const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[i]);
+                        const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[this.sldInfoNum][i]);
                         const itDes: HTMLDivElement = document.createElement('div');
-                        const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[i]);
+                        const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[this.sldInfoNum][i]);
                         const itArea: HTMLDivElement = document.createElement('div');
-                        const itAreaTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[i]);
+                        const itAreaTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[this.sldInfoNum][i]);
                         itBd.setAttribute('class', 'pdc-sld-item-body');
                         itCnt.setAttribute('class', 'pdc-sld-item-content');
                         itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
@@ -748,25 +765,26 @@ const productSlider_Obj: {
                 //console.table(this.resLimitVals);   /* Product slider hanger will moving according to this value of index array BUT from 0 to penultimate index, because las index = (-) value*/
             }, false);
         });
-        //this.reverseResLimVals_Func();   // MOVING AMOUNT OF ITEMS (depend to website window width)
-        this.createItems_fixedAmount();   // FIXED AMOUNT OF TEMS
-    },
-    createItems_fixedAmount(): void {
+        // YOU CAN CHOOSE ONLY ONE FROM FOLLOWWING:
+        //this.reverseResLimVals_Func();   // MOVING AMOUNT OF ITEMS (depend to website window width). IF YOU CHOOSE IT, GET IN COMMENT NEXT (on bottom) FUNCTION CALL
+        //this.createItems_fixedAmount();   // FIXED AMOUNT OF TEMS
+    };
+    public createItems_fixedAmount() {
         window.addEventListener('load', () => {
             const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
-            for (let i: number = 0; i < this.productsAmount_S1; i++) {
+            for (let i: number = 0; i < this.productsAmount; i++) {
                 const itBd: HTMLDivElement = document.createElement('div');
                 const itCnt: HTMLDivElement = document.createElement('div');
                 const itClkFld: HTMLDivElement = document.createElement('div');
                 const itImgDim: HTMLDivElement = document.createElement('div');
                 const itImgPrp: HTMLImageElement = document.createElement('img');
                 const itPrc: HTMLDivElement = document.createElement('div');
-                const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[0][i]);
+                const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[this.sldInfoNum][i]);
                 const itDes: HTMLDivElement = document.createElement('div');
-                const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[0][i]);
+                const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[this.sldInfoNum][i]);
                 const itArea: HTMLDivElement = document.createElement('div');
                 const itAreaText: HTMLDivElement = document.createElement('div');
-                const itAreaTextTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[0][i]);
+                const itAreaTextTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[this.sldInfoNum][i]);
                 const itAreaSup: HTMLElement = document.createElement('sup');
                 const itAreaSupTN: Text = document.createTextNode('2');
                 itBd.setAttribute('class', 'pdc-sld-item-body');
@@ -803,24 +821,27 @@ const productSlider_Obj: {
                 itemsHanger.appendChild(itBd);
             };
         }, false);
-        this.reverseResLimVals_Func();
-    },
-    reverseResLimVals_Func(): void {
+        //this.reverseResLimVals_Func();
+    };
+    public reverseResLimVals_Func() {
         // Iterujemy tą tablicą "this.curWidStat" po tej "this.resLimitVals" i w ten sposób mamy aktualną wartość przesunięcia produktu względem odpowiedniego rozstawy tychże produktów
         this.evWinLoadRes.forEach((ev) => {
             window.addEventListener(ev, () => {
                 let reverseResLimVals: number[] = this.resLimitVals.reverse();
-                this.curPdcSldMovVal = reverseResLimVals[this.curWidStat];
-                //console.log(`CURRENT PRODUCT SLIDER MOVING: ${this.curPdcSldMovVal}`);
+                let val: any = reverseResLimVals[this.curWidStat];
+                this.curPdcSldMovVal = val;
+                //console.log(`CURRENT PRODUCT SLIDER MOVING: ${this.curPdcSldMovVal}`);   // OK
+                //console.log(typeof this.curPdcSldMovVal);   // OK
+                //console.log(Number(this.curPdcSldMovVal) + 15);   // OK
             }, false);
         });
-        this.setAEL_PdcSldMoving();
-    },
-    setAEL_PdcSldMoving(): void {
-        const pdcSldButLft: HTMLDivElement = document.querySelector('div.product-slider-arrowBox-left-box');
-        const pdcSldButRgt: HTMLDivElement = document.querySelector('div.product-slider-arrowBox-right-box');
-        const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
-        let pageEndLimit: number = this.productsAmount_S1;
+        //this.setAEL_PdcSldMoving();
+    };
+    public setAEL_PdcSldMoving() {
+        const pdcSldButLft: any = document.querySelectorAll('div.product-slider-arrowBox-left-box')[this.sldStlIdxNumToWdt];
+        const pdcSldButRgt: any = document.querySelectorAll('div.product-slider-arrowBox-right-box')[this.sldStlIdxNumToWdt];
+        const itemsHanger: any = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
+        let pageEndLimit: number = this.productsAmount;
         let isMoved: boolean = false;
         let tnsDur_Timeout = 1000;
         let tnsDur_Style = (tnsDur_Timeout / 1000);
@@ -833,7 +854,7 @@ const productSlider_Obj: {
                 if (this.itemsPage >= this.pageStartLimit && isMoved === false) {   // Example: 4 >= 3 = true | 3 >= true   -> Result: element.style.left = moveVal + 'px';
                         this.itemsPage -= this.curWidStat;
                         isMoved = true;
-                        this.pdcSldmoveVal += ((this.curPdcSldMovVal + this.pdcSldItBd_MgnLft) * 1);   // MEGA WAŻNE!
+                        this.pdcSldmoveVal += ((Number(this.curPdcSldMovVal) + this.pdcSldItBd_MgnLft) * 1);   // MEGA WAŻNE!
                         // Trzeba dodać 1x margin-left, gdyż pole widoczności zawiera elemnety łącznie z marginami! 
                         // Inaczej hanger ruszy się na niewystarczającą odległość
                         itemsHanger.style.left = this.pdcSldmoveVal + 'px';
@@ -856,16 +877,24 @@ const productSlider_Obj: {
                 let stsBallAR: any[] = [];
                 this.currentPage = this.itemsPage / this.curWidStat;   // [current-item-page-value] / [current-wide-status (slider-hanger-position-in-click-steps)] = [current-page-number] !!! with decimal
                 this.currentPage = Math.ceil(this.currentPage);   // Clean decimal by round up this value
-                for (let i: number = 0; i < this.statBallsAmount; i++) {
-                    stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
-                    if (i === this.currentPage) {
-                        stsBallAR[i].style.border = '2px solid #333';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
-                    } else {
-                        stsBallAR[i].style.border = '2px solid #CCC';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
-                    }
-                };
+                if (this.curWidStat > 1) {
+                    const statusBox: any = document.querySelectorAll('div.product-slider-status-box')[this.sldStlIdxNumToWdt];
+                    const stBxChildren: HTMLCollection = statusBox.children;
+                    if (statusBox.childElementCount > 0) {
+                        for (let i = 0; i < stBxChildren.length; i++) {
+                            stsBallAR[i] = stBxChildren[i];
+                        };
+                    } else {}
+                    for (let i: number = 0; i < this.statBallsAmount; i++) {
+                        if (i === this.currentPage) {
+                            stsBallAR[i].style.border = '2px solid #333';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        } else {
+                            stsBallAR[i].style.border = '2px solid #CCC';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        }
+                    };
+                } else {}
             }, false);
         });
         this.evElClick.forEach((ev) => {
@@ -875,7 +904,7 @@ const productSlider_Obj: {
                 if (this.itemsPage < (pageEndLimit - this.curWidStat) && isMoved === false) {
                     this.itemsPage += this.curWidStat;
                     isMoved = true;
-                    this.pdcSldmoveVal += ((this.curPdcSldMovVal + this.pdcSldItBd_MgnLft) * -1);
+                    this.pdcSldmoveVal += ((Number(this.curPdcSldMovVal) + this.pdcSldItBd_MgnLft) * -1);
                     itemsHanger.style.left = this.pdcSldmoveVal + 'px';
                     itemsHanger.style.transitionDuration = tnsDur_Style + 's';
                     console.log(`RIGHT: ${this.pdcSldmoveVal}`);
@@ -887,31 +916,39 @@ const productSlider_Obj: {
                 let stsBallAR: any[] = [];
                 this.currentPage = this.itemsPage / this.curWidStat;
                 this.currentPage = Math.ceil(this.currentPage);
-                for (let i: number = 0; i < this.statBallsAmount; i++) {
-                    stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
-                    if (i === this.currentPage) {
-                        stsBallAR[i].style.border = '2px solid #333';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
-                    } else {
-                        stsBallAR[i].style.border = '2px solid #CCC';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
-                    }
-                };
+                if (this.curWidStat > 1) {
+                    const statusBox: any = document.querySelectorAll('div.product-slider-status-box')[this.sldStlIdxNumToWdt];
+                    const stBxChildren: HTMLCollection = statusBox.children;
+                    if (statusBox.childElementCount > 0) {
+                        for (let i = 0; i < stBxChildren.length; i++) {
+                            stsBallAR[i] = stBxChildren[i];
+                        };
+                    } else {}
+                    for (let i: number = 0; i < this.statBallsAmount; i++) {
+                        if (i === this.currentPage) {
+                            stsBallAR[i].style.border = '2px solid #333';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        } else {
+                            stsBallAR[i].style.border = '2px solid #CCC';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        }
+                    };
+                } else {}
             }, false);
         });
-        this.createPdcSldPageStatus();
-    },
-    createPdcSldPageStatus(): void {
+        //this.createPdcSldPageStatus();
+    };
+    public createPdcSldPageStatus() {
         this.evWinLoadRes.forEach((ev) => {
             window.addEventListener(ev, () => {
-                const statusBox: HTMLDivElement = document.querySelector('div.product-slider-status-box');
+                const statusBox: any = document.querySelectorAll('div.product-slider-status-box')[this.sldStlIdxNumToWdt];
                 const stBxChildren: HTMLCollection = statusBox.children;
                 if (statusBox.childElementCount > 0) {
                     for (let i = stBxChildren.length - 1; i >= 0; i--) {
                         statusBox.removeChild(stBxChildren[i]);
                     };
                 } else {}
-                this.statBallsAmount = this.productsAmount_S1 / this.curWidStat;
+                this.statBallsAmount = this.productsAmount / this.curWidStat;
                 this.statBallsAmount = Math.ceil(this.statBallsAmount);
                 console.log('STATUS BALL AMOUNT: ' + this.statBallsAmount);
                 if (this.curWidStat > 1) {
@@ -924,18 +961,34 @@ const productSlider_Obj: {
                 let stsBallAR: any[] = [];
                 this.currentPage = this.itemsPage / this.curWidStat;
                 this.currentPage = Math.ceil(this.currentPage);
-                for (let i: number = 0; i < this.statBallsAmount; i++) {
-                    stsBallAR[i] = document.querySelectorAll('div.ps-status-ball')[i];
-                    if (i === this.currentPage) {
-                        stsBallAR[i].style.border = '2px solid #333';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
-                    } else {
-                        stsBallAR[i].style.border = '2px solid #CCC';
-                        stsBallAR[i].style.transitionDuration = '0.1s';
-                    }
-                };
+                if (this.curWidStat > 1) {
+                    const statusBox: any = document.querySelectorAll('div.product-slider-status-box')[this.sldStlIdxNumToWdt];
+                    const stBxChildren: HTMLCollection = statusBox.children;
+                    if (statusBox.childElementCount > 0) {
+                        for (let i = 0; i < stBxChildren.length; i++) {
+                            stsBallAR[i] = stBxChildren[i];
+                        };
+                    } else {}
+                    for (let i: number = 0; i < this.statBallsAmount; i++) {
+                        if (i === this.currentPage) {
+                            stsBallAR[i].style.border = '2px solid #333';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        } else {
+                            stsBallAR[i].style.border = '2px solid #CCC';
+                            stsBallAR[i].style.transitionDuration = '0.1s';
+                        }
+                    };
+                } else {}
             }, false);
         });
-    }
-};
-productSlider_Obj.setVisibleAreaWidth();
+    };
+}
+
+let arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[0].length;
+let productSlider_1 = new ProductSlider(arg_1, 0, 0);
+productSlider_1.setVisibleAreaWidth();
+productSlider_1.createItems_fixedAmount();
+productSlider_1.reverseResLimVals_Func();
+productSlider_1.setAEL_PdcSldMoving();
+productSlider_1.createPdcSldPageStatus();
+console.log(productSlider_1);
