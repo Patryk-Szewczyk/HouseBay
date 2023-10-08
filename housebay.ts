@@ -30,7 +30,7 @@ const navbar_Mobile_Obj: {
     eventsWindow: ['load', 'resize'],
     eventsClick: ['click', 'touchend'],
     setNavbar(): void {
-        let navbarEL: HTMLDivElement = document.querySelector('div.navbar-box');
+        let navbarEL: HTMLDivElement = document.querySelector('nav.navbar-box');
         this.eventsPageLoad.forEach((ev) => {
             window.addEventListener(ev, () => {
                 if (this.windowWidth < RWD_info_Obj.desktop) {
@@ -227,6 +227,7 @@ const slider_Obj: {
             sldDscEL.setAttribute('class', 'img-slider-description');
             sldButEL.setAttribute('class', 'img-slider-button');
             sldPrpEl.setAttribute('src', 'hb-images-slider/img_' + (i + 1) + '.jpg');
+            sldPrpEl.setAttribute('alt', sldTitTxt[i])
             sldDimEl.appendChild(sldPrpEl);
             sldTitEL.appendChild(sldTitTN[i]);
             sldInfHngEl.appendChild(sldTitEL);
@@ -637,6 +638,7 @@ interface pdcSld_Interface {
     productsAmount: number,
     sldStlIdxNumToWdt: number,
     sldInfoNum: number,
+    sldImgFileNum: number,
     resLimitVals: number[],
     curPdcSldMovVal: number[],
     evWinLoadRes: string[],
@@ -655,13 +657,15 @@ class ProductSlider implements pdcSld_Interface {
     pdcSldItBd_Wdt: number;   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
     pdcSldItBd_MgnLft: number;   //  - space betwen items
     resSpace: number;   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
-    constructor(arg_1: number, arg_2: number, arg_3: number, arg_4: number, arg_5: number, arg_6: number) {
+    sldImgFileNum: number;   // - number of slider images file
+    constructor(arg_1: number, arg_2: number, arg_3: number, arg_4: number, arg_5: number, arg_6: number, arg_7: number) {
         this.productsAmount = arg_1;
         this.sldStlIdxNumToWdt = arg_2;
         this.sldInfoNum = arg_3;
         this.pdcSldItBd_Wdt = arg_4;
         this.pdcSldItBd_MgnLft = arg_5;
         this.resSpace = arg_6;
+        this.sldImgFileNum = arg_7;
     }
     windowWidth = 0;
     windowHeight = 0;
@@ -795,7 +799,7 @@ class ProductSlider implements pdcSld_Interface {
                 itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
                 itImgDim.setAttribute('class', 'pdc-sld-item-img-dim');
                 itImgPrp.setAttribute('class', 'pdc-sld-item-img-prp');
-                itImgPrp.setAttribute('src', 'hb-images-product-slider/img_' + (i + 1) + '.jpg');
+                itImgPrp.setAttribute('src', 'hb-images-product-slider-' + (this.sldImgFileNum + 1) + '/img_' + (i + 1) + '.jpg');
                 itImgPrp.setAttribute('alt', productSlider_Sources_Obj.pdcSldSrc_Dsc[this.sldInfoNum][i]);
                 itPrc.setAttribute('class', 'pdc-sld-item-price');
                 itDes.setAttribute('class', 'pdc-sld-item-des');
@@ -1026,7 +1030,8 @@ const sliderFactory_Obj: {
     createSliders(arg_2: number, arg_3: number, arg_4: number, arg_5: number, arg_6: number): void {
         for (let i: number = 0; i < this.sliderAmount; i++) {
             let arg_1: number = productSlider_Sources_Obj.pdcSldSrc_Prc[i].length;  // Amount of products in product, which has been in choosed slider
-            let productSlider = new ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6);
+            let arg_7: number = i;   // - number of slider images file
+            let productSlider = new ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7);
             productSlider.setVisibleAreaWidth();
             productSlider.createItems_fixedAmount();
             productSlider.reverseResLimVals_Func();
