@@ -541,88 +541,6 @@ slider_Obj.setAEL_ImgLeftResize();
 
 
 
-const productSlider_Sources_Obj: {
-    pdcSldSrc_Prc: string[][],
-    pdcSldSrc_Dsc: string[][],
-    pdcSldSrc_Area: string[][]
-} = {
-    pdcSldSrc_Prc: [
-        [   // Prooduct slider #1
-            '830 000 PLN',
-            '770 000 PLN',
-            '1 230 000 PLN',
-            '850 000 PLN',
-            '560 000 PLN',
-            '1 310 000 PLN',
-            '890 000 PLN',
-            '715 000 PLN',
-            '699 000 PLN',
-            '835 000 PLN',
-            '910 000 PLN',
-            '1 105 000 PLN',
-            '1 110 000 PLN',
-            '735 000 PLN',
-            '750 000 PLN'
-        ],
-        [   // Prooduct slider #2
-            //
-        ],
-        [   // Prooduct slider #3
-            //
-        ]
-    ],
-    pdcSldSrc_Dsc: [
-        [   // Prooduct slider #1
-            'Dom na sprzedaż: Łódź, Wapienna 4',
-            'Dom na sprzedaż: Toruń, Drzymały 23',
-            'Dom na sprzedaż: Łódź, Rukocka 11',
-            'Dom na sprzedaż: Piaseczno, Mała 3',
-            'Dom na sprzedaż: Poznań, Perłowa 93',
-            'Dom na sprzedaż: Puck, Długa 10',
-            'Dom na sprzedaż: Kraków, Zamkowa 2',
-            'Dom na sprzedaż: Kraków, Podła 55',
-            'Dom na sprzedaż: Łódź, Drewnowska 9',
-            'Dom na sprzedaż: Zwoleń, Alejkowa 7',
-            'Dom na sprzedaż: Kozienice, Gruba 77',
-            'Dom na sprzedaż: Pionki, Piękna 42',
-            'Dom na sprzedaż: Warszawa, Zielona 4',
-            'Dom na sprzedaż: Warszawa, Maja 93',
-            'Dom na sprzedaż: Radom, Stara 237'
-        ],
-        [   // Prooduct slider #2
-            //
-        ],
-        [   // Prooduct slider #3
-            //
-        ]
-    ],
-    pdcSldSrc_Area: [
-        [   // Prooduct slider #1
-            '179.3 m',
-            '162.4 m',
-            '204.0 m',
-            '170.1 m',
-            '105.4 m',
-            '228.8 m',
-            '168.9 m',
-            '135.0 m',
-            '124.2 m',
-            '142.6 m',
-            '138.0 m',
-            '252.4 m',
-            '158.3 m',
-            '151.5 m',
-            '166.0 m'
-        ],
-        [   // Prooduct slider #2
-            //
-        ],
-        [   // Prooduct slider #3
-            //
-        ]
-    ]
-};
-
 interface pdcSld_Interface {
     windowWidth: number,
     windowHeight: number,
@@ -1019,6 +937,91 @@ class ProductSlider implements pdcSld_Interface {
 }
 
 
+
+const productSlider_Sources_Obj: {
+    pdcSldSrc_Prc: string[][],
+    pdcSldSrc_Dsc: string[][],
+    pdcSldSrc_Area: string[][]
+} = {
+    pdcSldSrc_Prc: [
+        [   // Prooduct slider #1
+            '830 000 PLN',
+            '770 000 PLN',
+            '1 730 000 PLN',
+            '1 350 000 PLN',
+            '560 000 PLN',
+            '1 310 000 PLN',
+            '890 000 PLN',
+            '715 000 PLN',
+            '699 000 PLN',
+            '835 000 PLN',
+            '910 000 PLN',
+            '1 105 000 PLN',
+            '2 110 000 PLN',
+            '1 299 000 PLN',
+            '750 000 PLN'
+        ],
+        [   // Prooduct slider #2
+            //
+        ],
+        [   // Prooduct slider #3
+            //
+        ]
+    ],
+    pdcSldSrc_Dsc: [
+        [   // Prooduct slider #1
+            'Dom na sprzedaż: Łódź, Wapienna 4',
+            'Dom na sprzedaż: Toruń, Drzymały 23',
+            'Dom na sprzedaż: Łódź, Rukocka 11',
+            'Dom na sprzedaż: Piaseczno, Mała 3',
+            'Dom na sprzedaż: Poznań, Perłowa 93',
+            'Dom na sprzedaż: Puck, Długa 10',
+            'Dom na sprzedaż: Kraków, Zamkowa 2',
+            'Dom na sprzedaż: Kraków, Podła 55',
+            'Dom na sprzedaż: Łódź, Drewnowska 9',
+            'Dom na sprzedaż: Zwoleń, Alejkowa 7',
+            'Dom na sprzedaż: Kozienice, Gruba 77',
+            'Dom na sprzedaż: Pionki, Piękna 42',
+            'Dom na sprzedaż: Warszawa, Zielona 4',
+            'Dom na sprzedaż: Warszawa, Maja 93',
+            'Dom na sprzedaż: Radom, Stara 237'
+        ],
+        [   // Prooduct slider #2
+            //
+        ],
+        [   // Prooduct slider #3
+            //
+        ]
+    ],
+    pdcSldSrc_Area: [
+        [   // Prooduct slider #1
+            '179.3 m',
+            '162.4 m',
+            '254.0 m',
+            '236.1 m',
+            '105.4 m',
+            '228.8 m',
+            '168.9 m',
+            '135.0 m',
+            '124.2 m',
+            '142.6 m',
+            '138.0 m',
+            '252.4 m',
+            '202.3 m',
+            '151.5 m',
+            '166.0 m'
+        ],
+        [   // Prooduct slider #2
+            //
+        ],
+        [   // Prooduct slider #3
+            //
+        ]
+    ]
+};
+
+
+
 // SERIES PRODUCTION: FACTORY
 const sliderFactory_Obj: {
     sliderAmount: number,
@@ -1050,8 +1053,6 @@ let arg_4: number = 0;   // - slider item width | (0 - this value is setting in 
 let arg_5: number = 15;   //  - space betwen items
 let arg_6: number = 350;   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
 sliderFactory_Obj.createSliders(arg_2, arg_3, arg_4, arg_5, arg_6);
-
-
 // HAND CREATING
 /*let arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[0].length;
 let productSlider_1 = new ProductSlider(arg_1, 0, 0, 0, 15, 350);
