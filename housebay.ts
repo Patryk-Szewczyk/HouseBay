@@ -1,6 +1,16 @@
 // Strona ta to: agencja nieruchomości
 
 
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {   // IN WORK
+        //let one: HTMLElement = document.getElementById('splash-screen');
+        //let two: HTMLDivElement = document.querySelector('div.window-block');
+        //one.style.display = 'none';
+        //two.style.display = 'flex';
+    }, 800);
+}, false);
+
+
 
 const RWD_info_Obj: {
     phone: number,
