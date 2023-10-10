@@ -615,7 +615,7 @@ var ProductSlider = /** @class */ (function () {
                 } else {}
                 // Create slider items:
                 for (let i: number = 0; i < this.curWidStat; i++) {
-                    const itemsHanger: HTMLDivElement = document.querySelector('div.product-slider-hanger');
+                    const itemsHanger: any = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
                     for (let i: number = 0; i < this.productsAmount; i++) {
                         const itBd: HTMLDivElement = document.createElement('div');
                         const itCnt: HTMLDivElement = document.createElement('div');
@@ -625,18 +625,24 @@ var ProductSlider = /** @class */ (function () {
                         const itPrc: HTMLDivElement = document.createElement('div');
                         const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[this.sldInfoNum][i]);
                         const itDes: HTMLDivElement = document.createElement('div');
-                        const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[this.sldInfoNum][i]);
+                        const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[this.sldInfoNum][i]);
                         const itArea: HTMLDivElement = document.createElement('div');
-                        const itAreaTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[this.sldInfoNum][i]);
+                        const itAreaText: HTMLDivElement = document.createElement('div');
+                        const itAreaTextTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[this.sldInfoNum][i]);
+                        const itAreaSup: HTMLElement = document.createElement('sup');
+                        const itAreaSupTN: Text = document.createTextNode('2');
                         itBd.setAttribute('class', 'pdc-sld-item-body');
                         itCnt.setAttribute('class', 'pdc-sld-item-content');
                         itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
                         itImgDim.setAttribute('class', 'pdc-sld-item-img-dim');
                         itImgPrp.setAttribute('class', 'pdc-sld-item-img-prp');
-                        itImgPrp.setAttribute('src', 'hb-images-product-slider/img_' + (i + 1) + '.jpg');
+                        itImgPrp.setAttribute('src', 'hb-images-product-slider-' + (this.sldImgFileNum + 1) + '/img_' + (i + 1) + '.jpg');
+                        itImgPrp.setAttribute('alt', productSlider_Sources_Obj.pdcSldSrc_Dsc[this.sldInfoNum][i]);
                         itPrc.setAttribute('class', 'pdc-sld-item-price');
                         itDes.setAttribute('class', 'pdc-sld-item-des');
                         itArea.setAttribute('class', 'pdc-sld-item-area');
+                        itAreaText.setAttribute('class', 'pdc-sld-item-area-text');
+                        itAreaSup.setAttribute('class', 'pdc-sld-item-area-sup');
                         itBd.appendChild(itCnt);
                         itBd.style.width = this.pdcSldItBd_Wdt + 'px';
                         if (i === 0) {
@@ -650,8 +656,11 @@ var ProductSlider = /** @class */ (function () {
                         itDes.appendChild(itDesTN);
                         itClkFld.appendChild(itDes);
                         itImgDim.appendChild(itImgPrp);
-                        itArea.appendChild(itAreaTN);
                         itClkFld.appendChild(itArea);
+                        itArea.appendChild(itAreaText);
+                        itAreaText.appendChild(itAreaTextTN);
+                        itArea.appendChild(itAreaSup);
+                        itAreaSup.appendChild(itAreaSupTN);
                         let itImgDimVal = (this.pdcSldItBd_Wdt * 0.7);
                         itImgDim.style.height = itImgDimVal + 'px';
                         itemsHanger.appendChild(itBd);
@@ -669,7 +678,7 @@ var ProductSlider = /** @class */ (function () {
     ProductSlider.prototype.createItems_fixedAmount = function () {
         var _this = this;
         window.addEventListener('load', function () {
-            var itemsHanger = document.querySelector('div.product-slider-hanger');
+            var itemsHanger = document.querySelectorAll('div.product-slider-hanger')[_this.sldStlIdxNumToWdt];
             for (var i = 0; i < _this.productsAmount; i++) {
                 var itBd = document.createElement('div');
                 var itCnt = document.createElement('div');
@@ -957,11 +966,34 @@ var productSlider_Sources_Obj = {
             '1 299 000 PLN',
             '750 000 PLN'
         ],
-        [ // Prooduct slider #2
-        //
+        [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9'
         ],
-        [ // Prooduct slider #3
-        //
+        [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '11',
+            '12',
+            '13',
+            '14',
+            '15',
+            '16',
+            '17'
         ]
     ],
     pdcSldSrc_Dsc: [
@@ -982,11 +1014,34 @@ var productSlider_Sources_Obj = {
             'Dom na sprzedaż: Warszawa, Maja 93',
             'Dom na sprzedaż: Radom, Stara 237'
         ],
-        [ // Prooduct slider #2
-        //
+        [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9'
         ],
-        [ // Prooduct slider #3
-        //
+        [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '11',
+            '12',
+            '13',
+            '14',
+            '15',
+            '16',
+            '17'
         ]
     ],
     pdcSldSrc_Area: [
@@ -1007,11 +1062,34 @@ var productSlider_Sources_Obj = {
             '151.5 m',
             '166.0 m'
         ],
-        [ // Prooduct slider #2
-        //
+        [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9'
         ],
-        [ // Prooduct slider #3
-        //
+        [
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            '11',
+            '12',
+            '13',
+            '14',
+            '15',
+            '16',
+            '17'
         ]
     ]
 };
@@ -1019,9 +1097,14 @@ var productSlider_Sources_Obj = {
 var sliderFactory_Obj = {
     sliderAmount: document.querySelectorAll('div.product-slider-area').length,
     sliderAR: [],
-    createSliders: function (arg_2, arg_3, arg_4, arg_5, arg_6) {
+    createSliders: function () {
         for (var i = 0; i < this.sliderAmount; i++) {
             var arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[i].length; // Amount of products in product, which has been in choosed slider
+            var arg_2 = i; // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
+            var arg_3 = i; // Informations from slider info object. WARNING: Begin is from 0!
+            var arg_4 = i; // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
+            var arg_5 = 15; //  - space betwen items
+            var arg_6 = 350; // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
             var arg_7 = i; // - number of slider images file
             var productSlider = new ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7);
             productSlider.setVisibleAreaWidth();
@@ -1035,15 +1118,16 @@ var sliderFactory_Obj = {
         console.log(sliderFactory_Obj.sliderAR);
     }
 };
+//sliderFactory_Obj.createSliders();
 // SERIES PRODUCTION: ARGUMENTS
 // arg_1 - This argument is in FORM lop, because they require steady iteration
-var arg_2 = 0; // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
-var arg_3 = 0; // Informations from slider info object. WARNING: Begin is from 0!
-var arg_4 = 0; // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
-var arg_5 = 15; //  - space betwen items
-var arg_6 = 350; // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
-sliderFactory_Obj.createSliders(arg_2, arg_3, arg_4, arg_5, arg_6);
-// HAND CREATING
+//let arg_2: number = 0;   // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
+//let arg_3: number = 0;   // Informations from slider info object. WARNING: Begin is from 0!
+//let arg_4: number = 0;   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
+//let arg_5: number = 15;   //  - space betwen items
+//let arg_6: number = 350;   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
+sliderFactory_Obj.createSliders();
+// HAND CREATING  // IS BAD - IN WORK
 /*let arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[0].length;
 let productSlider_1 = new ProductSlider(arg_1, 0, 0, 0, 15, 350);
 productSlider_1.setVisibleAreaWidth();
@@ -1052,9 +1136,10 @@ productSlider_1.reverseResLimVals_Func();
 productSlider_1.setAEL_PdcSldMoving();
 productSlider_1.createPdcSldPageStatus();
 console.log(productSlider_1);*/
+/* // Patrykowe różne rzeczy
 // Domknięcie - tzw. "Curring". Wiem o co w tym chodzi, ale ciężko mi jesst to opisać.
-// Po prostu zwracana funkcja zagnieżdżona ma zapisany zakres funkcji, w której została 
-// zadeklarowana i w ten sposób się domyka - coś w tym stylu i dzięki temu można 
+// Po prostu zwracana funkcja zagnieżdżona ma zapisany zakres funkcji, w której została
+// zadeklarowana i w ten sposób się domyka - coś w tym stylu i dzięki temu można
 // swobodnie korzystać z uprzednio zadeklarowanych parametrów w funkcji "func_1".
 //let a: number = 2;
 //let b: number = 4;
@@ -1063,8 +1148,48 @@ function func_1(a, b) {
     return function func_2(c) {
         return ((a + c) / b);
     };
-}
-;
-var one = func_1(2, 4);
-var two = one(6);
+};
+let one: Function = func_1(2, 4);
+let two: Function = one(6);
 console.log(two);
+
+
+let forRes: HTMLElement = document.getElementById('for');
+for (let i: number = 1, m: number = 7; i < 7; i++, m--) {
+    for (let j: number = 2; j < m; j++) {   // pirewszy argument = od ilu znaków
+        // np. "*" zaczynami i później w drugim argumencie do ilu znaków liczymy,
+        //względem iteracji zmiennej (iteracyjnej) "i"
+        forRes.innerHTML += '&nbsp&nbsp ';
+        // Zero "&nbsp" = wyrównaj do lewej
+        // Jedno "&nbsp" + ' ' = wyrównaj do środka
+        // Dwa "&nbsp" = wyrównaj do prawej
+    };
+    for (let j: number = 1; j < i; j++) {
+        forRes.innerHTML += String(j) + ' ';
+    };
+    for (let j: number = 2; j < i; j++) {
+        forRes.innerHTML += ' ' + String(i - j) + ' ';
+    };
+    forRes.innerHTML += '<br>';
+};
+
+
+
+let numbAR: number[] = [10, 7, 33, -4, 53, -16, 987];
+let minVal: number = Infinity;
+
+for (let i: number = 0; i < numbAR.length; i++) {
+    if (numbAR[i] < minVal) {
+        minVal = numbAR[i];
+    } else {}
+}
+//alert('Najmniejsza liczba: ' + minVal);
+
+let maxVal: number = -Infinity;
+for (let i: number = 0; i < numbAR.length; i++) {
+    if (numbAR[i] > maxVal) {
+        maxVal = numbAR[i];
+    } else {}
+}
+//alert('Największa liczba: ' + maxVal);
+*/ 
