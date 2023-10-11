@@ -550,6 +550,7 @@ var ProductSlider = /** @class */ (function () {
         this.pdcSldmoveVal = 0;
         this.statBallsAmount = 0;
         this.currentPage = 0;
+        this.statusLimitAR = [];
         this.pageStartLimit = this.curWidStat;
         this.resLimitVals = []; // Values of slider box width, which are calculate form items for current product slider box width
         this.curPdcSldMovVal = []; // Values of current product slider moving distance on once move action (reverse "resLimitVals" array)
@@ -672,7 +673,7 @@ var ProductSlider = /** @class */ (function () {
         });
         // YOU CAN CHOOSE ONLY ONE FROM FOLLOWWING:
         //this.reverseResLimVals_Func();   // MOVING AMOUNT OF ITEMS (depend to website window width). IF YOU CHOOSE IT, GET IN COMMENT NEXT (on bottom) FUNCTION CALL
-        //this.createItems_fixedAmount();   // FIXED AMOUNT OF TEMS
+        this.createItems_fixedAmount(); // FIXED AMOUNT OF TEMS
     };
     ;
     ProductSlider.prototype.createItems_fixedAmount = function () {
@@ -731,7 +732,29 @@ var ProductSlider = /** @class */ (function () {
             }
             ;
         }, false);
-        //this.reverseResLimVals_Func();
+        this.createStatusLimitAR();
+        this.reverseResLimVals_Func();
+    };
+    ;
+    ProductSlider.prototype.createStatusLimitAR = function () {
+        var statNumAR = [];
+        for (var i = 0; i < 5; i++) {
+            statNumAR[i] = Math.ceil(this.productsAmount / (i + 1));
+        }
+        ; // [15, 8, 5, 4, 3]
+        /*let result: number[][][][] = [];
+        for (let i: number = 0; i < 1; i++) {   // OK
+            for (let j: number = 0; j < 5; j++) {   // OK
+                for (let k: number = 0; k < statNumAR[j]; k++) {
+                    for (let l: number = 0; l < this.productsAmount; l++) {    /*arg_1 = początek 1 grupy, arg_2 = koniec 2 grupy*/
+        /* result[i][j][k][l] = (l + 1);   // ERROR...
+         //
+     }
+ }
+}
+}
+console.log(`STAT_NUM_AR: ${statNumAR}`);
+console.log(`STATUS_LIMIT_AR: ${result}`);*/
     };
     ;
     ProductSlider.prototype.reverseResLimVals_Func = function () {
@@ -747,7 +770,7 @@ var ProductSlider = /** @class */ (function () {
                 //console.log(Number(this.curPdcSldMovVal) + 15);   // OK
             }, false);
         });
-        //this.setAEL_PdcSldMoving();
+        this.setAEL_PdcSldMoving();
     };
     ;
     ProductSlider.prototype.setAEL_PdcSldMoving = function () {
@@ -879,7 +902,7 @@ var ProductSlider = /** @class */ (function () {
                 else { }
             }, false);
         });
-        //this.createPdcSldPageStatus();
+        this.createPdcSldPageStatus();
     };
     ;
     ProductSlider.prototype.createPdcSldPageStatus = function () {
@@ -1104,6 +1127,7 @@ var sliderFactory_Obj = {
     sliderAmount: document.querySelectorAll('div.product-slider-area').length,
     sliderAR: [],
     createSliders: function () {
+        // SERIES PRODUCTION: ARGUMENTS
         for (var i = 0; i < this.sliderAmount; i++) {
             var arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[i].length; // Amount of products in product, which has been in choosed slider
             var arg_2 = i; // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
@@ -1114,25 +1138,25 @@ var sliderFactory_Obj = {
             var arg_7 = i; // - number of slider images file
             var productSlider = new ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7);
             productSlider.setVisibleAreaWidth();
-            productSlider.createItems_fixedAmount();
+            /*productSlider.createItems_fixedAmount();
+            productSlider.createStatusLimitAR();
             productSlider.reverseResLimVals_Func();
             productSlider.setAEL_PdcSldMoving();
-            productSlider.createPdcSldPageStatus();
+            productSlider.createPdcSldPageStatus();*/
             this.sliderAR.push(productSlider);
         }
         ;
         console.log(sliderFactory_Obj.sliderAR);
     }
 };
-//sliderFactory_Obj.createSliders();
-// SERIES PRODUCTION: ARGUMENTS
+sliderFactory_Obj.createSliders();
 // arg_1 - This argument is in FORM lop, because they require steady iteration
 //let arg_2: number = 0;   // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
 //let arg_3: number = 0;   // Informations from slider info object. WARNING: Begin is from 0!
 //let arg_4: number = 0;   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
 //let arg_5: number = 15;   //  - space betwen items
 //let arg_6: number = 350;   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
-sliderFactory_Obj.createSliders();
+//sliderFactory_Obj.createSliders();
 // HAND CREATING  // IS BAD - IN WORK
 /*let arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[0].length;
 let productSlider_1 = new ProductSlider(arg_1, 0, 0, 0, 15, 350);
