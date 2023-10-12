@@ -1226,14 +1226,17 @@ class CategoriesGrid implements generalInfo_ITF {
     createEL(): void {
         const genInfoBoxEL = document.querySelectorAll('div.general-news-box')[this.currentGnBox];
         let newsELS: any[] = [];
+        let imgELS: any[] = [];
         for (let i: number = 0; i < this.itemAmount; i++) {
             let newsEL = document.createElement('div');
             newsELS.push(newsEL);
             let imgEL = document.createElement('img');
+            imgELS.push(imgEL);
             let titEl = document.createElement('div');
             let txtEL = document.createElement('div');
             let txtTN = document.createTextNode(this.dataTit[i]);
             newsEL.setAttribute('class', 'news');
+            newsEL.setAttribute('id', String(i));
             imgEL.setAttribute('class', 'gn-img-box');
             imgEL.setAttribute('src', 'hb-images-gn-tit-' + (this.currentGnBox + 1) + '/img_' + (i + 1) + '.jpg');
             imgEL.setAttribute('alt', this.dataTit[this.currentGnBox][i]);
@@ -1245,18 +1248,35 @@ class CategoriesGrid implements generalInfo_ITF {
             txtEL.appendChild(txtTN);
             genInfoBoxEL.appendChild(newsEL);
         }
-        this.hoverAEL(newsELS, this.itemAmount);
+        this.hoverAEL(newsELS, imgELS, this.itemAmount, genInfoBoxEL);
     }
-    hoverAEL(newsELS, itmAm): void {
-        /*for (let i: number = 0; i < itmAm; i++) {
+    hoverAEL(newsELS, imgELS, itmAm, giBoxEL): void {   // Można to zrobić na "target" bez 
+        // pierdzielenia się z pętlami, id i dodawaniem atrybutu id z wartością w tworzeniu 
+        // eleemntów, ale zrobiłem tak, dla treningu kombinowania
+        for (let i: number = 0; i < itmAm; i++) {
             ['mouseover'].forEach((ev) => {
                 newsELS[i].addEventListener(ev, (e) => {
-                    let el = e.target;
-                    el.style.filter = 'brightness(50%)';
-                    el.style.transitionDuration = '0.4s';
+                    let el = e.currentTarget;
+                    let id = el.id;
+                    let prpEditEl: any = imgELS[id];
+                    console.log(prpEditEl);
+                    prpEditEl.style.filter = 'brightness(85%)';
+                    prpEditEl.style.transitionDuration = '0.4s';
                 }, false);
             });
-        };*/
+        };
+        for (let i: number = 0; i < itmAm; i++) {
+            ['mouseout'].forEach((ev) => {
+                newsELS[i].addEventListener(ev, (e) => {
+                    let el = e.currentTarget;
+                    let id = el.id;
+                    let prpEditEl: any = imgELS[id];
+                    console.log(prpEditEl);
+                    prpEditEl.style.filter = 'brightness(100%)';
+                    prpEditEl.style.transitionDuration = '0.4s';
+                }, false);
+            });
+        };
     }
 }
 
