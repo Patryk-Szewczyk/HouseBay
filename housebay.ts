@@ -569,10 +569,12 @@ interface pdcSld_Interface {
     sldImgFileNum: number,
     resLimitVals: number[],
     curPdcSldMovVal: number[],
+    statusLimitAR: number[][][][],
     evWinLoadRes: string[],
     evElClick: string[],
     setVisibleAreaWidth(): void;
     createItems_fixedAmount(): void;
+    createStatusLimitAR();
     reverseResLimVals_Func(): void;
     setAEL_PdcSldMoving(): void;
     createPdcSldPageStatus(): void;
@@ -602,6 +604,7 @@ class ProductSlider implements pdcSld_Interface {
     pdcSldmoveVal = 0;
     statBallsAmount = 0;
     currentPage = 0;
+    statusLimitAR = [];
     pageStartLimit = this.curWidStat;
     resLimitVals = [];   // Values of slider box width, which are calculate form items for current product slider box width
     curPdcSldMovVal = [];   // Values of current product slider moving distance on once move action (reverse "resLimitVals" array)
@@ -711,7 +714,7 @@ class ProductSlider implements pdcSld_Interface {
         });
         // YOU CAN CHOOSE ONLY ONE FROM FOLLOWWING:
         //this.reverseResLimVals_Func();   // MOVING AMOUNT OF ITEMS (depend to website window width). IF YOU CHOOSE IT, GET IN COMMENT NEXT (on bottom) FUNCTION CALL
-        //this.createItems_fixedAmount();   // FIXED AMOUNT OF TEMS
+        this.createItems_fixedAmount();   // FIXED AMOUNT OF TEMS
     };
     public createItems_fixedAmount() {
         window.addEventListener('load', () => {
@@ -766,7 +769,36 @@ class ProductSlider implements pdcSld_Interface {
                 itemsHanger.appendChild(itBd);
             };
         }, false);
-        //this.reverseResLimVals_Func();
+        this.createStatusLimitAR();
+        this.reverseResLimVals_Func();
+    };
+    public createStatusLimitAR() {   // This function is not finished experiment about slider status checking
+        // Also this function is pause in work, because this mechanism require a lot more work...
+        let productsWide: number[] = [1, 2, 3, 4, 5];
+        let statNumAR: any[] = [];
+        for (let i: number = 0; i < 5; i++) {
+            statNumAR[i] = Math.ceil(this.productsAmount / (i + 1));
+        };   // [15, 8, 5, 4, 3]
+        //console.log(statNumAR);
+        let res: number[][][] = [];
+        for (let i: number = 0; i < 5; i++) {
+            res[i] = [];   // UWAGA! MEGA ULTRA HIPER WAŻNE! Jeżeli chcesz przypisaywać 
+            // wartości do kolejnego/następnego indeksu zagnieżdżonego, MUSISZ uprzednio
+            // UTWORZYĆ ten INDEKS za pomocą "[]", inaczej wyskorzy ci BŁĄD!;
+            let startVal: number = (productsWide[i] * -1);
+            for (let j: number = 0; j < statNumAR[i]; j++) {
+                //res[i][j] = productsWide[i];
+                res[i][j] = [];   // UWAGA! Tutaj tak samo! W zwykłym DżawaSkripcie tak nie ma
+                startVal += productsWide[i];
+                for (let k: number = 0; k < productsWide[i]; k++) {
+                    res[i][j][k] = ((startVal + k) + 1);
+                };
+            };
+        };
+        //console.log(`STAT_NUM_AR: ${statNumAR}`);
+        //console.log('START_VALUE: ' + startValue);
+        //console.log(res);
+        return res;
     };
     public reverseResLimVals_Func() {
         // Iterujemy tą tablicą "this.curWidStat" po tej "this.resLimitVals" i w ten sposób mamy aktualną wartość przesunięcia produktu względem odpowiedniego rozstawy tychże produktów
@@ -780,7 +812,7 @@ class ProductSlider implements pdcSld_Interface {
                 //console.log(Number(this.curPdcSldMovVal) + 15);   // OK
             }, false);
         });
-        //this.setAEL_PdcSldMoving();
+        this.setAEL_PdcSldMoving();
     };
     public setAEL_PdcSldMoving() {
         const pdcSldButLft: any = document.querySelectorAll('div.product-slider-arrowBox-left-box')[this.sldStlIdxNumToWdt];
@@ -899,7 +931,7 @@ class ProductSlider implements pdcSld_Interface {
                 } else {}
             }, false);
         });
-        //this.createPdcSldPageStatus();
+        this.createPdcSldPageStatus();
     };
     public createPdcSldPageStatus() {
         this.evWinLoadRes.forEach((ev) => {
@@ -911,6 +943,11 @@ class ProductSlider implements pdcSld_Interface {
                         statusBox.removeChild(stBxChildren[i]);
                     };
                 } else {}
+
+                // To slider status not finished experiment
+                //let statusInfoAR: number[][][] = this.createStatusLimitAR();
+                //console.log(statusInfoAR);
+
                 this.statBallsAmount = this.productsAmount / this.curWidStat;
                 this.currentPage = this.itemsPage / this.curWidStat;
                 this.currentPage = Math.ceil(this.currentPage);
@@ -924,13 +961,8 @@ class ProductSlider implements pdcSld_Interface {
                 } else if (this.curWidStat === 1) {}
                 this.currentPage = this.itemsPage / this.curWidStat;
                 this.currentPage = Math.ceil(this.currentPage);
-                console.log(`CURRENT PAGE: ${this.currentPage}`);   /*IMPORTANT SHORTTIME INFO*/
-                console.log(`ITEMS PAGE: ${this.itemsPage}`);   /*IMPORTANT SHORTTIME INFO*/
-                /*if (this.lastArrowStatus === 'LEFT') {
-                    this.currentPage = Math.floor(this.currentPage);
-                } else if (this.lastArrowStatus === 'RIGHT') {
-                    this.currentPage = Math.floor(this.currentPage);
-                }*/
+                console.log(`CURRENT PAGE: ${this.currentPage}`);
+                console.log(`ITEMS PAGE: ${this.itemsPage}`);
                 let stsBallAR: any[] = [];
                 if (this.curWidStat > 1) {
                     const statusBox: any = document.querySelectorAll('div.product-slider-status-box')[this.sldStlIdxNumToWdt];
@@ -950,6 +982,8 @@ class ProductSlider implements pdcSld_Interface {
                         }
                     };
                 } else {}
+
+
             }, false);
         });
     };
@@ -1125,6 +1159,7 @@ const sliderFactory_Obj: {
     sliderAmount: document.querySelectorAll('div.product-slider-area').length,
     sliderAR: [],
    createSliders(): void {
+        // SERIES PRODUCTION: ARGUMENTS
         for (let i: number = 0; i < this.sliderAmount; i++) {
             let arg_1: number = productSlider_Sources_Obj.pdcSldSrc_Prc[i].length;  // Amount of products in product, which has been in choosed slider
             let arg_2: number = i;   // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
@@ -1135,24 +1170,25 @@ const sliderFactory_Obj: {
             let arg_7: number = i;   // - number of slider images file
             let productSlider = new ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7);
             productSlider.setVisibleAreaWidth();
-            productSlider.createItems_fixedAmount();
+            /*productSlider.createItems_fixedAmount();
+            productSlider.createStatusLimitAR();
             productSlider.reverseResLimVals_Func();
             productSlider.setAEL_PdcSldMoving();
-            productSlider.createPdcSldPageStatus();
+            productSlider.createPdcSldPageStatus();*/
             this.sliderAR.push(productSlider);
         };
         console.log(sliderFactory_Obj.sliderAR);
     }
 };
-//sliderFactory_Obj.createSliders();
-// SERIES PRODUCTION: ARGUMENTS
+sliderFactory_Obj.createSliders();
+
 // arg_1 - This argument is in FORM lop, because they require steady iteration
 //let arg_2: number = 0;   // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
 //let arg_3: number = 0;   // Informations from slider info object. WARNING: Begin is from 0!
 //let arg_4: number = 0;   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
 //let arg_5: number = 15;   //  - space betwen items
 //let arg_6: number = 350;   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
-sliderFactory_Obj.createSliders();
+//sliderFactory_Obj.createSliders();
 
 // HAND CREATING  // IS BAD - IN WORK
 /*let arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[0].length;
@@ -1163,6 +1199,117 @@ productSlider_1.reverseResLimVals_Func();
 productSlider_1.setAEL_PdcSldMoving();
 productSlider_1.createPdcSldPageStatus();
 console.log(productSlider_1);*/
+
+
+
+
+
+// Robimy od nowa nową klasę z konstruktorem na rodzaje nieruchomości na sprzedaż i style domów
+
+interface generalInfo_ITF {
+    currentGnBox: number;
+    dataTit: string[],
+    itemAmount: number,
+    createEL: Function,
+    hoverAEL: Function
+}
+
+class CategoriesGrid implements generalInfo_ITF {
+    currentGnBox: number;
+    itemAmount: number;
+    dataTit: string[];
+    constructor(arg_1, arg_2, arg_3) {   // arg_1 - choosed slider data index | arg_2 - items amount on each slider
+        this.dataTit = arg_1;
+        this.itemAmount = arg_2;
+        this.currentGnBox = arg_3;
+    }
+    createEL(): void {
+        const genInfoBoxEL = document.querySelectorAll('div.general-news-box')[this.currentGnBox];
+        let newsELS: any[] = [];
+        for (let i: number = 0; i < this.itemAmount; i++) {
+            let newsEL = document.createElement('div');
+            newsELS.push(newsEL);
+            let imgEL = document.createElement('img');
+            let titEl = document.createElement('div');
+            let txtEL = document.createElement('div');
+            let txtTN = document.createTextNode(this.dataTit[i]);
+            newsEL.setAttribute('class', 'news');
+            imgEL.setAttribute('class', 'gn-img-box');
+            imgEL.setAttribute('src', 'hb-images-gn-tit-' + (this.currentGnBox + 1) + '/img_' + (i + 1) + '.jpg');
+            imgEL.setAttribute('alt', this.dataTit[this.currentGnBox][i]);
+            titEl.setAttribute('class', 'gn-tit');
+            txtEL.setAttribute('class', 'gn-tit-txt');
+            newsEL.appendChild(imgEL);
+            newsEL.appendChild(titEl);
+            titEl.appendChild(txtEL);
+            txtEL.appendChild(txtTN);
+            genInfoBoxEL.appendChild(newsEL);
+        }
+        this.hoverAEL(newsELS, this.itemAmount);
+    }
+    hoverAEL(newsELS, itmAm): void {
+        /*for (let i: number = 0; i < itmAm; i++) {
+            ['mouseover'].forEach((ev) => {
+                newsELS[i].addEventListener(ev, (e) => {
+                    let el = e.target;
+                    el.style.filter = 'brightness(50%)';
+                    el.style.transitionDuration = '0.4s';
+                }, false);
+            });
+        };*/
+    }
+}
+
+
+
+const generalInfoSources_Obj: {
+    gnTit: string[][],   // Title, ALT
+} = {
+    gnTit: [
+        [   // rodzaje nieruchomości
+            'Dom jednorodzinny wolnostojący',
+            'Dom w zabudowie bliźniaczej',
+            'Dom w zabudowie szeregowej',
+            'Blok',
+            'Wierzowiec',
+            'Kamiennica'   
+        ],
+        [   // style domów
+            'Styl nowoczesny',
+            'Styl minimalistyczny',
+            'Styl wiejski',
+            'Styl klasyczny',
+            'Styl śródziemnomorski',
+            'Styl elektyczny'
+        ]
+    ]
+}
+
+
+const generalInfoFactory_Obj: {
+    createGnInfoEL: Function
+} = {
+    createGnInfoEL() {
+        let gnBoxEL: any = document.querySelectorAll('div.general-news-box');   // PAMIĘTAJ KURWA MAĆ O TYM!
+        for (let i: number = 0; i < gnBoxEL.length; i++) {
+            let arg_1: string[] = generalInfoSources_Obj.gnTit[i];
+            let arg_2: number = generalInfoSources_Obj.gnTit[i].length;
+            let arg_3: number = i;
+            let generalInfoObj = new CategoriesGrid(arg_1, arg_2, arg_3);
+            generalInfoObj.createEL();
+        }
+    }
+};
+generalInfoFactory_Obj.createGnInfoEL();
+
+
+
+
+
+
+
+
+
 
 
 
