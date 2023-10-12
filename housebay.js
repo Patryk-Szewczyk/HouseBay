@@ -1201,7 +1201,7 @@ var CategoriesGrid = /** @class */ (function () {
                     var id = el.id;
                     var prpEditEl = imgELS[id];
                     console.log(prpEditEl);
-                    prpEditEl.style.filter = 'brightness(85%)';
+                    prpEditEl.style.filter = 'brightness(80%)';
                     prpEditEl.style.transitionDuration = '0.4s';
                 }, false);
             });
