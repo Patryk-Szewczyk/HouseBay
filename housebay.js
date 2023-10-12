@@ -1169,14 +1169,17 @@ var CategoriesGrid = /** @class */ (function () {
     CategoriesGrid.prototype.createEL = function () {
         var genInfoBoxEL = document.querySelectorAll('div.general-news-box')[this.currentGnBox];
         var newsELS = [];
+        var imgELS = [];
         for (var i = 0; i < this.itemAmount; i++) {
             var newsEL = document.createElement('div');
             newsELS.push(newsEL);
             var imgEL = document.createElement('img');
+            imgELS.push(imgEL);
             var titEl = document.createElement('div');
             var txtEL = document.createElement('div');
             var txtTN = document.createTextNode(this.dataTit[i]);
             newsEL.setAttribute('class', 'news');
+            newsEL.setAttribute('id', String(i));
             imgEL.setAttribute('class', 'gn-img-box');
             imgEL.setAttribute('src', 'hb-images-gn-tit-' + (this.currentGnBox + 1) + '/img_' + (i + 1) + '.jpg');
             imgEL.setAttribute('alt', this.dataTit[this.currentGnBox][i]);
@@ -1188,18 +1191,43 @@ var CategoriesGrid = /** @class */ (function () {
             txtEL.appendChild(txtTN);
             genInfoBoxEL.appendChild(newsEL);
         }
-        this.hoverAEL(newsELS, this.itemAmount);
+        this.hoverAEL(newsELS, imgELS, this.itemAmount, genInfoBoxEL);
     };
-    CategoriesGrid.prototype.hoverAEL = function (newsELS, itmAm) {
-        /*for (let i: number = 0; i < itmAm; i++) {
-            ['mouseover'].forEach((ev) => {
-                newsELS[i].addEventListener(ev, (e) => {
-                    let el = e.target;
-                    el.style.filter = 'brightness(50%)';
-                    el.style.transitionDuration = '0.4s';
+    CategoriesGrid.prototype.hoverAEL = function (newsELS, imgELS, itmAm, giBoxEL) {
+        var _loop_2 = function (i) {
+            ['mouseover'].forEach(function (ev) {
+                newsELS[i].addEventListener(ev, function (e) {
+                    var el = e.currentTarget;
+                    var id = el.id;
+                    var prpEditEl = imgELS[id];
+                    console.log(prpEditEl);
+                    prpEditEl.style.filter = 'brightness(85%)';
+                    prpEditEl.style.transitionDuration = '0.4s';
                 }, false);
             });
-        };*/
+        };
+        // pierdzielenia się z pętlami, id i dodawaniem atrybutu id z wartością w tworzeniu 
+        // eleemntów, ale zrobiłem tak, dla treningu kombinowania
+        for (var i = 0; i < itmAm; i++) {
+            _loop_2(i);
+        }
+        ;
+        var _loop_3 = function (i) {
+            ['mouseout'].forEach(function (ev) {
+                newsELS[i].addEventListener(ev, function (e) {
+                    var el = e.currentTarget;
+                    var id = el.id;
+                    var prpEditEl = imgELS[id];
+                    console.log(prpEditEl);
+                    prpEditEl.style.filter = 'brightness(100%)';
+                    prpEditEl.style.transitionDuration = '0.4s';
+                }, false);
+            });
+        };
+        for (var i = 0; i < itmAm; i++) {
+            _loop_3(i);
+        }
+        ;
     };
     return CategoriesGrid;
 }());
