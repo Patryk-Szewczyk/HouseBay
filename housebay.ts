@@ -1260,7 +1260,7 @@ class CategoriesGrid implements generalInfo_ITF {
                     let id = el.id;
                     let prpEditEl: any = imgELS[id];
                     console.log(prpEditEl);
-                    prpEditEl.style.filter = 'brightness(85%)';
+                    prpEditEl.style.filter = 'brightness(80%)';
                     prpEditEl.style.transitionDuration = '0.4s';
                 }, false);
             });
