@@ -809,10 +809,10 @@ body {
     .general-news-box {
         width: 100%;
         max-width: 1234px;
-        min-width: 300px;
-        padding: 4px 68px 0px;
+        min-width: 270px;
+        padding: 4px 34px 0px;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
         grid-auto-rows: 250px;
         gap: 25px;
         background-color: inherit;
@@ -884,7 +884,7 @@ body {
                     align-items: center;
                     color: #333;
                     font-family: 'Montserrat', sans-serif;
-                    font-size: 110%;
+                    font-size: 125%;
                     font-weight: 600;
                     text-align: center;
                     opacity: 0.0;
@@ -1050,6 +1050,10 @@ body {
             line-height: 1.5em;
             letter-spacing: 1.3px;
             word-spacing: 0.2em;
+        }
+        
+        .general-news-box {
+            padding: 4px 51px 0px;   /*51=6-(34/2)*/
         }
 }
 
