@@ -572,7 +572,7 @@ interface pdcSld_Interface {
     statusLimitAR: number[][][][],
     evWinLoadRes: string[],
     evElClick: string[],
-    setVisibleAreaWidth(): void;
+    setVisibleAreaWidth: Function;
     createItems_fixedAmount(): void;
     createStatusLimitAR();
     reverseResLimVals_Func(): void;
@@ -610,7 +610,7 @@ class ProductSlider implements pdcSld_Interface {
     curPdcSldMovVal = [];   // Values of current product slider moving distance on once move action (reverse "resLimitVals" array)
     evWinLoadRes = ['load', 'resize'];
     evElClick = ['click', 'touchend'];
-    public setVisibleAreaWidth() {
+    public setVisibleAreaWidth(): void {
         this.evWinLoadRes.forEach((ev) => {
             window.addEventListener(ev, () => {
                 this.windowWidth = window.innerWidth;
@@ -716,7 +716,7 @@ class ProductSlider implements pdcSld_Interface {
         //this.reverseResLimVals_Func();   // MOVING AMOUNT OF ITEMS (depend to website window width). IF YOU CHOOSE IT, GET IN COMMENT NEXT (on bottom) FUNCTION CALL
         this.createItems_fixedAmount();   // FIXED AMOUNT OF TEMS
     };
-    public createItems_fixedAmount() {
+    public createItems_fixedAmount(): void {
         window.addEventListener('load', () => {
             const itemsHanger: any = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
             for (let i: number = 0; i < this.productsAmount; i++) {
@@ -800,7 +800,7 @@ class ProductSlider implements pdcSld_Interface {
         //console.log(res);
         return res;
     };
-    public reverseResLimVals_Func() {
+    public reverseResLimVals_Func(): void {
         // Iterujemy tą tablicą "this.curWidStat" po tej "this.resLimitVals" i w ten sposób mamy aktualną wartość przesunięcia produktu względem odpowiedniego rozstawy tychże produktów
         this.evWinLoadRes.forEach((ev) => {
             window.addEventListener(ev, () => {
@@ -814,7 +814,7 @@ class ProductSlider implements pdcSld_Interface {
         });
         this.setAEL_PdcSldMoving();
     };
-    public setAEL_PdcSldMoving() {
+    public setAEL_PdcSldMoving(): void {
         const pdcSldButLft: any = document.querySelectorAll('div.product-slider-arrowBox-left-box')[this.sldStlIdxNumToWdt];
         const pdcSldButRgt: any = document.querySelectorAll('div.product-slider-arrowBox-right-box')[this.sldStlIdxNumToWdt];
         const itemsHanger: any = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
@@ -933,7 +933,7 @@ class ProductSlider implements pdcSld_Interface {
         });
         this.createPdcSldPageStatus();
     };
-    public createPdcSldPageStatus() {
+    public createPdcSldPageStatus(): void {
         this.evWinLoadRes.forEach((ev) => {
             window.addEventListener(ev, () => {
                 const statusBox: any = document.querySelectorAll('div.product-slider-status-box')[this.sldStlIdxNumToWdt];
@@ -1208,10 +1208,13 @@ console.log(productSlider_1);*/
 
 interface generalInfo_ITF {
     currentGnBox: number;
-    dataTit: string[],
-    itemAmount: number,
-    createEL: Function,
-    hoverAEL: Function
+    newsELPosAR: number[];
+    dataTit: string[];
+    itemAmount: number;
+    createEL: Function;
+    hoverAEL_DESKTOP: Function;
+    scrollAEL_MOBILE: Function;
+    checkGIBlockPosAEL_MOBILE: Function;
 }
 
 class CategoriesGrid implements generalInfo_ITF {
@@ -1222,61 +1225,130 @@ class CategoriesGrid implements generalInfo_ITF {
         this.dataTit = arg_1;
         this.itemAmount = arg_2;
         this.currentGnBox = arg_3;
-    }
+    };
+    newsELPosAR: number[];
     createEL(): void {
         const genInfoBoxEL = document.querySelectorAll('div.general-news-box')[this.currentGnBox];
         let newsELS: any[] = [];
         let imgELS: any[] = [];
+        let titELS: any[] = [];
+        let txtELS: any[] = [];
         for (let i: number = 0; i < this.itemAmount; i++) {
             let newsEL = document.createElement('div');
             newsELS.push(newsEL);
             let imgEL = document.createElement('img');
             imgELS.push(imgEL);
-            let titEl = document.createElement('div');
+            let titEL = document.createElement('div');
+            titELS.push(titEL);
             let txtEL = document.createElement('div');
+            txtELS.push(txtEL);
             let txtTN = document.createTextNode(this.dataTit[i]);
             newsEL.setAttribute('class', 'news');
             newsEL.setAttribute('id', String(i));
             imgEL.setAttribute('class', 'gn-img-box');
             imgEL.setAttribute('src', 'hb-images-gn-tit-' + (this.currentGnBox + 1) + '/img_' + (i + 1) + '.jpg');
             imgEL.setAttribute('alt', this.dataTit[this.currentGnBox][i]);
-            titEl.setAttribute('class', 'gn-tit');
+            titEL.setAttribute('class', 'gn-tit');
             txtEL.setAttribute('class', 'gn-tit-txt');
             newsEL.appendChild(imgEL);
-            newsEL.appendChild(titEl);
-            titEl.appendChild(txtEL);
+            newsEL.appendChild(titEL);
+            titEL.appendChild(txtEL);
             txtEL.appendChild(txtTN);
             genInfoBoxEL.appendChild(newsEL);
-        }
-        this.hoverAEL(newsELS, imgELS, this.itemAmount, genInfoBoxEL);
-    }
-    hoverAEL(newsELS, imgELS, itmAm, giBoxEL): void {   // Można to zrobić na "target" bez 
+        };
+        this.hoverAEL_DESKTOP(newsELS, imgELS, titELS, txtELS, this.itemAmount);
+        this.checkGIBlockPosAEL_MOBILE(newsELS, this.itemAmount, this.currentGnBox);
+        this.scrollAEL_MOBILE(titELS, txtELS, this.itemAmount);
+    };
+    hoverAEL_DESKTOP(newsELS, imgELS, titELS, txtELS, itmAm): void {   // Można to zrobić na "target" bez 
         // pierdzielenia się z pętlami, id i dodawaniem atrybutu id z wartością w tworzeniu 
         // eleemntów, ale zrobiłem tak, dla treningu kombinowania
         for (let i: number = 0; i < itmAm; i++) {
             ['mouseover'].forEach((ev) => {
                 newsELS[i].addEventListener(ev, (e) => {
-                    let el = e.currentTarget;
-                    let id = el.id;
-                    let prpEditEl: any = imgELS[id];
-                    console.log(prpEditEl);
-                    prpEditEl.style.filter = 'brightness(80%)';
-                    prpEditEl.style.transitionDuration = '0.4s';
+                    if (window.innerWidth >= RWD_info_Obj.desktop) {
+                        let el = e.currentTarget;
+                        let id = el.id;
+                        let prpEditEl: any = imgELS[id];
+                        //console.log(prpEditEl);
+                        prpEditEl.style.filter = 'brightness(80%)';
+                        prpEditEl.style.transitionDuration = '0.4s';
+                        titELS[id].style.height = 70 + 'px';
+                        txtELS[id].style.bottom = 0 + 'px';
+                        txtELS[id].style.opacity = 1.0;
+                        titELS[id].transitionDuration = 0.4 + 's';
+                        txtELS[id].transitionDuration = 0.4 + 's';
+                    } else {}
                 }, false);
             });
         };
         for (let i: number = 0; i < itmAm; i++) {
             ['mouseout'].forEach((ev) => {
                 newsELS[i].addEventListener(ev, (e) => {
-                    let el = e.currentTarget;
-                    let id = el.id;
-                    let prpEditEl: any = imgELS[id];
-                    console.log(prpEditEl);
-                    prpEditEl.style.filter = 'brightness(100%)';
-                    prpEditEl.style.transitionDuration = '0.4s';
+                    if (window.innerWidth >= RWD_info_Obj.desktop) {
+                        let el = e.currentTarget;
+                        let id = el.id;
+                        let prpEditEl: any = imgELS[id];
+                        //console.log(prpEditEl);
+                        prpEditEl.style.filter = 'brightness(100%)';
+                        prpEditEl.style.transitionDuration = '0.4s';
+                        titELS[id].style.height = 0 + 'px';
+                        txtELS[id].style.bottom = -10 + 'px';
+                        txtELS[id].style.opacity = 0.0;
+                        titELS[id].transitionDuration = 0.4 + 's';
+                        txtELS[id].transitionDuration = 0.4 + 's';
+                    } else {}
                 }, false);
             });
         };
+    };
+    scrollAEL_MOBILE(titELS, txtELS, itmAm): void {
+        ['load', 'resize', 'scroll'].forEach((ev) => {
+            window.addEventListener(ev, () => {
+                if (window.innerWidth < RWD_info_Obj.desktop) {
+                    for (let i: number = 0; i < itmAm; i++) {
+                        let catBorder: number = (window.innerHeight / 1.6);
+                        //console.log('CURR' + this.newsELPosAR[i]);
+                        if (this.newsELPosAR[i] <= catBorder) {
+                            titELS[i].style.height = 70 + 'px';
+                            txtELS[i].style.bottom = 0 + 'px';
+                            txtELS[i].style.opacity = 1.0;
+                            titELS[i].transitionDuration = 0.4 + 's';
+                            txtELS[i].transitionDuration = 0.4 + 's';
+                        } else if (this.newsELPosAR[i] > catBorder) {
+                            titELS[i].style.height = 0 + 'px';
+                            txtELS[i].style.bottom = -10 + 'px';
+                            txtELS[i].style.opacity = 0.0;
+                            titELS[i].transitionDuration = 0.4 + 's';
+                            txtELS[i].transitionDuration = 0.4 + 's';
+                        }
+                    }
+                } else {
+                    for (let i: number = 0; i < itmAm; i++) {
+                        titELS[i].style.height = 0 + 'px';
+                        txtELS[i].style.bottom = 0 + 'px';
+                        txtELS[i].style.opacity = 0.0;
+                        titELS[i].transitionDuration = 0.4 + 's';
+                        txtELS[i].transitionDuration = 0.4 + 's';
+                    }
+                }
+            }, false);
+        });
+    };
+    checkGIBlockPosAEL_MOBILE(newsELS, itmAm, currentGnBox): void {
+        console.log(currentGnBox);
+        let arr: number[] = [];
+        ['load', 'resize', 'scroll'].forEach((ev) => {
+            window.addEventListener(ev, () => {
+                for (let i: number = 0; i < itmAm; i++) {
+                    let el = newsELS[i].getBoundingClientRect();
+                    let pos = Math.round(el.top);
+                    arr[i] = pos;
+                    //console.log(arr[i]);
+                }
+            }, false);
+        });
+        this.newsELPosAR = arr;
     }
 }
 
