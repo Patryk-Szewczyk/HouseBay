@@ -1359,20 +1359,20 @@ const generalInfoSources_Obj: {
 } = {
     gnTit: [
         [   // rodzaje nieruchomości
-            'Dom jednorodzinny wolnostojący',
-            'Dom w zabudowie bliźniaczej',
-            'Dom w zabudowie szeregowej',
-            'Blok',
-            'Wierzowiec',
-            'Kamiennica'   
+            'Detached house',
+            'Twin house',
+            'Terraced development',
+            'Block of flat',
+            'Skyscrapper',
+            'Tenement'   
         ],
         [   // style domów
-            'Styl nowoczesny',
-            'Styl minimalistyczny',
-            'Styl wiejski',
-            'Styl klasyczny',
-            'Styl śródziemnomorski',
-            'Styl elektyczny'
+            'Modern',
+            'Minimalist',
+            'Country',
+            'Classic',
+            'Mediterranean',
+            'Eclectic'
         ]
     ]
 }
