@@ -1312,20 +1312,20 @@ var CategoriesGrid = /** @class */ (function () {
 var generalInfoSources_Obj = {
     gnTit: [
         [
-            'Dom jednorodzinny wolnostojący',
-            'Dom w zabudowie bliźniaczej',
-            'Dom w zabudowie szeregowej',
-            'Blok',
-            'Wierzowiec',
-            'Kamiennica'
+            'Detached house',
+            'Twin house',
+            'Terraced development',
+            'Block of flat',
+            'Skyscrapper',
+            'Tenement'
         ],
         [
-            'Styl nowoczesny',
-            'Styl minimalistyczny',
-            'Styl wiejski',
-            'Styl klasyczny',
-            'Styl śródziemnomorski',
-            'Styl elektyczny'
+            'Modern',
+            'Minimalist',
+            'Country',
+            'Classic',
+            'Mediterranean',
+            'Eclectic'
         ]
     ]
 };
