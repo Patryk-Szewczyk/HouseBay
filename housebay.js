@@ -1166,43 +1166,60 @@ var CategoriesGrid = /** @class */ (function () {
         this.itemAmount = arg_2;
         this.currentGnBox = arg_3;
     }
+    ;
     CategoriesGrid.prototype.createEL = function () {
         var genInfoBoxEL = document.querySelectorAll('div.general-news-box')[this.currentGnBox];
         var newsELS = [];
         var imgELS = [];
+        var titELS = [];
+        var txtELS = [];
         for (var i = 0; i < this.itemAmount; i++) {
             var newsEL = document.createElement('div');
             newsELS.push(newsEL);
             var imgEL = document.createElement('img');
             imgELS.push(imgEL);
-            var titEl = document.createElement('div');
+            var titEL = document.createElement('div');
+            titELS.push(titEL);
             var txtEL = document.createElement('div');
+            txtELS.push(txtEL);
             var txtTN = document.createTextNode(this.dataTit[i]);
             newsEL.setAttribute('class', 'news');
             newsEL.setAttribute('id', String(i));
             imgEL.setAttribute('class', 'gn-img-box');
             imgEL.setAttribute('src', 'hb-images-gn-tit-' + (this.currentGnBox + 1) + '/img_' + (i + 1) + '.jpg');
             imgEL.setAttribute('alt', this.dataTit[this.currentGnBox][i]);
-            titEl.setAttribute('class', 'gn-tit');
+            titEL.setAttribute('class', 'gn-tit');
             txtEL.setAttribute('class', 'gn-tit-txt');
             newsEL.appendChild(imgEL);
-            newsEL.appendChild(titEl);
-            titEl.appendChild(txtEL);
+            newsEL.appendChild(titEL);
+            titEL.appendChild(txtEL);
             txtEL.appendChild(txtTN);
             genInfoBoxEL.appendChild(newsEL);
         }
-        this.hoverAEL(newsELS, imgELS, this.itemAmount, genInfoBoxEL);
+        ;
+        this.hoverAEL_DESKTOP(newsELS, imgELS, titELS, txtELS, this.itemAmount);
+        this.checkGIBlockPosAEL_MOBILE(newsELS, this.itemAmount, this.currentGnBox);
+        this.scrollAEL_MOBILE(titELS, txtELS, this.itemAmount);
     };
-    CategoriesGrid.prototype.hoverAEL = function (newsELS, imgELS, itmAm, giBoxEL) {
+    ;
+    CategoriesGrid.prototype.hoverAEL_DESKTOP = function (newsELS, imgELS, titELS, txtELS, itmAm) {
         var _loop_2 = function (i) {
             ['mouseover'].forEach(function (ev) {
                 newsELS[i].addEventListener(ev, function (e) {
-                    var el = e.currentTarget;
-                    var id = el.id;
-                    var prpEditEl = imgELS[id];
-                    console.log(prpEditEl);
-                    prpEditEl.style.filter = 'brightness(80%)';
-                    prpEditEl.style.transitionDuration = '0.4s';
+                    if (window.innerWidth >= RWD_info_Obj.desktop) {
+                        var el = e.currentTarget;
+                        var id = el.id;
+                        var prpEditEl = imgELS[id];
+                        //console.log(prpEditEl);
+                        prpEditEl.style.filter = 'brightness(80%)';
+                        prpEditEl.style.transitionDuration = '0.4s';
+                        titELS[id].style.height = 70 + 'px';
+                        txtELS[id].style.bottom = 0 + 'px';
+                        txtELS[id].style.opacity = 1.0;
+                        titELS[id].transitionDuration = 0.4 + 's';
+                        txtELS[id].transitionDuration = 0.4 + 's';
+                    }
+                    else { }
                 }, false);
             });
         };
@@ -1215,12 +1232,20 @@ var CategoriesGrid = /** @class */ (function () {
         var _loop_3 = function (i) {
             ['mouseout'].forEach(function (ev) {
                 newsELS[i].addEventListener(ev, function (e) {
-                    var el = e.currentTarget;
-                    var id = el.id;
-                    var prpEditEl = imgELS[id];
-                    console.log(prpEditEl);
-                    prpEditEl.style.filter = 'brightness(100%)';
-                    prpEditEl.style.transitionDuration = '0.4s';
+                    if (window.innerWidth >= RWD_info_Obj.desktop) {
+                        var el = e.currentTarget;
+                        var id = el.id;
+                        var prpEditEl = imgELS[id];
+                        //console.log(prpEditEl);
+                        prpEditEl.style.filter = 'brightness(100%)';
+                        prpEditEl.style.transitionDuration = '0.4s';
+                        titELS[id].style.height = 0 + 'px';
+                        txtELS[id].style.bottom = -10 + 'px';
+                        txtELS[id].style.opacity = 0.0;
+                        titELS[id].transitionDuration = 0.4 + 's';
+                        txtELS[id].transitionDuration = 0.4 + 's';
+                    }
+                    else { }
                 }, false);
             });
         };
@@ -1228,6 +1253,59 @@ var CategoriesGrid = /** @class */ (function () {
             _loop_3(i);
         }
         ;
+    };
+    ;
+    CategoriesGrid.prototype.scrollAEL_MOBILE = function (titELS, txtELS, itmAm) {
+        var _this = this;
+        ['load', 'resize', 'scroll'].forEach(function (ev) {
+            window.addEventListener(ev, function () {
+                if (window.innerWidth < RWD_info_Obj.desktop) {
+                    for (var i = 0; i < itmAm; i++) {
+                        var catBorder = (window.innerHeight / 1.6);
+                        //console.log('CURR' + this.newsELPosAR[i]);
+                        if (_this.newsELPosAR[i] <= catBorder) {
+                            titELS[i].style.height = 70 + 'px';
+                            txtELS[i].style.bottom = 0 + 'px';
+                            txtELS[i].style.opacity = 1.0;
+                            titELS[i].transitionDuration = 0.4 + 's';
+                            txtELS[i].transitionDuration = 0.4 + 's';
+                        }
+                        else if (_this.newsELPosAR[i] > catBorder) {
+                            titELS[i].style.height = 0 + 'px';
+                            txtELS[i].style.bottom = -10 + 'px';
+                            txtELS[i].style.opacity = 0.0;
+                            titELS[i].transitionDuration = 0.4 + 's';
+                            txtELS[i].transitionDuration = 0.4 + 's';
+                        }
+                    }
+                }
+                else {
+                    for (var i = 0; i < itmAm; i++) {
+                        titELS[i].style.height = 0 + 'px';
+                        txtELS[i].style.bottom = 0 + 'px';
+                        txtELS[i].style.opacity = 0.0;
+                        titELS[i].transitionDuration = 0.4 + 's';
+                        txtELS[i].transitionDuration = 0.4 + 's';
+                    }
+                }
+            }, false);
+        });
+    };
+    ;
+    CategoriesGrid.prototype.checkGIBlockPosAEL_MOBILE = function (newsELS, itmAm, currentGnBox) {
+        console.log(currentGnBox);
+        var arr = [];
+        ['load', 'resize', 'scroll'].forEach(function (ev) {
+            window.addEventListener(ev, function () {
+                for (var i = 0; i < itmAm; i++) {
+                    var el = newsELS[i].getBoundingClientRect();
+                    var pos = Math.round(el.top);
+                    arr[i] = pos;
+                    //console.log(arr[i]);
+                }
+            }, false);
+        });
+        this.newsELPosAR = arr;
     };
     return CategoriesGrid;
 }());
