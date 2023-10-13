@@ -844,6 +844,11 @@ body {
                 align-items: center;
                 background-color: #888;
                 filter: brightness(100%);
+                transition-duration: 0.4s;
+            }
+            .news:hover .gn-img-box {
+                filter: brightness(85%);   /*Nie robiłem na to event'a, z klikaniem na MOBILE gdyż uznałem, iż jest to strata czasu, kiedy mogę to zrobić w CSS*/
+                transition-duration: 0.4s;
             }
             .news > div {
                 width: 100%;
@@ -1040,7 +1045,7 @@ body {
         }
 
         .infoTitle {
-            padding: 100px 34px 15px;
+            padding: 100px 34px 10px;
             font-size: 225%;
             line-height: 1.5em;
             letter-spacing: 1.3px;
