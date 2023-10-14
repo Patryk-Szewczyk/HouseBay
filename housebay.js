@@ -1261,7 +1261,7 @@ var CategoriesGrid = /** @class */ (function () {
             window.addEventListener(ev, function () {
                 if (window.innerWidth < RWD_info_Obj.desktop) {
                     for (var i = 0; i < itmAm; i++) {
-                        var catBorder = (window.innerHeight / 1.6);
+                        var catBorder = (window.innerHeight / 1.65);
                         //console.log('CURR' + this.newsELPosAR[i]);
                         if (_this.newsELPosAR[i] <= catBorder) {
                             titELS[i].style.height = 70 + 'px';
