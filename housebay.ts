@@ -1307,7 +1307,7 @@ class CategoriesGrid implements generalInfo_ITF {
             window.addEventListener(ev, () => {
                 if (window.innerWidth < RWD_info_Obj.desktop) {
                     for (let i: number = 0; i < itmAm; i++) {
-                        let catBorder: number = (window.innerHeight / 1.6);
+                        let catBorder: number = (window.innerHeight / 1.65);
                         //console.log('CURR' + this.newsELPosAR[i]);
                         if (this.newsELPosAR[i] <= catBorder) {
                             titELS[i].style.height = 70 + 'px';
