@@ -1352,8 +1352,6 @@ class CategoriesGrid implements generalInfo_ITF {
     }
 }
 
-
-
 const generalInfoSources_Obj: {
     gnTit: string[][],   // Title, ALT
 } = {
@@ -1377,12 +1375,11 @@ const generalInfoSources_Obj: {
     ]
 }
 
-
 const generalInfoFactory_Obj: {
     createGnInfoEL: Function
 } = {
     createGnInfoEL() {
-        let gnBoxEL: any = document.querySelectorAll('div.general-news-box');   // PAMIĘTAJ KURWA MAĆ O TYM!
+        let gnBoxEL: NodeListOf<HTMLDivElement> = document.querySelectorAll('div.general-news-box');
         for (let i: number = 0; i < gnBoxEL.length; i++) {
             let arg_1: string[] = generalInfoSources_Obj.gnTit[i];
             let arg_2: number = generalInfoSources_Obj.gnTit[i].length;
