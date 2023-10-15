@@ -1331,7 +1331,7 @@ var generalInfoSources_Obj = {
 };
 var generalInfoFactory_Obj = {
     createGnInfoEL: function () {
-        var gnBoxEL = document.querySelectorAll('div.general-news-box'); // PAMIĘTAJ KURWA MAĆ O TYM!
+        var gnBoxEL = document.querySelectorAll('div.general-news-box');
         for (var i = 0; i < gnBoxEL.length; i++) {
             var arg_1 = generalInfoSources_Obj.gnTit[i];
             var arg_2 = generalInfoSources_Obj.gnTit[i].length;
