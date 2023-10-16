@@ -3,13 +3,17 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {   // IN WORK
-        //let one: HTMLElement = document.getElementById('splash-screen');
-        //let two: HTMLDivElement = document.querySelector('div.window-block');
-        //one.style.display = 'none';
-        //two.style.display = 'flex';
-    }, 800);
+        let one: HTMLElement = document.getElementById('splash-screen');
+        //let two: HTMLDivElement = document.querySelector('div.website-content');
+        one.style.display = 'none';
+        //two.style.display = 'block';
+    }, 1800);
 }, false);
 
+
+function createContent() {
+
+}
 
 
 const RWD_info_Obj: {
@@ -991,6 +995,20 @@ class ProductSlider implements pdcSld_Interface {
 
 
 
+const begeinInfoImg_Obj: {
+    imgBox: HTMLImageElement,
+    setAttr: Function
+} = {
+    imgBox: document.querySelector('img.bi-img-prp'),
+    setAttr(): void {
+        this.imgBox.setAttribute('src', 'bg-images-begin-info/residential-property-2858226_640.jpg');
+        this.imgBox.setAttribute('alt', 'company-build');
+    }
+
+};
+begeinInfoImg_Obj.setAttr();
+
+
 const productSlider_Sources_Obj: {
     pdcSldSrc_Prc: string[][],
     pdcSldSrc_Dsc: string[][],
@@ -1386,7 +1404,7 @@ const generalInfoFactory_Obj: {
             let arg_3: number = i;
             let generalInfoObj = new CategoriesGrid(arg_1, arg_2, arg_3);
             generalInfoObj.createEL();
-        }
+        };
     }
 };
 generalInfoFactory_Obj.createGnInfoEL();
@@ -1394,9 +1412,78 @@ generalInfoFactory_Obj.createGnInfoEL();
 
 
 
+const ourTeam_Obj: {
+    itemAmount: number,
+    createItems: Function
+} = {
+    itemAmount: 4,
+    createItems(): void {
+        for (let i: number = 0; i < this.itemAmount; i++) {
 
+            let otBox_EL = document.querySelector('div.our-team-box');
+            let otItem_EL: HTMLDivElement = document.createElement('div');
+            otItem_EL.setAttribute('class', 'ot-item');
+            let otImgBox_EL = document.createElement('div');
+            otImgBox_EL.setAttribute('class', 'ot-img-box');
+            let otCrcImgDim_EL: HTMLDivElement = document.createElement('div');
+            otCrcImgDim_EL.setAttribute('class', 'ot-circle-img-dim');
+            let otCrcImgPrp_EL: HTMLDivElement = document.createElement('img');
+            otCrcImgPrp_EL.setAttribute('class', 'ot-circle-img-prp');
+            otCrcImgPrp_EL.setAttribute('src', 'hb-images-worker/img_' + (i + 1) + '.jpg');
+            otCrcImgPrp_EL.setAttribute('alt', ourTeam_Sources_Obj.name[i]);
+            let otTitBox_EL: HTMLDivElement = document.createElement('div');
+            otTitBox_EL.setAttribute('class', 'ot-tit-box');
+            let otTitPrp_EL: HTMLDivElement = document.createElement('div');
+            let otTitPrp_TN: Text = document.createTextNode(ourTeam_Sources_Obj.name[i]);
+            otTitPrp_EL.setAttribute('class', 'ot-tit-prp');
+            let otDesBox_EL: HTMLDivElement = document.createElement('div');
+            otDesBox_EL.setAttribute('class', 'ot-des-box');
+            let otDesPrp_EL: HTMLDivElement = document.createElement('div');
+            let otDesPrp_TN: Text = document.createTextNode(ourTeam_Sources_Obj.desc[i]);
+            otDesPrp_EL.setAttribute('class', 'ot-des-prp');
+            let otIcnBox_EL: HTMLDivElement = document.createElement('div');
+            otIcnBox_EL.setAttribute('class', 'ot-icon-box');
+            let otIcnPrp_EL: HTMLDivElement = document.createElement('img');
+            otIcnPrp_EL.setAttribute('class', 'ot-icon-prp');
+            otIcnPrp_EL.setAttribute('src', 'hb-images-worker/social-media-5995266_1280.png');
+            otIcnPrp_EL.setAttribute('alt', 'social-media-icons');
+            
+            otItem_EL.appendChild(otImgBox_EL);
+            otImgBox_EL.appendChild(otCrcImgDim_EL);
+            otCrcImgDim_EL.appendChild(otCrcImgPrp_EL);
+            otItem_EL.appendChild(otTitBox_EL);
+            otTitBox_EL.appendChild(otTitPrp_EL);
+            otTitPrp_EL.appendChild(otTitPrp_TN);
+            otItem_EL.appendChild(otDesBox_EL);
+            otDesBox_EL.appendChild(otDesPrp_EL);
+            otDesPrp_EL.appendChild(otDesPrp_TN);
+            otItem_EL.appendChild(otIcnBox_EL);
+            otIcnBox_EL.appendChild(otIcnPrp_EL);
 
+            otBox_EL.appendChild(otItem_EL);
+        };
+    }
+};
 
+const ourTeam_Sources_Obj: {
+    name: string[],
+    desc: string[]
+} = {
+    name: [
+        'Walter White',
+        'Sarah Black',
+        'Carl Johnson',
+        'Annah Beverly'
+    ],
+    desc: [
+        'Professionalist from finding ideal houses and appartaments. He worked in few IT companies, as SEO specialist.',
+        'The best specialist in caunselling all time. She help everybody to choose appropriate house as well as appartament.',
+        'One form few the best specialist in caunselling in history. He can in no time pick appropriate property kind for everybody.',
+        'This woman helps everything in difficulty chooses in which often people don\'t know what is good choose for them.'
+    ],
+};
+
+ourTeam_Obj.createItems();
 
 
 
