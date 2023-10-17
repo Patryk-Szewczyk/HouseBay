@@ -102,7 +102,7 @@ var navbar_Mobile_Obj = {
                     }, 300);
                     setTimeout(function () {
                         _this.isShowed = true;
-                        console.log(_this.isShowed);
+                        //console.log(this.isShowed);   // ! --> IMPORTANT CONSOLLOG <-- !
                     }, 600);
                 }
                 else if (_this.isShowed === true) { // Hide
@@ -126,7 +126,7 @@ var navbar_Mobile_Obj = {
                     }, 300);
                     setTimeout(function () {
                         _this.isShowed = false;
-                        console.log(_this.isShowed);
+                        //console.log(this.isShowed);   // ! --> IMPORTANT CONSOLLOG <-- !
                     }, 600);
                 }
             }, false);
@@ -270,7 +270,7 @@ var slider_Obj = {
                 }
                 else if (window.innerWidth >= RWD_info_Obj.desktop) {
                     _this.extraWdt = 150;
-                    console.log(_this.extraWdt);
+                    //console.log(this.extraWdt);   // ! --> IMPORTANT CONSOLLOG <-- !
                 }
                 if (window.innerWidth)
                     sldTitWdtVALS.map(function (value, i) {
@@ -584,7 +584,7 @@ var ProductSlider = /** @class */ (function () {
                 }
                 ;
                 _this.resLimitVals[productsWide.length] = (_this.pdcSldItBd_Wdt * -1); // Naprawione niechciane rozszerzanie się bloku slidera
-                console.log(_this.resLimitVals);
+                ///console.log(this.resLimitVals);   // ! --> IMPORTANT CONSOLLOG <-- !
                 // resSpace: current-slider-item-box-width
                 var oneTime = true; // I don't know why I must use this...
                 for (var i = 0; i < _this.resLimitVals.length; i++) {
@@ -605,7 +605,7 @@ var ProductSlider = /** @class */ (function () {
                     }
                 }
                 ;
-                console.log("CURRENT WIDE STATUS: ".concat(_this.curWidStat));
+                //console.log(`CURRENT WIDE STATUS: ${this.curWidStat}`);   // ! --> IMPORTANT CONSOLLOG <-- !
                 // THIS OPERATIONS IS ALLOWED FOR RESIZE SLIDER ITEMS DEPEND OF WEBSITE WINDOW WIDTH: (scope: 5 - 1)
                 /*// Clear slider items:
                 const itemsHanger: any = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
@@ -796,8 +796,8 @@ var ProductSlider = /** @class */ (function () {
         var isMoved = false;
         var tnsDur_Timeout = 1000;
         var tnsDur_Style = (tnsDur_Timeout / 1000);
-        console.log('PAGE_END_LIMIT:' + pageEndLimit);
-        console.log('PAGE_START_LIMIT:' + this.pageStartLimit);
+        //console.log('PAGE_END_LIMIT:' + pageEndLimit);   // ! --> IMPORTANT CONSOLLOG <-- !
+        //console.log('PAGE_START_LIMIT:' + this.pageStartLimit);   // ! --> IMPORTANT CONSOLLOG <-- !
         this.evElClick.forEach(function (ev) {
             pdcSldButLft.addEventListener(ev, function () {
                 _this.pageStartLimit = _this.curWidStat;
@@ -810,7 +810,7 @@ var ProductSlider = /** @class */ (function () {
                     // Inaczej hanger ruszy się na niewystarczającą odległość
                     itemsHanger.style.left = _this.pdcSldmoveVal + 'px';
                     itemsHanger.style.transitionDuration = tnsDur_Style + 's';
-                    console.log("LEFT: ".concat(_this.pdcSldmoveVal));
+                    //console.log(`LEFT: ${this.pdcSldmoveVal}`);   // ! --> IMPORTANT CONSOLLOG <-- !
                     setTimeout(function () {
                         isMoved = false;
                     }, tnsDur_Timeout);
@@ -821,7 +821,7 @@ var ProductSlider = /** @class */ (function () {
                     _this.pdcSldmoveVal = 0;
                     itemsHanger.style.left = _this.pdcSldmoveVal + 'px';
                     itemsHanger.style.transitionDuration = tnsDur_Style + 's';
-                    console.log("LEFT: ".concat(_this.pdcSldmoveVal));
+                    //console.log(`LEFT: ${this.pdcSldmoveVal}`);   // ! --> IMPORTANT CONSOLLOG <-- !
                     setTimeout(function () {
                         isMoved = false;
                     }, tnsDur_Timeout);
@@ -829,8 +829,8 @@ var ProductSlider = /** @class */ (function () {
                 var stsBallAR = [];
                 _this.currentPage = _this.itemsPage / _this.curWidStat; // [current-item-page-value] / [current-wide-status (slider-hanger-position-in-click-steps)] = [current-page-number] !!! with decimal
                 _this.currentPage = Math.ceil(_this.currentPage);
-                console.log("CURRENT PAGE: ".concat(_this.currentPage)); /*IMPORTANT SHORTTIME INFO*/
-                console.log("ITEMS PAGE: ".concat(_this.itemsPage)); /*IMPORTANT SHORTTIME INFO*/
+                //console.log(`CURRENT PAGE: ${this.currentPage}`);   /*IMPORTANT SHORTTIME INFO*/   // ! --> IMPORTANT CONSOLLOG <-- !
+                //console.log(`ITEMS PAGE: ${this.itemsPage}`);   /*IMPORTANT SHORTTIME INFO*/   // ! --> IMPORTANT CONSOLLOG <-- !
                 //if (this.currentPage % 2 > 0) {   // Clean decimal by round up this value
                 /*if (this.lastArrowStatus === 'LEFT') {
                     this.currentPage = Math.ceil(this.currentPage);
@@ -873,7 +873,7 @@ var ProductSlider = /** @class */ (function () {
                     _this.pdcSldmoveVal += ((Number(_this.curPdcSldMovVal) + _this.pdcSldItBd_MgnLft) * -1);
                     itemsHanger.style.left = _this.pdcSldmoveVal + 'px';
                     itemsHanger.style.transitionDuration = tnsDur_Style + 's';
-                    console.log("RIGHT: ".concat(_this.pdcSldmoveVal));
+                    //console.log(`RIGHT: ${this.pdcSldmoveVal}`);   // ! --> IMPORTANT CONSOLLOG <-- !
                     setTimeout(function () {
                         isMoved = false;
                     }, tnsDur_Timeout);
@@ -882,8 +882,8 @@ var ProductSlider = /** @class */ (function () {
                 var stsBallAR = [];
                 _this.currentPage = _this.itemsPage / _this.curWidStat;
                 _this.currentPage = Math.ceil(_this.currentPage);
-                console.log("ITEMS PAGE: ".concat(_this.itemsPage)); /*IMPORTANT SHORTTIME INFO*/
-                console.log("CURRENT PAGE: ".concat(_this.currentPage)); /*IMPORTANT SHORTTIME INFO*/
+                //console.log(`ITEMS PAGE: ${this.itemsPage}`);   /*IMPORTANT SHORTTIME INFO*/   // ! --> IMPORTANT CONSOLLOG <-- !
+                //console.log(`CURRENT PAGE: ${this.currentPage}`);   /*IMPORTANT SHORTTIME INFO*/   // ! --> IMPORTANT CONSOLLOG <-- !
                 //if (this.currentPage % 2 > 0) {
                 /*if (this.lastArrowStatus === 'LEFT') {
                     this.currentPage = Math.ceil(this.currentPage);
@@ -938,7 +938,7 @@ var ProductSlider = /** @class */ (function () {
                 _this.statBallsAmount = _this.productsAmount / _this.curWidStat;
                 _this.currentPage = _this.itemsPage / _this.curWidStat;
                 _this.currentPage = Math.ceil(_this.currentPage);
-                console.log('STATUS BALL AMOUNT: ' + _this.statBallsAmount);
+                //console.log('STATUS BALL AMOUNT: ' + this.statBallsAmount);   // ! --> IMPORTANT CONSOLLOG <-- !
                 if (_this.curWidStat > 1) {
                     for (var i = 0; i < _this.statBallsAmount; i++) {
                         var statusBall = document.createElement('div');
@@ -950,8 +950,8 @@ var ProductSlider = /** @class */ (function () {
                 else if (_this.curWidStat === 1) { }
                 _this.currentPage = _this.itemsPage / _this.curWidStat;
                 _this.currentPage = Math.ceil(_this.currentPage);
-                console.log("CURRENT PAGE: ".concat(_this.currentPage));
-                console.log("ITEMS PAGE: ".concat(_this.itemsPage));
+                //console.log(`CURRENT PAGE: ${this.currentPage}`);   // ! --> IMPORTANT CONSOLLOG <-- !
+                //console.log(`ITEMS PAGE: ${this.itemsPage}`);   // ! --> IMPORTANT CONSOLLOG <-- !
                 var stsBallAR = [];
                 if (_this.curWidStat > 1) {
                     var statusBox_1 = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
@@ -985,7 +985,7 @@ var ProductSlider = /** @class */ (function () {
 var begeinInfoImg_Obj = {
     imgBox: document.querySelector('img.bi-img-prp'),
     setAttr: function () {
-        this.imgBox.setAttribute('src', 'bg-images-begin-info/residential-property-2858226_640.jpg');
+        this.imgBox.setAttribute('src', 'hb-images-begin-info/residential-property-2858226_640.jpg');
         this.imgBox.setAttribute('alt', 'company-build');
     }
 };
@@ -1166,7 +1166,7 @@ var sliderFactory_Obj = {
             this.sliderAR.push(productSlider);
         }
         ;
-        console.log(sliderFactory_Obj.sliderAR);
+        //console.log(sliderFactory_Obj.sliderAR);   // ! --> IMPORTANT CONSOLLOG <-- !
     }
 };
 sliderFactory_Obj.createSliders();
@@ -1415,6 +1415,231 @@ var ourTeam_Sources_Obj = {
     ],
 };
 ourTeam_Obj.createItems();
+var clientOpinions_Obj = {
+    mainEl: document.getElementsByClassName('opinion-box')[0],
+    colAm: 4,
+    colWdt: 283,
+    colArn: 0,
+    optItmWidtTypeAR: [],
+    optItmWidtTypeAR_TransfBord: [],
+    colAmPerTransfBord: [],
+    setCol: function () {
+        var _this = this;
+        for (var i = 0; i < this.colAm; i++) {
+            this.optItmWidtTypeAR[i] = (this.colWdt * (i + 1));
+            this.optItmWidtTypeAR_TransfBord[i] = this.optItmWidtTypeAR[i];
+        }
+        ;
+        this.optItmWidtTypeAR = this.optItmWidtTypeAR.reverse();
+        this.optItmWidtTypeAR_TransfBord.map(function (el, i, arr) {
+            return arr[i] = el + 388; // 320 - do krawędzi + (34 x 2) padding
+        });
+        this.optItmWidtTypeAR_TransfBord = this.optItmWidtTypeAR_TransfBord.reverse();
+        var cmaptb_idx = 0;
+        for (var i = this.colAm; i > 0; i--) {
+            this.colAmPerTransfBord[cmaptb_idx] = i;
+            cmaptb_idx += 1;
+        }
+        ;
+        this.optItmWidtTypeAR_TransfBord[0] = Infinity;
+        this.optItmWidtTypeAR_TransfBord[this.optItmWidtTypeAR_TransfBord.length] = -200;
+        console.log(this.optItmWidtTypeAR);
+        console.log(this.optItmWidtTypeAR_TransfBord);
+        console.log(this.colAmPerTransfBord);
+        ['load', 'resize'].forEach(function (ev) {
+            window.addEventListener(ev, function () {
+                for (var i = 0; i < _this.colAmPerTransfBord.length; i++) {
+                    if (window.innerWidth < _this.optItmWidtTypeAR_TransfBord[i] && window.innerWidth >= _this.optItmWidtTypeAR_TransfBord[i + 1]) {
+                        _this.colAm = _this.colAmPerTransfBord[i];
+                        var mainELWdtVal = _this.optItmWidtTypeAR[i];
+                        _this.mainEl.style.width = mainELWdtVal + 'px';
+                        console.log(_this.optItmWidtTypeAR[i]);
+                        console.log(_this.colAm);
+                        var mainBox_ChildrenNL = _this.mainEl.children;
+                        if (mainBox_ChildrenNL.length > 0) {
+                            for (var i_1 = mainBox_ChildrenNL.length - 1; i_1 >= 0; i_1--) {
+                                _this.mainEl.removeChild(_this.mainEl.lastChild);
+                            }
+                            ;
+                        }
+                        else { }
+                        mainBox_ChildrenNL = _this.mainEl.children;
+                        if (mainBox_ChildrenNL.length === 0) {
+                            // Tworzenie masonry kolumn:
+                            for (var i_2 = 0; i_2 < _this.colAm; i_2++) {
+                                // Several elements:
+                                var opnColEL = document.createElement('div');
+                                opnColEL.setAttribute('class', 'option-col');
+                                opnColEL.style.width = _this.colWdt + 'px';
+                                _this.mainEl.appendChild(opnColEL);
+                                /*let opnTitBoxEL = document.createElement('div');
+                                let opnTitImgBoxEL = document.createElement('div');
+                                //
+                                let opnTextBoxEL = document.createElement('div');
+                                let opnTitPrpEL = document.createElement('div');
+                                let opnTitPrpTN = document.createTextNode('imię i nazwisko');
+                                let opnDatEL = document.createElement('div');
+                                let opnDatTN = document.createTextNode('data');
+                                opnTitBoxEL.setAttribute('class', 'opn-tit-box');
+                                opnTitImgBoxEL.setAttribute('class', 'opn-img-box');
+                                //
+                                opnTextBoxEL.setAttribute('class', 'opn-txt-box');
+                                opnTitPrpEL.setAttribute('class', 'opn-txt-tit');
+                                opnDatEL.setAttribute('class', 'opn-txt-dat');
+                                // User name row:
+                                opnTitBoxEL.appendChild(opnTitImgBoxEL);
+                                opnTitBoxEL.appendChild(opnTextBoxEL);
+                                opnTitPrpEL.appendChild(opnTitPrpTN);
+                                opnTextBoxEL.appendChild(opnTitPrpEL);
+                                opnDatEL.appendChild(opnDatTN);
+                                opnTextBoxEL.appendChild(opnDatEL);
+                                opnColEL.appendChild(opnTitBoxEL);*/
+                            }
+                            ;
+                            // Tworzenie masonry elementów:
+                            for (var el = 0; el < clientOpinions_Sources_Obj.name.length; el++) {
+                                var opnColAR = [];
+                                var opnColHgh = [];
+                                for (var i_3 = 0; i_3 < document.querySelectorAll('div.option-col').length; i_3++) {
+                                    opnColAR[i_3] = document.querySelectorAll('div.option-col')[i_3];
+                                    var opnColBoun = opnColAR[i_3].getBoundingClientRect();
+                                    opnColHgh[i_3] = opnColBoun.height;
+                                }
+                                ;
+                                console.log(opnColHgh);
+                                var mostMinVal = Infinity;
+                                for (var i_4 = 0; i_4 < opnColHgh.length; i_4++) {
+                                    if (opnColHgh[i_4] < mostMinVal) {
+                                        mostMinVal = opnColHgh[i_4];
+                                    }
+                                    else { }
+                                }
+                                ;
+                                console.log("MOST_MIN_VAL: ".concat(mostMinVal));
+                                for (var i_5 = 0; i_5 < opnColHgh.length; i_5++) {
+                                    if (opnColHgh[i_5] === mostMinVal) {
+                                        var targetBox = document.querySelectorAll('div.option-col')[i_5];
+                                        var opnItmBoxEL = document.createElement('div');
+                                        opnItmBoxEL.setAttribute('class', 'opn-item-box');
+                                        // User name row:
+                                        var opnTitBoxEL = document.createElement('div');
+                                        var opnTitImgBoxEL = document.createElement('div');
+                                        var opnTitImgBoxTN = document.createTextNode(clientOpinions_Sources_Obj.imgLtr[el]);
+                                        var opnTextBoxEL = document.createElement('div');
+                                        var opnTitPrpEL = document.createElement('div');
+                                        var opnTitPrpTN = document.createTextNode(clientOpinions_Sources_Obj.name[el]);
+                                        var opnDatEL = document.createElement('div');
+                                        var opnDatTN = document.createTextNode(clientOpinions_Sources_Obj.date[el]);
+                                        opnTitBoxEL.setAttribute('class', 'opn-tit-box');
+                                        opnTitImgBoxEL.setAttribute('class', 'opn-img-box');
+                                        opnTitImgBoxEL.style.backgroundColor = clientOpinions_Sources_Obj.imgBchCl[el];
+                                        opnTextBoxEL.setAttribute('class', 'opn-txt-box');
+                                        opnTitPrpEL.setAttribute('class', 'opn-txt-tit');
+                                        opnDatEL.setAttribute('class', 'opn-txt-dat');
+                                        opnItmBoxEL.appendChild(opnTitBoxEL);
+                                        opnTitBoxEL.appendChild(opnTitImgBoxEL);
+                                        opnTitImgBoxEL.appendChild(opnTitImgBoxTN);
+                                        opnTitBoxEL.appendChild(opnTextBoxEL);
+                                        opnTitPrpEL.appendChild(opnTitPrpTN);
+                                        opnTextBoxEL.appendChild(opnTitPrpEL);
+                                        opnDatEL.appendChild(opnDatTN);
+                                        opnTextBoxEL.appendChild(opnDatEL);
+                                        // Stars Box:
+                                        //
+                                        // Description box:
+                                        var opnDscBoxEL = document.createElement('div');
+                                        var opnDscPrpEL = document.createElement('div');
+                                        var opnDscPrpTN = document.createTextNode(clientOpinions_Sources_Obj.opinion[el]);
+                                        opnDscBoxEL.setAttribute('class', 'opn-dsc-box');
+                                        opnDscPrpEL.setAttribute('class', 'opn-dsc-prp');
+                                        opnDscPrpEL.appendChild(opnDscPrpTN);
+                                        opnDscBoxEL.appendChild(opnDscPrpEL);
+                                        opnItmBoxEL.appendChild(opnDscBoxEL);
+                                        // Finaly connect:
+                                        targetBox.appendChild(opnItmBoxEL);
+                                        break; //      M E G A   W A Ż N E   I N F O   !
+                                        // break - odnosi się do aktualnie wykonywanego if / else if,
+                                        // a nie jak return - do całej funkcji
+                                    }
+                                    else { }
+                                }
+                                ;
+                            }
+                            ;
+                        }
+                        else { }
+                    }
+                    else { }
+                }
+                ;
+            }, false);
+        });
+    }
+};
+var clientOpinions_Sources_Obj = {
+    imgBchCl: [
+        'crimson',
+        'steelblue',
+        'green',
+        'orangered',
+        'cornflowerblue',
+        '#777',
+        'purple',
+        'brown',
+        'cadetblue',
+    ],
+    imgLtr: [],
+    name: [
+        'Amanda Onshee',
+        'Alex Hawking',
+        'John Wick',
+        'Peter Kick',
+        'Samara Brown',
+        'Joseph Smith',
+        'Carl Washington',
+        'Smoke Big',
+        'Tyson Warner'
+    ],
+    date: [
+        '1 days ago',
+        '3 days ago',
+        '5 weeks ago',
+        '5 week ago',
+        '7 days ago',
+        '7 days ago',
+        '9 days ago',
+        '12 days ago',
+        '13 days ago'
+    ],
+    opinion: [
+        'I am very pleased with the purchase of this villa. My husband and I were previously looking for a residence for eight wasps, but the prices were astronomical. I managed to buy a beautiful property with you twice as cheaply as with other sellers.',
+        'Professional service as well as the purchased house. Mr. Carl is a real expert in consulting.',
+        'I was looking for a small house in a quiet place near the city. With your company, and especially with Ms. Sarah, my problem was solved in no time and decently',
+        'The apartment I bought from you works great. Everything is richly made, no scratches or scuffs. You are doing a wonderful job.',
+        'I was looking for a modest and functional house in a small town. Your company gave me everything I needed. I recommend you to everyone with all my heart.',
+        'For a long time I had trouble choosing the right apartment for me due to my poor physical condition. Ms. Annah quickly helped me choose the perfect apartment for me, on the ground floor.',
+        'I finally have the house of my dreams. You guys are great, this whole company is great, especially Mr. Walter and his gift of finding homes.',
+        'I look of ideal house for me in over Los Santos and I can\'t find them, so I decide to make us from your company. Now I living in huge mansion and I\'am so happy! Oooh I thank you very much!',
+        'It\'s amazing. So that I contacted you and the next day you showed me this wonderful parament. Your properties deserve a big five stars!'
+    ],
+    setLtr: function () {
+        for (var i = 0; i < this.name.length; i++) {
+            this.imgLtr[i] = this.name[i].slice(0, 1);
+        }
+        ;
+        //console.log(this.imgLtr);
+    }
+};
+clientOpinions_Sources_Obj.setLtr();
+clientOpinions_Obj.setCol();
+var footerImg_Obj = {
+    imgBox: document.querySelector('img.footer-icons-prp'),
+    setAttr: function () {
+        this.imgBox.setAttribute('src', 'hb-images-worker/social-media-5995266_1280.png');
+        this.imgBox.setAttribute('alt', 'social-media-icons');
+    }
+};
+footerImg_Obj.setAttr();
 /* // Patrykowe różne rzeczy
 // Domknięcie - tzw. "Curring". Wiem o co w tym chodzi, ale ciężko mi jesst to opisać.
 // Po prostu zwracana funkcja zagnieżdżona ma zapisany zakres funkcji, w której została
