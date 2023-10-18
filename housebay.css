@@ -590,7 +590,7 @@ body {
                         min-width: 200px;
                         height: 600px;
                         border-radius: 5px;
-                        box-shadow: 0px 1px 8px 2px #999;
+                        box-shadow: 0px 1px 8px 3px #AAA;
                     }
                     .bi-content-tit {
                         font-family: 'Montserrat', sans-serif;
