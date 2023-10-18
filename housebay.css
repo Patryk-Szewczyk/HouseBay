@@ -1261,9 +1261,9 @@ body {
         background-color: black;
     }
         .footer-grid {
-            width: 1132px;
+            width: 100%;
             min-width: 270px;
-            max-width: 1200px;
+            max-width: 1132px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(270px, auto));
             grid-auto-columns: auto;
