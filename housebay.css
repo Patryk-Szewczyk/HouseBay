@@ -577,9 +577,6 @@ body {
                 align-items: center;
                 border: 0px solid green;
             }
-            .bi-img-box {
-                box-shadow: 0px 0px 0px 0px #555;
-            }
                 .bi-img-box img, .bi-content div {
                     border: 0px solid green;
                 }
@@ -592,7 +589,8 @@ body {
                         max-width: 300px;
                         min-width: 200px;
                         height: 600px;
-                        box-shadow: 0px 0px 10px 0px #AAA;
+                        border-radius: 5px;
+                        box-shadow: 0px 1px 8px 2px #999;
                     }
                     .bi-content-tit {
                         font-family: 'Montserrat', sans-serif;
