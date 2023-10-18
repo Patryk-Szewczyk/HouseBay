@@ -533,6 +533,10 @@ body {
             width: 100%;
             height: 70px;
         }
+        .content-space-type-7 {
+            width: 100%;
+            height: 180px;
+        }
         .infoTitle {
             width: 100%;
             height: 100%;
@@ -1249,7 +1253,7 @@ body {
     .footer-box {
         width: 100%;
         height: auto;
-        padding: 80px 68px;
+        padding: 80px 68px 72px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -1257,7 +1261,7 @@ body {
         background-color: black;
     }
         .footer-grid {
-            width: 100%;
+            width: 1132px;
             min-width: 270px;
             max-width: 1200px;
             display: grid;
