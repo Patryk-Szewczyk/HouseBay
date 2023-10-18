@@ -1418,7 +1418,7 @@ ourTeam_Obj.createItems();
 var clientOpinions_Obj = {
     mainEl: document.getElementsByClassName('opinion-box')[0],
     colAm: 4,
-    colWdt: 283,
+    colWdt: 250,
     colArn: 0,
     optItmWidtTypeAR: [],
     optItmWidtTypeAR_TransfBord: [],
@@ -1545,7 +1545,14 @@ var clientOpinions_Obj = {
                                         opnDatEL.appendChild(opnDatTN);
                                         opnTextBoxEL.appendChild(opnDatEL);
                                         // Stars Box:
-                                        //
+                                        var opnStsBoxEL = document.createElement('div');
+                                        var opnStsPrpEL = document.createElement('img');
+                                        opnStsBoxEL.setAttribute('class', 'opn-stars-box');
+                                        opnStsPrpEL.setAttribute('class', 'opn-stars-prp');
+                                        opnStsPrpEL.setAttribute('src', 'hb-images-opinions/five-stars-7292866_640.png');
+                                        opnStsPrpEL.setAttribute('alt', 'five-stars');
+                                        opnStsBoxEL.appendChild(opnStsPrpEL);
+                                        opnItmBoxEL.appendChild(opnStsBoxEL);
                                         // Description box:
                                         var opnDscBoxEL = document.createElement('div');
                                         var opnDscPrpEL = document.createElement('div');
@@ -1619,7 +1626,7 @@ var clientOpinions_Sources_Obj = {
         'I was looking for a modest and functional house in a small town. Your company gave me everything I needed. I recommend you to everyone with all my heart.',
         'For a long time I had trouble choosing the right apartment for me due to my poor physical condition. Ms. Annah quickly helped me choose the perfect apartment for me, on the ground floor.',
         'I finally have the house of my dreams. You guys are great, this whole company is great, especially Mr. Walter and his gift of finding homes.',
-        'I look of ideal house for me in over Los Santos and I can\'t find them, so I decide to make us from your company. Now I living in huge mansion and I\'am so happy! Oooh I thank you very much!',
+        'I was looking for the perfect home for myself in over Los Santos and I couldn\'t find it, so I decided to contact with your company. Now I living in huge mansion and I\'am so happy! Oooh I thank you very much and especially Carl Johnson!',
         'It\'s amazing. So that I contacted you and the next day you showed me this wonderful parament. Your properties deserve a big five stars!'
     ],
     setLtr: function () {
