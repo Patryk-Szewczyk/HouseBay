@@ -936,12 +936,12 @@ body {
             background-color: white;
             transition-duration: 0.2s;
             border-radius: 5px;
-            box-shadow: 0px 3px 6px 0px #BBB;
+            box-shadow: 0px 3px 5px 0px #555;
             overflow: hidden;
         }
         .general-news-box > div:hover {
             cursor: pointer;
-            box-shadow: 0px 5px 9px 0px #888;
+            box-shadow: 0px 3px 10px 1px #333;
             transition-duration: 0.2s;
         }
             .news > img {
@@ -1155,7 +1155,7 @@ body {
                 .opn-tit-box {
                     width: 100%;
                     height: auto;
-                    padding: 23px 23px 8px;
+                    padding: 23px 23px 0px;
                     display: flex;
                     flex-direction: row;
                     justify-content: flex-start;
@@ -1219,7 +1219,7 @@ body {
                 .opn-stars-box {
                     width: 100%;
                     height: auto;
-                    padding: 2px 23px 4px;
+                    padding: 10px 23px 0px;
                     display: flex;
                     flex-direction: row;
                     justify-content: flex-start;
@@ -1236,7 +1236,7 @@ body {
                 .opn-dsc-box {
                     width: 100%;
                     height: auto;
-                    padding: 3px 23px 17px;
+                    padding: 8px 23px 17px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -1253,7 +1253,7 @@ body {
     .footer-box {
         width: 100%;
         height: auto;
-        padding: 80px 68px 72px;
+        padding: 80px 68px 74px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -1303,6 +1303,10 @@ body {
                 color: rgba(255, 235, 235, 1.0);
                 transition-duration: 0.2s;
             }
+            .footer-col ul li:nth-child(1n + 2)::selection {
+                color: rgba(255, 235, 235, 1.0);
+                background-color: inherit;
+            }
             .footer-col ul li:nth-child(1n + 2)::before {
                 content: '';
                 position: absolute;
@@ -1349,6 +1353,9 @@ body {
                 .footer-icons-prp {
                     width: 150px;
                     height: 30px;
+                }
+                .footer-icons-prp:hover {
+                    cursor: pointer;
                 }
 }
 
