@@ -1066,52 +1066,52 @@ const productSlider_Sources_Obj: {
     ],
     pdcSldSrc_Dsc: [
         [   // Prooduct slider #1
-            'Dom na sprzedaż: Łódź, Wapienna 4',
-            'Dom na sprzedaż: Toruń, Drzymały 23',
-            'Dom na sprzedaż: Łódź, Rukocka 11',
-            'Dom na sprzedaż: Piaseczno, Mała 3',
-            'Dom na sprzedaż: Poznań, Perłowa 93',
-            'Dom na sprzedaż: Puck, Długa 10',
-            'Dom na sprzedaż: Kraków, Zamkowa 2',
-            'Dom na sprzedaż: Kraków, Podła 55',
-            'Dom na sprzedaż: Łódź, Drewnowska 9',
-            'Dom na sprzedaż: Zwoleń, Alejkowa 7',
-            'Dom na sprzedaż: Kozienice, Gruba 77',
-            'Dom na sprzedaż: Pionki, Piękna 42',
-            'Dom na sprzedaż: Warszawa, Zielona 4',
-            'Dom na sprzedaż: Warszawa, Maja 93',
-            'Dom na sprzedaż: Radom, Stara 237'
+            'House for sale: Łódź, Wapienna 4',
+            'House for sale: Toruń, Drzymały 23',
+            'House for sale: Łódź, Rukocka 11',
+            'House for sale: Piaseczno, Mała 3',
+            'House for sale: Poznań, Perłowa 93',
+            'House for sale: Puck, Długa 10',
+            'House for sale: Kraków, Zamkowa 2',
+            'House for sale: Kraków, Podła 55',
+            'House for sale: Łódź, Drewnowska 9',
+            'House for sale: Zwoleń, Alejkowa 7',
+            'House for sale: Kozienice, Gruba 77',
+            'House for sale: Pionki, Piękna 42',
+            'House for sale: Warszawa, Zielona 4',
+            'House for sale: Warszawa, Maja 93',
+            'House for sale: Radom, Stara 237'
         ],
         [   // Prooduct slider #2
-            'Dom na sprzedarz: Warszawa, Mokotów',
-            'Dom na sprzedarz: Warszawa, Młynów',
-            'Dom na sprzedarz: Warszawa, Filtry',
-            'Dom na sprzedarz: Warszawa, Radość',
-            'Dom na sprzedarz: Katowice, Bogucice',
-            'Dom na sprzedarz: Poznań, Wilda',
-            'Dom na sprzedarz: Kraków, Dąbie',
-            'Dom na sprzedarz: Nowy Sącz Wólki',
-            'Dom na sprzedarz: Radom Glinice'
+            'House for sale: Warszawa, Mokotów',
+            'House for sale: Warszawa, Młynów',
+            'House for sale: Warszawa, Filtry',
+            'House for sale: Warszawa, Radość',
+            'House for sale: Katowice, Bogucice',
+            'House for sale: Poznań, Wilda',
+            'House for sale: Kraków, Dąbie',
+            'House for sale: Nowy Sącz Wólki',
+            'House for sale: Radom Glinice'
         ],
         [   // Prooduct slider #3
-            'Mieszkanie na sprzedaż: Warszawa',
-            'Mieszkanie na sprzedaż: Warszawa',
-            'Mieszkanie na sprzedaż: Warszawa',
-            'Mieszkanie na sprzedaż: Kraków',
-            'Mieszkanie na sprzedaż: Warszawa',
-            'Mieszkanie na sprzedaż: Warszawa',
-            'Mieszkanie na sprzedaż: Poznań',
-            'Mieszkanie na sprzedaż: Kraków',
-            'Mieszkanie na sprzedaż: Warszawa',
-            'Mieszkanie na sprzedaż: Radom',
-            'Mieszkanie na sprzedaż: Łódź',
-            'Mieszkanie na sprzedaż: Poznań',
-            'Mieszkanie na sprzedaż: Lublin',
-            'Mieszkanie na sprzedaż: Wrocław',
-            'Mieszkanie na sprzedaż: Warszawa',
-            'Mieszkanie na sprzedaż: Warszawa',
-            'Mieszkanie na sprzedaż: Warszawa',
-            'Mieszkanie na sprzedaż: Solina'
+            'Apartament for sale: Warszawa',
+            'Apartament for sale: Warszawa',
+            'Apartament for sale: Warszawa',
+            'Apartament for sale: Kraków',
+            'Apartament for sale: Warszawa',
+            'Apartament for sale: Warszawa',
+            'Apartament for sale: Poznań',
+            'Apartament for sale: Kraków',
+            'Apartament for sale: Warszawa',
+            'Apartament for sale: Radom',
+            'Apartament for sale: Łódź',
+            'Apartament for sale: Poznań',
+            'Apartament for sale: Lublin',
+            'Apartament for sale: Wrocław',
+            'Apartament for sale: Warszawa',
+            'Apartament for sale: Warszawa',
+            'Apartament for sale: Warszawa',
+            'Apartament for sale: Solina'
         ]
     ],
     pdcSldSrc_Area: [
@@ -1520,9 +1520,9 @@ const clientOpinions_Obj: {
         };
         this.optItmWidtTypeAR_TransfBord[0] = Infinity;
         this.optItmWidtTypeAR_TransfBord[this.optItmWidtTypeAR_TransfBord.length] = -200;
-        console.log(this.optItmWidtTypeAR);
-        console.log(this.optItmWidtTypeAR_TransfBord);
-        console.log(this.colAmPerTransfBord);
+        //console.log(this.optItmWidtTypeAR);   // ! --> IMPOSTANT CONSOLE_LOF <-- !
+        //console.log(this.optItmWidtTypeAR_TransfBord);   // ! --> IMPOSTANT CONSOLE_LOF <-- !
+        //console.log(this.colAmPerTransfBord);   // ! --> IMPOSTANT CONSOLE_LOF <-- !
         ['load', 'resize'].forEach((ev) => {
             window.addEventListener(ev, () => {
                 for (let i: number = 0; i < this.colAmPerTransfBord.length; i++) {
@@ -1530,8 +1530,8 @@ const clientOpinions_Obj: {
                         this.colAm = this.colAmPerTransfBord[i];
                         let mainELWdtVal = this.optItmWidtTypeAR[i];
                         this.mainEl.style.width = mainELWdtVal + 'px';
-                        console.log(this.optItmWidtTypeAR[i]);
-                        console.log(this.colAm);
+                        //console.log(this.optItmWidtTypeAR[i]);   // ! --> IMPOSTANT CONSOLE_LOF <-- !
+                        //console.log(this.colAm);   // ! --> IMPOSTANT CONSOLE_LOF <-- !
                         let mainBox_ChildrenNL = this.mainEl.children;
                         if (mainBox_ChildrenNL.length > 0) {
                             for (let i: number = mainBox_ChildrenNL.length - 1; i >= 0; i--) {
