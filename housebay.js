@@ -1,36 +1,57 @@
 // Strona ta to: agencja nieruchomości
-document.addEventListener('DOMContentLoaded', function () {
-    setTimeout(function () {
-        var one = document.getElementById('splash-screen');
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {   // IN WORK
+        let one: HTMLElement = document.getElementById('splash-screen');
         //let two: HTMLDivElement = document.querySelector('div.website-content');
         one.style.display = 'none';
         //two.style.display = 'block';
     }, 1800);
 }, false);
+
+
 function createContent() {
+
 }
-var RWD_info_Obj = {
+
+
+const RWD_info_Obj: {
+    phone: number,
+    desktop: number
+    //sliderDescExtraWidthValFunc: Function
+} = {
     phone: 0,
     desktop: 900,
     //sliderDescExtraWidthValFunc
 };
-var navbar_Mobile_Obj = {
+
+
+
+const navbar_Mobile_Obj: {
+    windowWidth: number,
+    isShowed: boolean,
+    eventsPageLoad: string[],
+    eventsWindow: string[],
+    eventsClick: string[],
+    setNavbar: Function,
+    setNavPgTitBxWdt: Function,
+    navMoving: Function
+} = {
     windowWidth: 0,
     isShowed: false,
     eventsPageLoad: ['load'],
     eventsWindow: ['load', 'resize'],
     eventsClick: ['click', 'touchend'],
-    setNavbar: function () {
-        var _this = this;
-        var navbarEL = document.querySelector('nav.navbar-box');
-        this.eventsPageLoad.forEach(function (ev) {
-            window.addEventListener(ev, function () {
-                if (_this.windowWidth < RWD_info_Obj.desktop) {
+    setNavbar(): void {
+        let navbarEL: HTMLDivElement = document.querySelector('nav.navbar-box');
+        this.eventsPageLoad.forEach((ev) => {
+            window.addEventListener(ev, () => {
+                if (this.windowWidth < RWD_info_Obj.desktop) {
                     navbarEL.style.top = 0 + 'px';
                     navbarEL.style.transitionDelay = 0.1 + 's';
                     navbarEL.style.transitionDuration = 0.6 + 's';
-                }
-                else if (_this.windowWidth >= RWD_info_Obj.desktop) {
+                } else if (this.windowWidth >= RWD_info_Obj.desktop) {
                     navbarEL.style.top = 0 + 'px';
                     navbarEL.style.transitionDelay = 0.1 + 's';
                     navbarEL.style.transitionDuration = 0.6 + 's';
@@ -39,7 +60,7 @@ var navbar_Mobile_Obj = {
         });
         this.setNavPgTitBxWdt();
     },
-    setNavPgTitBxWdt: function () {
+    setNavPgTitBxWdt(): void {
         // Eksperynet: (Cel: wyśrodkowanie tytułu strony)
         // Iteracja po indeksach typu "string" obiektu "Map" za pomocą indeksów z wartością 
         // "string" innej tablicy (odpowiadającej nazwą indeksów z obiektu "Map"):
@@ -70,62 +91,60 @@ var navbar_Mobile_Obj = {
         });*/
         this.navMoving();
     },
-    navMoving: function () {
-        var _this = this;
-        var navBut = document.querySelector('div.page-dropdown-button-proper');
-        var navCntBx = document.querySelector('div.navbar-mobile-content-box');
-        var topStrip = document.querySelector('div.bs-top');
-        var centerStrip = document.querySelector('div.bs-center');
-        var bottomStrip = document.querySelector('div.bs-bottom');
-        var navButGroup = document.querySelector('div.navbar-mobile-button-group');
-        this.eventsClick.forEach(function (ev) {
-            navBut.addEventListener(ev, function () {
-                if (_this.isShowed === false) { // Show
+    navMoving(): void {   // - mobile nav button
+        const navBut: HTMLDivElement = document.querySelector('div.page-dropdown-button-proper');
+        const navCntBx: HTMLDivElement = document.querySelector('div.navbar-mobile-content-box');
+        const topStrip: HTMLDivElement = document.querySelector('div.bs-top');
+        const centerStrip: HTMLDivElement = document.querySelector('div.bs-center');
+        const bottomStrip: HTMLDivElement = document.querySelector('div.bs-bottom');
+        const navButGroup: HTMLDivElement = document.querySelector('div.navbar-mobile-button-group');
+        this.eventsClick.forEach((ev) => {
+            navBut.addEventListener(ev, () => {
+                if (this.isShowed === false) {   // Show
                     // Navbar content:
-                    var toHgt = window.innerHeight;
+                    let toHgt: number = window.innerHeight;
                     navCntBx.style.height = (60 + (42 * 6) + 17) + 'px';
                     navCntBx.style.transitionDuration = 0.4 + 's';
                     navButGroup.style.top = 0 + 'px';
                     navButGroup.style.transitionDuration = 0.4 + 's';
                     // Navbar strips:
-                    var toCenterPos = (((60 - 18) / 2) / 2) - 0.5;
+                    let toCenterPos: number = (((60 - 18) / 2) / 2) -0.5;
                     topStrip.style.top = toCenterPos + 'px';
                     topStrip.style.transitionDuration = 0.3 + 's';
                     bottomStrip.style.bottom = toCenterPos + 'px';
                     bottomStrip.style.transitionDuration = 0.3 + 's';
-                    setTimeout(function () {
+                    setTimeout(() => {
                         centerStrip.style.opacity = '0.0';
                         topStrip.style.transform = 'rotate(' + 45 + 'deg)';
                         topStrip.style.transitionDuration = 0.3 + 's';
                         bottomStrip.style.transform = 'rotate(' + -45 + 'deg)';
                         bottomStrip.style.transitionDuration = 0.3 + 's';
                     }, 300);
-                    setTimeout(function () {
-                        _this.isShowed = true;
+                    setTimeout(() => {
+                        this.isShowed = true;
                         //console.log(this.isShowed);   // ! --> IMPORTANT CONSOLLOG <-- !
                     }, 600);
-                }
-                else if (_this.isShowed === true) { // Hide
+                } else if (this.isShowed === true) {   // Hide
                     // Navbar content:
                     navCntBx.style.height = 60 + 'px';
                     navCntBx.style.transitionDuration = 0.4 + 's';
                     navButGroup.style.top = -301 + 'px';
                     navButGroup.style.transitionDuration = 0.4 + 's';
                     // Navbar strips:
-                    var resetPos_1 = 0;
+                    let resetPos: number = 0;
                     topStrip.style.transform = 'rotate(' + 0 + 'deg)';
                     topStrip.style.transitionDuration = 0.3 + 's';
                     bottomStrip.style.transform = 'rotate(' + 0 + 'deg)';
                     bottomStrip.style.transitionDuration = 0.3 + 's';
-                    setTimeout(function () {
+                    setTimeout(() => {
                         centerStrip.style.opacity = '1.0';
-                        topStrip.style.top = resetPos_1 + 'px';
+                        topStrip.style.top = resetPos + 'px';
                         topStrip.style.transitionDuration = 0.3 + 's';
-                        bottomStrip.style.bottom = resetPos_1 + 'px';
+                        bottomStrip.style.bottom = resetPos + 'px';
                         bottomStrip.style.transitionDuration = 0.3 + 's';
                     }, 300);
-                    setTimeout(function () {
-                        _this.isShowed = false;
+                    setTimeout(() => {
+                        this.isShowed = false;
                         //console.log(this.isShowed);   // ! --> IMPORTANT CONSOLLOG <-- !
                     }, 600);
                 }
@@ -134,12 +153,36 @@ var navbar_Mobile_Obj = {
     }
 };
 navbar_Mobile_Obj.setNavbar();
-var slider_Obj = {
+
+
+
+const slider_Obj: {
+    windowHeight: number,
+    windowWidth: number,
+    imageAmount: number,
+    currentImg: number,
+    sliderDescExtraWidth: number,
+    blockadeImg: boolean,
+    eventsWindowTable: string[],
+    eventsClickTable: string[],
+    imagesArray: HTMLDivElement[],
+    stateELNodeList: HTMLDivElement[],
+    setWinBdHeight: Function,
+    createSldELS: Function,
+    returnSliderTitELS: Function,
+    returnSliderDescELS: Function,
+    returnSliderButELS: Function,
+    setSliderDescWidthAEL: Function,
+    createSldImgStateEL: Function,
+    setAEL_SldMoving: Function,
+    setAEL_ImgLeftResize: Function,
+    positingSldEl: Function
+} = {
     // UWAGA: Wywołanie właściwość "length" spowoduje, iż typem wynikowym bęzie "number",
     // a nie "HTMLDivElement" w przypadku braku właściwości "length".
     windowHeight: window.innerHeight,
     windowWidth: window.innerWidth,
-    imageAmount: 6,
+    imageAmount: 6,   // RUCHOMA WARTOŚĆ - wartość jest równoważna z ilością zdjęć do image slidera
     currentImg: 0,
     sliderDescExtraWidth: 0,
     blockadeImg: false,
@@ -147,21 +190,20 @@ var slider_Obj = {
     eventsClickTable: ['click', 'touchend'],
     imagesArray: [],
     stateELNodeList: [],
-    setWinBdHeight: function () {
-        var _this = this;
-        var windowBodyEL = document.querySelector('div.window-block');
-        this.eventsWindowTable.forEach(function (ev) {
-            window.addEventListener(ev, function () {
-                _this.windowHeight = window.innerHeight;
-                windowBodyEL.style.height = _this.windowHeight + 'px';
+    setWinBdHeight(): void {
+        const windowBodyEL: HTMLDivElement = document.querySelector('div.window-block');
+        this.eventsWindowTable.forEach((ev) => {
+            window.addEventListener(ev, () => {
+                this.windowHeight = window.innerHeight;
+                windowBodyEL.style.height = this.windowHeight + 'px';
                 //console.log(this.windowHeight);
             });
         });
         slider_Obj.createSldELS();
     },
-    createSldELS: function () {
-        var sliderParentBox = document.querySelector('div.img-slider-body');
-        var sldTitTxt = [
+    createSldELS(): void {
+        const sliderParentBox: HTMLDivElement = document.querySelector('div.img-slider-body');
+        const sldTitTxt: string[] = [
             'Your dream house',
             'True constructions',
             'Modern design',
@@ -169,7 +211,7 @@ var slider_Obj = {
             'Ideal locations',
             'Simple and modest',
         ];
-        var sldDscTxt = [
+        const sldDscTxt: string[] = [
             'Our company will find the house of your dreams for you.',
             'Houses which we offer to clients are building from incredibly tough materials.',
             'Among our houses can mark out many style types. The once from them is modern style, which is currently hugely popular.',
@@ -177,21 +219,20 @@ var slider_Obj = {
             'All buildings are located in greater agglomerations as well as they be located close environments parks.',
             'Among a plenty our constructions also are simple style type houses. They are perfect choose for averege peoples.',
         ];
-        var sldTitTN = [];
-        var sldDscTN = [];
-        for (var i = 0; i < this.imageAmount; i++) {
+        const sldTitTN: Text[] = [];
+        const sldDscTN: Text[] = [];
+        for (let i = 0; i < this.imageAmount; i++) {
             sldTitTN[i] = document.createTextNode(sldTitTxt[i]);
             sldDscTN[i] = document.createTextNode(sldDscTxt[i]);
-        }
-        ;
-        for (var i = 0; i < this.imageAmount; i++) {
-            var sldDimEl = document.createElement('div');
-            var sldPrpEl = document.createElement('img');
-            var sldInfEL = document.createElement('div');
-            var sldInfHngEl = document.createElement('div');
-            var sldTitEL = document.createElement('div');
-            var sldDscEL = document.createElement('div');
-            var sldButEL = document.createElement('div');
+        };
+        for (let i = 0; i < this.imageAmount; i++) {
+            const sldDimEl: HTMLDivElement = document.createElement('div');
+            const sldPrpEl: HTMLImageElement = document.createElement('img');
+            const sldInfEL: HTMLDivElement = document.createElement('div');
+            const sldInfHngEl: HTMLDivElement = document.createElement('div');
+            const sldTitEL: HTMLDivElement = document.createElement('div');
+            const sldDscEL: HTMLDivElement = document.createElement('div');
+            const sldButEL: HTMLDivElement = document.createElement('div');
             sldDimEl.setAttribute('class', 'img-slider-img-dim');
             sldPrpEl.setAttribute('class', 'img-slider-img-prp');
             sldInfEL.setAttribute('class', 'img-slider-info-box');
@@ -200,7 +241,7 @@ var slider_Obj = {
             sldDscEL.setAttribute('class', 'img-slider-description');
             sldButEL.setAttribute('class', 'img-slider-button');
             sldPrpEl.setAttribute('src', 'hb-images-slider/img_' + (i + 1) + '.jpg');
-            sldPrpEl.setAttribute('alt', sldTitTxt[i]);
+            sldPrpEl.setAttribute('alt', sldTitTxt[i])
             sldDimEl.appendChild(sldPrpEl);
             sldTitEL.appendChild(sldTitTN[i]);
             sldInfHngEl.appendChild(sldTitEL);
@@ -210,13 +251,12 @@ var slider_Obj = {
             sldInfEL.appendChild(sldInfHngEl);
             sldDimEl.appendChild(sldInfEL);
             sliderParentBox.appendChild(sldDimEl);
-        }
-        ;
+        };
         // First img animation:
-        var el = document.querySelectorAll('img.img-slider-img-prp')[0];
+        let el: any = document.querySelectorAll('img.img-slider-img-prp')[0];
         el.style.height = 115 + '%';
         el.style.filter = 'brightness(100%)';
-        setTimeout(function () {
+        setTimeout(() => {
             el.style.height = 100 + '%';
             el.style.filter = 'brightness(30%)';
             el.style.transitionDuration = 1.4 + 's';
@@ -225,144 +265,128 @@ var slider_Obj = {
         slider_Obj.setSliderDescWidthAEL();
         slider_Obj.createSldImgStateEL();
     },
-    returnSliderTitELS: function () {
-        var sldTitELS = [];
-        for (var i = 0; i < this.imageAmount; i++) {
+    returnSliderTitELS() {
+        const sldTitELS: any[] = [];
+        for (let i = 0; i < this.imageAmount; i++) {
             sldTitELS[i] = document.querySelectorAll('div.img-slider-title')[i];
-        }
-        ;
+        };
         return sldTitELS;
     },
-    returnSliderDescELS: function () {
-        var sldDescELS = [];
-        for (var i = 0; i < this.imageAmount; i++) {
+    returnSliderDescELS() {
+        const sldDescELS: any[] = [];
+        for (let i = 0; i < this.imageAmount; i++) {
             sldDescELS[i] = document.querySelectorAll('div.img-slider-description')[i];
-        }
-        ;
+        };
         return sldDescELS;
     },
-    returnSliderButELS: function () {
-        var sldButELS = [];
-        for (var i = 0; i < this.imageAmount; i++) {
+    returnSliderButELS() {
+        const sldButELS: any[] = [];
+        for (let i = 0; i < this.imageAmount; i++) {
             sldButELS[i] = document.querySelectorAll('div.img-slider-button')[i];
-        }
-        ;
+        };
         return sldButELS;
     },
-    setSliderDescWidthAEL: function () {
-        var _this = this;
-        slider_Obj.eventsWindowTable.forEach(function (ev) {
-            window.addEventListener(ev, function () {
+    setSliderDescWidthAEL(): void {
+        slider_Obj.eventsWindowTable.forEach((ev) => {
+            window.addEventListener(ev, () => {
                 // Ustawienie szerokości bloku opisu, względem szerkości bloku tytułowego slidera (+ ~100px)
-                var sldDescELS = _this.returnSliderDescELS();
-                var sldTitELS = _this.returnSliderTitELS();
+                const sldDescELS: any[] = this.returnSliderDescELS();
+                const sldTitELS: any[] = this.returnSliderTitELS();
                 //console.log(sldDescELS);
-                var sldTitWdtVALS = [];
-                for (var i = 0; i < _this.imageAmount; i++) {
-                    var sldTitWdtVALS_CSS_Obj = window.getComputedStyle(sldTitELS[i], null);
-                    var sldTitWdtVALS_CSS_Val_Str = sldTitWdtVALS_CSS_Obj.getPropertyValue('width');
-                    var sldTitWdtVALS_CSS_Val_Num = Number(sldTitWdtVALS_CSS_Val_Str.slice(0, -2));
+                const sldTitWdtVALS: any[] = [];
+                for (let i = 0; i < this.imageAmount; i++) {
+                    const sldTitWdtVALS_CSS_Obj: CSSStyleDeclaration = window.getComputedStyle(sldTitELS[i], null);
+                    let sldTitWdtVALS_CSS_Val_Str: string = sldTitWdtVALS_CSS_Obj.getPropertyValue('width');
+                    let sldTitWdtVALS_CSS_Val_Num: number = Number(sldTitWdtVALS_CSS_Val_Str.slice(0, -2));
                     sldTitWdtVALS[i] = sldTitWdtVALS_CSS_Val_Num;
-                }
-                ;
+                };
                 if (window.innerWidth < RWD_info_Obj.desktop) {
-                    _this.extraWdt = 0;
-                }
-                else if (window.innerWidth >= RWD_info_Obj.desktop) {
-                    _this.extraWdt = 150;
+                    this.extraWdt = 0;
+                } else if (window.innerWidth >= RWD_info_Obj.desktop) {
+                    this.extraWdt = 150;
                     //console.log(this.extraWdt);   // ! --> IMPORTANT CONSOLLOG <-- !
                 }
-                if (window.innerWidth)
-                    sldTitWdtVALS.map(function (value, i) {
-                        sldTitWdtVALS[i] = value + _this.extraWdt;
-                    });
-                sldDescELS.forEach(function (value, i) {
-                    var toWdtVal = sldTitWdtVALS[i];
+                if (window.innerWidth )
+                sldTitWdtVALS.map((value, i) => {   // Modyfikowanie wartości szerokości
+                    sldTitWdtVALS[i] = value + this.extraWdt;
+                });
+                sldDescELS.forEach((value, i) => {   // Ustawianie szerokości dla każdego elementu
+                    let toWdtVal = sldTitWdtVALS[i];
                     sldDescELS[i].style.width = toWdtVal + 'px';
                 });
                 // Wywołanie kolejnej funkcji}, false);
             }, false);
         });
     },
-    createSldImgStateEL: function () {
-        var _this = this;
-        var stateParentEL = document.querySelector('div.iscb-ib-is-group-box');
-        for (var i = 0; i < this.imageAmount; i++) {
-            var stateEL = document.createElement('div');
+    createSldImgStateEL(): void {
+        const stateParentEL: HTMLDivElement = document.querySelector('div.iscb-ib-is-group-box');
+        for (let i = 0; i < this.imageAmount; i++) {
+            const stateEL: HTMLDivElement = document.createElement('div');
             stateEL.setAttribute('class', 'iscb-ib-is-once-box');
             stateParentEL.appendChild(stateEL);
-        }
-        ;
-        for (var i = 0; i < this.imageAmount; i++) {
+        };
+        for (let i = 0; i < this.imageAmount; i++) {
             this.stateELNodeList[i] = document.querySelectorAll('div.iscb-ib-is-once-box')[i];
             this.stateELNodeList[i].style.top = 40 + 'px';
             this.stateELNodeList[i].style.opacity = 0;
-        }
-        ;
-        var intervIndex = 0;
-        var intervFunc = setInterval(function () {
-            if (intervIndex < _this.imageAmount) {
-                _this.stateELNodeList[intervIndex].style.top = 0 + 'px';
-                _this.stateELNodeList[intervIndex].style.opacity = 1;
-                _this.stateELNodeList[intervIndex].style.transitionDuration = 0.2 + 's';
-            }
-            else if (intervIndex >= _this.imageAmount) {
+        };
+        let intervIndex: number = 0;
+        let intervFunc = setInterval(() => {
+            if (intervIndex < this.imageAmount) {
+                this.stateELNodeList[intervIndex].style.top = 0 + 'px';
+                this.stateELNodeList[intervIndex].style.opacity = 1;
+                this.stateELNodeList[intervIndex].style.transitionDuration = 0.2 + 's';
+            } else if (intervIndex >= this.imageAmount) {
                 clearInterval(intervFunc);
             }
             intervIndex += 1;
         }, 150);
+
         this.positingSldEl();
     },
-    positingSldEl: function () {
-        var _this = this;
-        ['load'].forEach(function (ev) {
-            window.addEventListener(ev, function () {
-                var sldTitELS = _this.returnSliderTitELS();
-                var sldDescELS = _this.returnSliderDescELS();
-                var sldButELS = _this.returnSliderButELS();
-                _this.windowWidth = window.innerWidth;
-                var siteScrollbarWidth = (window.innerWidth - document.documentElement.clientWidth + 10); // Szerokość stałego scrollbar'a strony
-                if (siteScrollbarWidth === undefined || siteScrollbarWidth === null)
-                    siteScrollbarWidth = 0;
-                var _loop_1 = function (i) {
-                    _this.imagesArray[i] = document.querySelectorAll('div.img-slider-img-dim')[i];
-                    if (i === 0) { // Stały indeks pierwszaego obrazu
-                        _this.imagesArray[i].style.left = 0 + 'px'; // (-) left i (+) left działają DOBRZE!
-                        _this.stateELNodeList[i].style.backgroundColor = 'rgba(255,255,255,0.8)';
-                        setTimeout(function () {
+    positingSldEl(): void {
+        ['load'].forEach((ev) => {   // UWAGA! MEGA WAŻNE! Jeżeli skończyłeś funkcję "resize" właściwośći "left"/"right", usuń stąd zdarzenie "resize", a zostaw samo "load"
+            window.addEventListener(ev, () => {
+                const sldTitELS: any[] = this.returnSliderTitELS();
+                const sldDescELS: any[] = this.returnSliderDescELS();
+                const sldButELS: any[] = this.returnSliderButELS();
+                this.windowWidth = window.innerWidth;
+                let siteScrollbarWidth: number = (window.innerWidth - document.documentElement.clientWidth + 10);   // Szerokość stałego scrollbar'a strony
+                if (siteScrollbarWidth === undefined || siteScrollbarWidth === null) siteScrollbarWidth = 0;
+                for (let i = 0; i < this.imageAmount; i++) {
+                    this.imagesArray[i] = document.querySelectorAll('div.img-slider-img-dim')[i];
+                    if (i === 0) {   // Stały indeks pierwszaego obrazu
+                        this.imagesArray[i].style.left = 0 + 'px';   // (-) left i (+) left działają DOBRZE!
+                        this.stateELNodeList[i].style.backgroundColor = 'rgba(255,255,255,0.8)';
+                        setTimeout(() => {
                             sldTitELS[i].style.top = 0 + 'px';
-                            sldTitELS[i].style.opacity = 1;
+                            sldTitELS[i].style.opacity = 1; 
                             sldTitELS[i].style.transitionDuration = 0.0 + 'px';
-                            setTimeout(function () {
+                            setTimeout(() => {
                                 sldDescELS[i].style.top = 0 + 'px';
-                                sldDescELS[i].style.opacity = 1;
+                                sldDescELS[i].style.opacity = 1; 
                                 sldDescELS[i].style.transitionDuration = 0.0 + 'px';
-                                setTimeout(function () {
+                                setTimeout(() => {
                                     sldButELS[i].style.top = 0 + 'px';
-                                    sldButELS[i].style.opacity = 1;
+                                    sldButELS[i].style.opacity = 1; 
                                     sldButELS[i].style.transitionDuration = 0.0 + 'px';
                                 }, 200);
                             }, 200);
                         }, 400);
-                        return "continue";
-                    }
-                    else { }
-                    _this.imagesArray[i].style.left = ((_this.windowWidth - siteScrollbarWidth) * 1) + 'px';
-                    _this.stateELNodeList[i].style.backgroundColor = 'rgba(200,200,200,0.6)';
+                        continue;
+                    } else {}
+                    this.imagesArray[i].style.left = ((this.windowWidth - siteScrollbarWidth) * 1) + 'px';
+                    this.stateELNodeList[i].style.backgroundColor = 'rgba(220,220,220,0.4)';
                 };
-                for (var i = 0; i < _this.imageAmount; i++) {
-                    _loop_1(i);
-                }
-                ;
                 // Arrows animation:
-                var arrowELS = [];
+                const arrowELS: HTMLDivElement[] = [];
                 arrowELS[0] = document.querySelector('div.iscb-leftArrow-proper');
                 arrowELS[1] = document.querySelector('div.iscb-rightArrow-proper');
                 arrowELS[0].style.left = 100 + 'px';
                 arrowELS[0].style.opacity = '0';
                 arrowELS[1].style.right = 100 + 'px';
                 arrowELS[1].style.opacity = '0';
-                setTimeout(function () {
+                setTimeout(() => {
                     arrowELS[0].style.left = 0 + 'px';
                     arrowELS[0].style.opacity = '1';
                     arrowELS[0].style.transitionDuration = 0.6 + 's';
@@ -374,190 +398,201 @@ var slider_Obj = {
         });
         this.setAEL_SldMoving();
     },
-    setAEL_SldMoving: function () {
-        var _this = this;
-        var addToLeftPx = 0;
-        var sliderBut = {
+    setAEL_SldMoving(): void {
+        let addToLeftPx: number = 0;
+        const sliderBut: { [index: string]: HTMLDivElement } = {
             left: document.querySelector('div.iscb-leftArrow-box'),
             right: document.querySelector('div.iscb-rightArrow-box')
         };
-        console.log('Aktualny obraz: ' + (this.currentImg + 1));
-        this.eventsClickTable.forEach(function (ev) {
-            var sldTitELS = _this.returnSliderTitELS();
-            var sldDescELS = _this.returnSliderDescELS();
-            var sldButELS = _this.returnSliderButELS();
-            sliderBut.right.addEventListener(ev, function () {
-                var imgSwitchLimit = (_this.imageAmount - 1); // Start = 0. Oper +1 = img_1 znika => img_2 pojawia się
-                if (_this.currentImg < imgSwitchLimit && _this.blockadeImg === false) {
-                    var siteScrollbarWidth = (window.innerWidth - document.documentElement.clientWidth); // Stały pasek przewijania na stronie
-                    if (siteScrollbarWidth === undefined || siteScrollbarWidth === null)
-                        siteScrollbarWidth = 0;
+        //console.log('Aktualny obraz: ' + (this.currentImg + 1));   // ! --> IMPORTANT CONSOLLOG <-- !
+        this.eventsClickTable.forEach((ev) => {
+            const sldTitELS: any[] = this.returnSliderTitELS();
+            const sldDescELS: any[] = this.returnSliderDescELS();
+            const sldButELS: any[] = this.returnSliderButELS();
+            sliderBut.right.addEventListener(ev, () => {
+                let imgSwitchLimit: number = (this.imageAmount - 1);   // Start = 0. Oper +1 = img_1 znika => img_2 pojawia się
+                if (this.currentImg < imgSwitchLimit && this.blockadeImg === false) {
+                    let siteScrollbarWidth: number = (window.innerWidth - document.documentElement.clientWidth);   // Stały pasek przewijania na stronie
+                    if (siteScrollbarWidth === undefined || siteScrollbarWidth === null) siteScrollbarWidth = 0;
                     // Image:
-                    _this.imagesArray[_this.currentImg].style.left = ((_this.windowWidth - siteScrollbarWidth) * -1) + 'px';
-                    _this.imagesArray[_this.currentImg].style.transitionDuration = 1.5 + 's';
+                    this.imagesArray[this.currentImg].style.left = ((this.windowWidth - siteScrollbarWidth) * -1) + 'px';
+                    this.imagesArray[this.currentImg].style.transitionDuration = 1.5 + 's';
                     // Info:
-                    setTimeout(function () {
-                        sldTitELS[_this.currentImg].style.top = 0 + 'px';
-                        sldTitELS[_this.currentImg].style.opacity = 1;
-                        sldTitELS[_this.currentImg].style.transitionDuration = 0.4 + 'px';
-                        setTimeout(function () {
-                            sldDescELS[_this.currentImg].style.top = 0 + 'px';
-                            sldDescELS[_this.currentImg].style.opacity = 1;
-                            sldDescELS[_this.currentImg].style.transitionDuration = 0.4 + 'px';
-                            setTimeout(function () {
-                                sldButELS[_this.currentImg].style.top = 0 + 'px';
-                                sldButELS[_this.currentImg].style.opacity = 1;
-                                sldButELS[_this.currentImg].style.transitionDuration = 0.4 + 'px';
+                    setTimeout(() => {
+                        sldTitELS[this.currentImg].style.top = 0 + 'px';
+                        sldTitELS[this.currentImg].style.opacity = 1; 
+                        sldTitELS[this.currentImg].style.transitionDuration = 0.4 + 'px';
+                        setTimeout(() => {
+                            sldDescELS[this.currentImg].style.top = 0 + 'px';
+                            sldDescELS[this.currentImg].style.opacity = 1; 
+                            sldDescELS[this.currentImg].style.transitionDuration = 0.4 + 'px';
+                            setTimeout(() => {
+                                sldButELS[this.currentImg].style.top = 0 + 'px';
+                                sldButELS[this.currentImg].style.opacity = 1; 
+                                sldButELS[this.currentImg].style.transitionDuration = 0.4 + 'px';
                             }, 200);
                         }, 200);
                     }, 600);
                     // Counter
-                    _this.currentImg += 1;
+                    this.currentImg += 1;
                     // Image
-                    _this.imagesArray[_this.currentImg].style.left = 0 + 'px';
-                    _this.imagesArray[_this.currentImg].style.transitionDuration = 1.5 + 's';
+                    this.imagesArray[this.currentImg].style.left = 0 + 'px';
+                    this.imagesArray[this.currentImg].style.transitionDuration = 1.5 + 's';
                     // Info:
-                    setTimeout(function () {
-                        sldTitELS[_this.currentImg - 1].style.top = -20 + 'px';
-                        sldTitELS[_this.currentImg - 1].style.opacity = 0;
-                        sldTitELS[_this.currentImg - 1].style.transitionDuration = 0.2 + 'px';
-                        setTimeout(function () {
-                            sldDescELS[_this.currentImg - 1].style.top = -20 + 'px';
-                            sldDescELS[_this.currentImg - 1].style.opacity = 0;
-                            sldDescELS[_this.currentImg - 1].style.transitionDuration = 0.2 + 'px';
-                            setTimeout(function () {
-                                sldButELS[_this.currentImg - 1].style.top = -20 + 'px';
-                                sldButELS[_this.currentImg - 1].style.opacity = 0;
-                                sldButELS[_this.currentImg - 1].style.transitionDuration = 0.2 + 'px';
+                    setTimeout(() => {
+                        sldTitELS[this.currentImg - 1].style.top = -20 + 'px';
+                        sldTitELS[this.currentImg - 1].style.opacity = 0; 
+                        sldTitELS[this.currentImg - 1].style.transitionDuration = 0.2 + 'px';
+                        setTimeout(() => {
+                            sldDescELS[this.currentImg - 1].style.top = -20 + 'px';
+                            sldDescELS[this.currentImg - 1].style.opacity = 0; 
+                            sldDescELS[this.currentImg - 1].style.transitionDuration = 0.2 + 'px';
+                            setTimeout(() => {
+                                sldButELS[this.currentImg - 1].style.top = -20 + 'px';
+                                sldButELS[this.currentImg - 1].style.opacity = 0; 
+                                sldButELS[this.currentImg - 1].style.transitionDuration = 0.2 + 'px';
                             }, 100);
                         }, 100);
                     }, 0);
                     // Slider status color:
-                    for (var i = 0; i < _this.imageAmount; i++) {
-                        if (i === _this.currentImg) {
-                            _this.stateELNodeList[i].style.backgroundColor = 'rgba(255,255,255,0.8)';
+                    for (let i = 0; i < this.imageAmount; i++) {
+                        if (i === this.currentImg) {
+                            this.stateELNodeList[i].style.backgroundColor = 'rgba(255,255,255,0.8)';
                             continue;
-                        }
-                        else { }
-                        _this.stateELNodeList[i].style.backgroundColor = 'rgba(200,200,200,0.6)';
-                    }
-                    ;
-                    _this.blockadeImg = true;
-                    setTimeout(function () {
-                        _this.blockadeImg = false;
-                    }, 1200); // Taka sama jak w powyższym "transitionDuration" obrazka
+                        } else {}
+                        this.stateELNodeList[i].style.backgroundColor = 'rgba(220,220,220,0.4)';
+                    };
+                    this.blockadeImg = true;
+                    setTimeout(() => {
+                        this.blockadeImg = false;
+                    }, 1200);   // Taka sama jak w powyższym "transitionDuration" obrazka
                     //console.log('Aktualny obraz: ' + (this.currentImg + 1));   // LEFT aktualnego obrazu
-                }
-                else { }
+                } else {}
             }, false);
-            sliderBut.left.addEventListener(ev, function () {
-                if (_this.currentImg > 0 && _this.blockadeImg === false) {
-                    var siteScrollbarWidth = (window.innerWidth - document.documentElement.clientWidth);
-                    if (siteScrollbarWidth === undefined || siteScrollbarWidth === null)
-                        siteScrollbarWidth = 0;
-                    _this.imagesArray[_this.currentImg].style.left = ((_this.windowWidth - siteScrollbarWidth) * 1) + 'px';
-                    _this.imagesArray[_this.currentImg].style.transitionDuration = 1.5 + 's';
-                    setTimeout(function () {
-                        sldTitELS[_this.currentImg].style.top = 0 + 'px';
-                        sldTitELS[_this.currentImg].style.opacity = 1;
-                        sldTitELS[_this.currentImg].style.transitionDuration = 0.4 + 'px';
-                        setTimeout(function () {
-                            sldDescELS[_this.currentImg].style.top = 0 + 'px';
-                            sldDescELS[_this.currentImg].style.opacity = 1;
-                            sldDescELS[_this.currentImg].style.transitionDuration = 0.4 + 'px';
-                            setTimeout(function () {
-                                sldButELS[_this.currentImg].style.top = 0 + 'px';
-                                sldButELS[_this.currentImg].style.opacity = 1;
-                                sldButELS[_this.currentImg].style.transitionDuration = 0.4 + 'px';
+            sliderBut.left.addEventListener(ev, () => {
+                if (this.currentImg > 0 && this.blockadeImg === false) {
+                    let siteScrollbarWidth: number = (window.innerWidth - document.documentElement.clientWidth);
+                    if (siteScrollbarWidth === undefined || siteScrollbarWidth === null) siteScrollbarWidth = 0;
+                    this.imagesArray[this.currentImg].style.left = ((this.windowWidth - siteScrollbarWidth) * 1) + 'px';
+                    this.imagesArray[this.currentImg].style.transitionDuration = 1.5 + 's';
+                    setTimeout(() => {
+                        sldTitELS[this.currentImg].style.top = 0 + 'px';
+                        sldTitELS[this.currentImg].style.opacity = 1; 
+                        sldTitELS[this.currentImg].style.transitionDuration = 0.4 + 'px';
+                        setTimeout(() => {
+                            sldDescELS[this.currentImg].style.top = 0 + 'px';
+                            sldDescELS[this.currentImg].style.opacity = 1; 
+                            sldDescELS[this.currentImg].style.transitionDuration = 0.4 + 'px';
+                            setTimeout(() => {
+                                sldButELS[this.currentImg].style.top = 0 + 'px';
+                                sldButELS[this.currentImg].style.opacity = 1; 
+                                sldButELS[this.currentImg].style.transitionDuration = 0.4 + 'px';
                             }, 200);
                         }, 200);
                     }, 600);
-                    _this.currentImg -= 1;
-                    _this.imagesArray[_this.currentImg].style.left = 0 + 'px';
-                    _this.imagesArray[_this.currentImg].style.transitionDuration = 1.5 + 's';
-                    setTimeout(function () {
-                        sldTitELS[_this.currentImg + 1].style.top = -20 + 'px';
-                        sldTitELS[_this.currentImg + 1].style.opacity = 0;
-                        sldTitELS[_this.currentImg + 1].style.transitionDuration = 0.2 + 'px';
-                        setTimeout(function () {
-                            sldDescELS[_this.currentImg + 1].style.top = -20 + 'px';
-                            sldDescELS[_this.currentImg + 1].style.opacity = 0;
-                            sldDescELS[_this.currentImg + 1].style.transitionDuration = 0.2 + 'px';
-                            setTimeout(function () {
-                                sldButELS[_this.currentImg + 1].style.top = -20 + 'px';
-                                sldButELS[_this.currentImg + 1].style.opacity = 0;
-                                sldButELS[_this.currentImg + 1].style.transitionDuration = 0.2 + 'px';
+                    this.currentImg -= 1;
+                    this.imagesArray[this.currentImg].style.left = 0 + 'px';
+                    this.imagesArray[this.currentImg].style.transitionDuration = 1.5 + 's';
+                    setTimeout(() => {
+                        sldTitELS[this.currentImg + 1].style.top = -20 + 'px';
+                        sldTitELS[this.currentImg + 1].style.opacity = 0; 
+                        sldTitELS[this.currentImg + 1].style.transitionDuration = 0.2 + 'px';
+                        setTimeout(() => {
+                            sldDescELS[this.currentImg + 1].style.top = -20 + 'px';
+                            sldDescELS[this.currentImg + 1].style.opacity = 0; 
+                            sldDescELS[this.currentImg + 1].style.transitionDuration = 0.2 + 'px';
+                            setTimeout(() => {
+                                sldButELS[this.currentImg + 1].style.top = -20 + 'px';
+                                sldButELS[this.currentImg + 1].style.opacity = 0; 
+                                sldButELS[this.currentImg + 1].style.transitionDuration = 0.2 + 'px';
                             }, 100);
                         }, 100);
                     }, 0);
-                    for (var i = 0; i < _this.imageAmount; i++) {
-                        if (i === _this.currentImg) {
-                            _this.stateELNodeList[i].style.backgroundColor = 'rgba(255,255,255,0.8)';
+                    for (let i = 0; i < this.imageAmount; i++) {
+                        if (i === this.currentImg) {
+                            this.stateELNodeList[i].style.backgroundColor = 'rgba(255,255,255,0.8)';
                             continue;
-                        }
-                        else { }
-                        _this.stateELNodeList[i].style.backgroundColor = 'rgba(200,200,200,0.6)';
-                    }
-                    ;
-                    _this.blockadeImg = true;
-                    setTimeout(function () {
-                        _this.blockadeImg = false;
-                    }, 1200); // Taka sama jak w powyższym "transitionDuration" obrazka
+                        } else {}
+                        this.stateELNodeList[i].style.backgroundColor = 'rgba(220,220,220,0.4)';
+                    };
+                    this.blockadeImg = true;
+                    setTimeout(() => {
+                        this.blockadeImg = false;
+                    }, 1200);   // Taka sama jak w powyższym "transitionDuration" obrazka
                     //console.log('Aktualny obraz: ' + (this.currentImg + 1));   // LEFT aktualnego obrazu
-                }
-                else { }
+                } else {}
             }, false);
         });
     },
-    setAEL_ImgLeftResize: function () {
-        var _this = this;
-        this.eventsWindowTable.forEach(function (ev) {
-            window.addEventListener(ev, function () {
-                _this.windowWidth = innerWidth;
-                var siteScrollbarWidth = (window.innerWidth - document.documentElement.clientWidth);
-                if (siteScrollbarWidth === undefined || siteScrollbarWidth === null)
-                    siteScrollbarWidth = 0;
-                for (var i = 0; i < _this.imageAmount; i++) {
-                    var onceImg_CSS_Obj = window.getComputedStyle(_this.imagesArray[i], null);
-                    var onceImg_CSS_Str = onceImg_CSS_Obj.getPropertyValue('left');
+    setAEL_ImgLeftResize(): void {
+        this.eventsWindowTable.forEach((ev) => {   // Zmień na load i sprawdź co się stanie
+            window.addEventListener(ev, () => {
+                this.windowWidth = innerWidth;
+                let siteScrollbarWidth: number = (window.innerWidth - document.documentElement.clientWidth);
+                if (siteScrollbarWidth === undefined || siteScrollbarWidth === null) siteScrollbarWidth = 0;
+                for (let i = 0; i < this.imageAmount; i++) {
+                    let onceImg_CSS_Obj: CSSStyleDeclaration = window.getComputedStyle(this.imagesArray[i], null);
+                    let onceImg_CSS_Str: string = onceImg_CSS_Obj.getPropertyValue('left');
                     onceImg_CSS_Str = onceImg_CSS_Str.slice(0, -2);
-                    var onceImg_CSS_Num = Number(onceImg_CSS_Str);
+                    let onceImg_CSS_Num: number = Number(onceImg_CSS_Str);
                     //console.log('Obraz ' + (i + 1) + ': "left" = ' + onceImg_CSS_Num);   // LEFT po RESISE aktualnego obrazu
-                    if (onceImg_CSS_Num > 0) { // right
-                        _this.imagesArray[i].style.left = ((_this.windowWidth - siteScrollbarWidth) * 1) + 'px';
-                        _this.imagesArray[i].style.transitionDuration = 0.0 + 's';
-                    }
-                    else if (onceImg_CSS_Num === 0) { // center
+                    if (onceImg_CSS_Num > 0) {   // right
+                        this.imagesArray[i].style.left = ((this.windowWidth - siteScrollbarWidth) * 1) + 'px';
+                        this.imagesArray[i].style.transitionDuration = 0.0 + 's';
+                    } else if (onceImg_CSS_Num === 0) {   // center
                         continue;
+                    } else if (onceImg_CSS_Num < 0) {   // left
+                        this.imagesArray[i].style.left = ((this.windowWidth - siteScrollbarWidth) * -1) + 'px';
+                        this.imagesArray[i].style.transitionDuration = 0.0 + 's';
                     }
-                    else if (onceImg_CSS_Num < 0) { // left
-                        _this.imagesArray[i].style.left = ((_this.windowWidth - siteScrollbarWidth) * -1) + 'px';
-                        _this.imagesArray[i].style.transitionDuration = 0.0 + 's';
-                    }
-                }
-                ;
+                };
             }, false);
         });
     }
 };
 slider_Obj.setWinBdHeight();
 slider_Obj.setAEL_ImgLeftResize();
-;
-var ProductSlider = /** @class */ (function () {
-    function ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7) {
-        this.windowWidth = 0;
-        this.windowHeight = 0;
-        this.curWidStat = 0; // Amount of visibled items for current product slider box width
-        this.itemsPage = 0;
-        this.pdcSldmoveVal = 0;
-        this.statBallsAmount = 0;
-        this.currentPage = 0;
-        this.statusLimitAR = [];
-        this.pageStartLimit = this.curWidStat;
-        this.resLimitVals = []; // Values of slider box width, which are calculate form items for current product slider box width
-        this.curPdcSldMovVal = []; // Values of current product slider moving distance on once move action (reverse "resLimitVals" array)
-        this.evWinLoadRes = ['load', 'resize'];
-        this.evElClick = ['click', 'touchend'];
+
+
+
+interface pdcSld_Interface {
+    windowWidth: number,
+    windowHeight: number,
+    curWidStat: number,
+    pdcSldItBd_Wdt: number,
+    pdcSldItBd_MgnLft: number,
+    resSpace: number,
+    itemsPage: number,
+    pdcSldmoveVal: number;
+    pageStartLimit: number,
+    statBallsAmount: number,
+    currentPage: number,
+    productsAmount: number,
+    sldStlIdxNumToWdt: number,
+    sldInfoNum: number,
+    sldImgFileNum: number,
+    resLimitVals: number[],
+    curPdcSldMovVal: number[],
+    statusLimitAR: number[][][][],
+    evWinLoadRes: string[],
+    evElClick: string[],
+    setVisibleAreaWidth: Function;
+    createItems_fixedAmount(): void;
+    createStatusLimitAR();
+    reverseResLimVals_Func(): void;
+    setAEL_PdcSldMoving(): void;
+    createPdcSldPageStatus(): void;
+};
+
+class ProductSlider implements pdcSld_Interface {
+    productsAmount: number;  // Amount of products in product, which has been in choosed slider
+    sldStlIdxNumToWdt: number;   // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
+    sldInfoNum: number   // Informations from slider info object. WARNING: Begin is from 0!
+    pdcSldItBd_Wdt: number;   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
+    pdcSldItBd_MgnLft: number;   //  - space betwen items
+    resSpace: number;   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
+    sldImgFileNum: number;   // - number of slider images file
+    constructor(arg_1: number, arg_2: number, arg_3: number, arg_4: number, arg_5: number, arg_6: number, arg_7: number) {
         this.productsAmount = arg_1;
         this.sldStlIdxNumToWdt = arg_2;
         this.sldInfoNum = arg_3;
@@ -566,45 +601,53 @@ var ProductSlider = /** @class */ (function () {
         this.resSpace = arg_6;
         this.sldImgFileNum = arg_7;
     }
-    ProductSlider.prototype.setVisibleAreaWidth = function () {
-        var _this = this;
-        this.evWinLoadRes.forEach(function (ev) {
-            window.addEventListener(ev, function () {
-                _this.windowWidth = window.innerWidth;
-                var pdcSldBox = document.querySelectorAll('div.product-slider-box')[_this.sldStlIdxNumToWdt];
-                var pdcSldHng = document.querySelectorAll('div.product-slider-hanger')[_this.sldStlIdxNumToWdt];
+    windowWidth = 0;
+    windowHeight = 0;
+    curWidStat = 0;   // Amount of visibled items for current product slider box width
+    itemsPage = 0;
+    pdcSldmoveVal = 0;
+    statBallsAmount = 0;
+    currentPage = 0;
+    statusLimitAR = [];
+    pageStartLimit = this.curWidStat;
+    resLimitVals = [];   // Values of slider box width, which are calculate form items for current product slider box width
+    curPdcSldMovVal = [];   // Values of current product slider moving distance on once move action (reverse "resLimitVals" array)
+    evWinLoadRes = ['load', 'resize'];
+    evElClick = ['click', 'touchend'];
+    public setVisibleAreaWidth(): void {
+        this.evWinLoadRes.forEach((ev) => {
+            window.addEventListener(ev, () => {
+                this.windowWidth = window.innerWidth;
+                const pdcSldBox: any = document.querySelectorAll('div.product-slider-box')[this.sldStlIdxNumToWdt];
+                const pdcSldHng: any = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
                 // Counting values for limit array:
                 //const resLimitVals: number[] = [];   // Global variable
-                var productsWide = [5, 4, 3, 2, 1];
+                const productsWide: number[] = [5, 4, 3, 2, 1];
                 // (1200 - (34 * 2)) = navbar width without side elements margin/padding =
                 // ([desktop-navbar-width] - ([side-elements-margin/padding]) * [elements-amunt])
-                _this.pdcSldItBd_Wdt = (((1200 - (34 * 2)) / 5) - ((_this.pdcSldItBd_MgnLft * (productsWide.length - 1)) / 5)); // 214.4   |   depend of nev pseudo-width
-                for (var i = 0; i < productsWide.length; i++) {
-                    _this.resLimitVals[i] = ((_this.pdcSldItBd_Wdt * productsWide[i]) + (_this.pdcSldItBd_MgnLft * (productsWide[i] - 1)));
-                }
-                ;
-                _this.resLimitVals[productsWide.length] = (_this.pdcSldItBd_Wdt * -1); // Naprawione niechciane rozszerzanie się bloku slidera
+                this.pdcSldItBd_Wdt = (((1200 - (34 * 2)) / 5) - ((this.pdcSldItBd_MgnLft * (productsWide.length - 1)) / 5));  // 214.4   |   depend of nev pseudo-width
+                for (let i: number = 0; i < productsWide.length; i++) {
+                    this.resLimitVals[i] = ((this.pdcSldItBd_Wdt * productsWide[i]) + (this.pdcSldItBd_MgnLft * (productsWide[i] - 1)));
+                };
+                this.resLimitVals[productsWide.length] = (this.pdcSldItBd_Wdt * -1);   // Naprawione niechciane rozszerzanie się bloku slidera
                 ///console.log(this.resLimitVals);   // ! --> IMPORTANT CONSOLLOG <-- !
                 // resSpace: current-slider-item-box-width
-                var oneTime = true; // I don't know why I must use this...
-                for (var i = 0; i < _this.resLimitVals.length; i++) {
+                let oneTime = true;   // I don't know why I must use this...
+                for (let i: number = 0; i < this.resLimitVals.length; i++) {
                     if (i === 0 && oneTime === true) {
                         oneTime = false;
-                        var val = _this.resLimitVals[i];
+                        let val = this.resLimitVals[i];
                         pdcSldBox.style.width = val + 'px';
-                        _this.curWidStat = productsWide[i]; /* CURRENT WIDE STATUS - When you want to be add mowe images  */
-                    }
-                    else if (i > 0) {
+                        this.curWidStat = productsWide[i];   /* CURRENT WIDE STATUS - When you want to be add mowe images  */
+                    } else if (i > 0) {
                         oneTime = true;
-                        if (_this.windowWidth < (_this.resLimitVals[i] + _this.resSpace) && _this.windowWidth >= (_this.resLimitVals[i + 1] + _this.resSpace)) {
-                            var val = _this.resLimitVals[i];
+                        if (this.windowWidth < (this.resLimitVals[i] + this.resSpace) && this.windowWidth >= (this.resLimitVals[i+1] + this.resSpace)) {
+                            let val = this.resLimitVals[i];
                             pdcSldBox.style.width = val + 'px';
-                            _this.curWidStat = productsWide[i]; /* CURRENT WIDE STATUS - When you want to be add mowe images */
-                        }
-                        else { }
+                            this.curWidStat = productsWide[i];   /* CURRENT WIDE STATUS - When you want to be add mowe images */
+                        } else {}
                     }
-                }
-                ;
+                };
                 //console.log(`CURRENT WIDE STATUS: ${this.curWidStat}`);   // ! --> IMPORTANT CONSOLLOG <-- !
                 // THIS OPERATIONS IS ALLOWED FOR RESIZE SLIDER ITEMS DEPEND OF WEBSITE WINDOW WIDTH: (scope: 5 - 1)
                 /*// Clear slider items:
@@ -675,46 +718,43 @@ var ProductSlider = /** @class */ (function () {
         });
         // YOU CAN CHOOSE ONLY ONE FROM FOLLOWWING:
         //this.reverseResLimVals_Func();   // MOVING AMOUNT OF ITEMS (depend to website window width). IF YOU CHOOSE IT, GET IN COMMENT NEXT (on bottom) FUNCTION CALL
-        this.createItems_fixedAmount(); // FIXED AMOUNT OF TEMS
+        this.createItems_fixedAmount();   // FIXED AMOUNT OF TEMS
     };
-    ;
-    ProductSlider.prototype.createItems_fixedAmount = function () {
-        var _this = this;
-        window.addEventListener('load', function () {
-            var itemsHanger = document.querySelectorAll('div.product-slider-hanger')[_this.sldStlIdxNumToWdt];
-            for (var i = 0; i < _this.productsAmount; i++) {
-                var itBd = document.createElement('div');
-                var itCnt = document.createElement('div');
-                var itClkFld = document.createElement('div');
-                var itImgDim = document.createElement('div');
-                var itImgPrp = document.createElement('img');
-                var itPrc = document.createElement('div');
-                var itPrcTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[_this.sldInfoNum][i]);
-                var itDes = document.createElement('div');
-                var itDesTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[_this.sldInfoNum][i]);
-                var itArea = document.createElement('div');
-                var itAreaText = document.createElement('div');
-                var itAreaTextTN = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[_this.sldInfoNum][i]);
-                var itAreaSup = document.createElement('sup');
-                var itAreaSupTN = document.createTextNode('2');
+    public createItems_fixedAmount(): void {
+        window.addEventListener('load', () => {
+            const itemsHanger: any = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
+            for (let i: number = 0; i < this.productsAmount; i++) {
+                const itBd: HTMLDivElement = document.createElement('div');
+                const itCnt: HTMLDivElement = document.createElement('div');
+                const itClkFld: HTMLDivElement = document.createElement('div');
+                const itImgDim: HTMLDivElement = document.createElement('div');
+                const itImgPrp: HTMLImageElement = document.createElement('img');
+                const itPrc: HTMLDivElement = document.createElement('div');
+                const itPrcTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Prc[this.sldInfoNum][i]);
+                const itDes: HTMLDivElement = document.createElement('div');
+                const itDesTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Dsc[this.sldInfoNum][i]);
+                const itArea: HTMLDivElement = document.createElement('div');
+                const itAreaText: HTMLDivElement = document.createElement('div');
+                const itAreaTextTN: Text = document.createTextNode(productSlider_Sources_Obj.pdcSldSrc_Area[this.sldInfoNum][i]);
+                const itAreaSup: HTMLElement = document.createElement('sup');
+                const itAreaSupTN: Text = document.createTextNode('2');
                 itBd.setAttribute('class', 'pdc-sld-item-body');
                 itCnt.setAttribute('class', 'pdc-sld-item-content');
                 itClkFld.setAttribute('class', 'pdc-sld-item-clickField');
                 itImgDim.setAttribute('class', 'pdc-sld-item-img-dim');
                 itImgPrp.setAttribute('class', 'pdc-sld-item-img-prp');
-                itImgPrp.setAttribute('src', 'hb-images-product-slider-' + (_this.sldImgFileNum + 1) + '/img_' + (i + 1) + '.jpg');
-                itImgPrp.setAttribute('alt', productSlider_Sources_Obj.pdcSldSrc_Dsc[_this.sldInfoNum][i]);
+                itImgPrp.setAttribute('src', 'hb-images-product-slider-' + (this.sldImgFileNum + 1) + '/img_' + (i + 1) + '.jpg');
+                itImgPrp.setAttribute('alt', productSlider_Sources_Obj.pdcSldSrc_Dsc[this.sldInfoNum][i]);
                 itPrc.setAttribute('class', 'pdc-sld-item-price');
                 itDes.setAttribute('class', 'pdc-sld-item-des');
                 itArea.setAttribute('class', 'pdc-sld-item-area');
                 itAreaText.setAttribute('class', 'pdc-sld-item-area-text');
                 itAreaSup.setAttribute('class', 'pdc-sld-item-area-sup');
                 itBd.appendChild(itCnt);
-                itBd.style.width = _this.pdcSldItBd_Wdt + 'px';
+                itBd.style.width = this.pdcSldItBd_Wdt + 'px';
                 if (i === 0) {
-                }
-                else if (i > 0) {
-                    itBd.style.marginLeft = _this.pdcSldItBd_MgnLft + 'px';
+                } else if (i > 0) {
+                    itBd.style.marginLeft = this.pdcSldItBd_MgnLft + 'px';
                 }
                 itCnt.appendChild(itClkFld);
                 itClkFld.appendChild(itImgDim);
@@ -728,57 +768,49 @@ var ProductSlider = /** @class */ (function () {
                 itAreaText.appendChild(itAreaTextTN);
                 itArea.appendChild(itAreaSup);
                 itAreaSup.appendChild(itAreaSupTN);
-                var itImgDimVal = (_this.pdcSldItBd_Wdt * 0.7);
+                let itImgDimVal = (this.pdcSldItBd_Wdt * 0.7);
                 itImgDim.style.height = itImgDimVal + 'px';
                 itemsHanger.appendChild(itBd);
-            }
-            ;
+            };
         }, false);
         this.createStatusLimitAR();
         this.reverseResLimVals_Func();
     };
-    ;
-    ProductSlider.prototype.createStatusLimitAR = function () {
+    public createStatusLimitAR() {   // This function is not finished experiment about slider status checking
         // Also this function is pause in work, because this mechanism require a lot more work...
-        var productsWide = [1, 2, 3, 4, 5];
-        var statNumAR = [];
-        for (var i = 0; i < 5; i++) {
+        let productsWide: number[] = [1, 2, 3, 4, 5];
+        let statNumAR: any[] = [];
+        for (let i: number = 0; i < 5; i++) {
             statNumAR[i] = Math.ceil(this.productsAmount / (i + 1));
-        }
-        ; // [15, 8, 5, 4, 3]
+        };   // [15, 8, 5, 4, 3]
         //console.log(statNumAR);
-        var res = [];
-        for (var i = 0; i < 5; i++) {
-            res[i] = []; // UWAGA! MEGA ULTRA HIPER WAŻNE! Jeżeli chcesz przypisaywać 
+        let res: number[][][] = [];
+        for (let i: number = 0; i < 5; i++) {
+            res[i] = [];   // UWAGA! MEGA ULTRA HIPER WAŻNE! Jeżeli chcesz przypisaywać 
             // wartości do kolejnego/następnego indeksu zagnieżdżonego, MUSISZ uprzednio
             // UTWORZYĆ ten INDEKS za pomocą "[]", inaczej wyskorzy ci BŁĄD!;
-            var startVal = (productsWide[i] * -1);
-            for (var j = 0; j < statNumAR[i]; j++) {
+            let startVal: number = (productsWide[i] * -1);
+            for (let j: number = 0; j < statNumAR[i]; j++) {
                 //res[i][j] = productsWide[i];
-                res[i][j] = []; // UWAGA! Tutaj tak samo! W zwykłym DżawaSkripcie tak nie ma
+                res[i][j] = [];   // UWAGA! Tutaj tak samo! W zwykłym DżawaSkripcie tak nie ma
                 startVal += productsWide[i];
-                for (var k = 0; k < productsWide[i]; k++) {
+                for (let k: number = 0; k < productsWide[i]; k++) {
                     res[i][j][k] = ((startVal + k) + 1);
-                }
-                ;
-            }
-            ;
-        }
-        ;
+                };
+            };
+        };
         //console.log(`STAT_NUM_AR: ${statNumAR}`);
         //console.log('START_VALUE: ' + startValue);
         //console.log(res);
         return res;
     };
-    ;
-    ProductSlider.prototype.reverseResLimVals_Func = function () {
-        var _this = this;
+    public reverseResLimVals_Func(): void {
         // Iterujemy tą tablicą "this.curWidStat" po tej "this.resLimitVals" i w ten sposób mamy aktualną wartość przesunięcia produktu względem odpowiedniego rozstawy tychże produktów
-        this.evWinLoadRes.forEach(function (ev) {
-            window.addEventListener(ev, function () {
-                var reverseResLimVals = _this.resLimitVals.reverse();
-                var val = reverseResLimVals[_this.curWidStat];
-                _this.curPdcSldMovVal = val;
+        this.evWinLoadRes.forEach((ev) => {
+            window.addEventListener(ev, () => {
+                let reverseResLimVals: number[] = this.resLimitVals.reverse();
+                let val: any = reverseResLimVals[this.curWidStat];
+                this.curPdcSldMovVal = val;
                 //console.log(`CURRENT PRODUCT SLIDER MOVING: ${this.curPdcSldMovVal}`);   // OK
                 //console.log(typeof this.curPdcSldMovVal);   // OK
                 //console.log(Number(this.curPdcSldMovVal) + 15);   // OK
@@ -786,213 +818,204 @@ var ProductSlider = /** @class */ (function () {
         });
         this.setAEL_PdcSldMoving();
     };
-    ;
-    ProductSlider.prototype.setAEL_PdcSldMoving = function () {
-        var _this = this;
-        var pdcSldButLft = document.querySelectorAll('div.product-slider-arrowBox-left-box')[this.sldStlIdxNumToWdt];
-        var pdcSldButRgt = document.querySelectorAll('div.product-slider-arrowBox-right-box')[this.sldStlIdxNumToWdt];
-        var itemsHanger = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
-        var pageEndLimit = this.productsAmount;
-        var isMoved = false;
-        var tnsDur_Timeout = 1000;
-        var tnsDur_Style = (tnsDur_Timeout / 1000);
+    public setAEL_PdcSldMoving(): void {
+        const pdcSldButLft: any = document.querySelectorAll('div.product-slider-arrowBox-left-box')[this.sldStlIdxNumToWdt];
+        const pdcSldButRgt: any = document.querySelectorAll('div.product-slider-arrowBox-right-box')[this.sldStlIdxNumToWdt];
+        const itemsHanger: any = document.querySelectorAll('div.product-slider-hanger')[this.sldStlIdxNumToWdt];
+        let pageEndLimit: number = this.productsAmount;
+        let isMoved: boolean = false;
+        let tnsDur_Timeout = 1000;
+        let tnsDur_Style = (tnsDur_Timeout / 1000);
         //console.log('PAGE_END_LIMIT:' + pageEndLimit);   // ! --> IMPORTANT CONSOLLOG <-- !
         //console.log('PAGE_START_LIMIT:' + this.pageStartLimit);   // ! --> IMPORTANT CONSOLLOG <-- !
-        this.evElClick.forEach(function (ev) {
-            pdcSldButLft.addEventListener(ev, function () {
-                _this.pageStartLimit = _this.curWidStat;
+        this.evElClick.forEach((ev) => {
+            pdcSldButLft.addEventListener(ev, () => {   // LEFT
+                this.pageStartLimit = this.curWidStat;
                 // Limit of second statement operand are moving according to "this.curWidStat"
-                if (_this.itemsPage >= _this.pageStartLimit && isMoved === false) { // Example: 4 >= 3 = true | 3 >= true   -> Result: element.style.left = moveVal + 'px';
-                    _this.itemsPage -= _this.curWidStat;
+                if (this.itemsPage >= this.pageStartLimit && isMoved === false) {   // Example: 4 >= 3 = true | 3 >= true   -> Result: element.style.left = moveVal + 'px';
+                        this.itemsPage -= this.curWidStat;
+                        isMoved = true;
+                        this.pdcSldmoveVal += ((Number(this.curPdcSldMovVal) + this.pdcSldItBd_MgnLft) * 1);   // MEGA WAŻNE!
+                        // Trzeba dodać 1x margin-left, gdyż pole widoczności zawiera elemnety łącznie z marginami! 
+                        // Inaczej hanger ruszy się na niewystarczającą odległość
+                        itemsHanger.style.left = this.pdcSldmoveVal + 'px';
+                        itemsHanger.style.transitionDuration = tnsDur_Style + 's';
+                        //console.log(`LEFT: ${this.pdcSldmoveVal}`);   // ! --> IMPORTANT CONSOLLOG <-- !
+                        setTimeout(() => {
+                            isMoved = false;
+                        }, tnsDur_Timeout);
+                } else if ((this.itemsPage < this.pageStartLimit && (this.itemsPage % this.pageStartLimit) > 0) === true && (isMoved === false)) {   // Example: 3 < 2 = true   [&]   (3 / 2) > 0 = true
+                    this.itemsPage = 0;
                     isMoved = true;
-                    _this.pdcSldmoveVal += ((Number(_this.curPdcSldMovVal) + _this.pdcSldItBd_MgnLft) * 1); // MEGA WAŻNE!
-                    // Trzeba dodać 1x margin-left, gdyż pole widoczności zawiera elemnety łącznie z marginami! 
-                    // Inaczej hanger ruszy się na niewystarczającą odległość
-                    itemsHanger.style.left = _this.pdcSldmoveVal + 'px';
+                    this.pdcSldmoveVal = 0;
+                    itemsHanger.style.left = this.pdcSldmoveVal + 'px';
                     itemsHanger.style.transitionDuration = tnsDur_Style + 's';
                     //console.log(`LEFT: ${this.pdcSldmoveVal}`);   // ! --> IMPORTANT CONSOLLOG <-- !
-                    setTimeout(function () {
+                    setTimeout(() => {
                         isMoved = false;
                     }, tnsDur_Timeout);
                 }
-                else if ((_this.itemsPage < _this.pageStartLimit && (_this.itemsPage % _this.pageStartLimit) > 0) === true && (isMoved === false)) { // Example: 3 < 2 = true   [&]   (3 / 2) > 0 = true
-                    _this.itemsPage = 0;
-                    isMoved = true;
-                    _this.pdcSldmoveVal = 0;
-                    itemsHanger.style.left = _this.pdcSldmoveVal + 'px';
-                    itemsHanger.style.transitionDuration = tnsDur_Style + 's';
-                    //console.log(`LEFT: ${this.pdcSldmoveVal}`);   // ! --> IMPORTANT CONSOLLOG <-- !
-                    setTimeout(function () {
-                        isMoved = false;
-                    }, tnsDur_Timeout);
-                }
-                var stsBallAR = [];
-                _this.currentPage = _this.itemsPage / _this.curWidStat; // [current-item-page-value] / [current-wide-status (slider-hanger-position-in-click-steps)] = [current-page-number] !!! with decimal
-                _this.currentPage = Math.ceil(_this.currentPage);
+                let stsBallAR: any[] = [];
+                this.currentPage = this.itemsPage / this.curWidStat;   // [current-item-page-value] / [current-wide-status (slider-hanger-position-in-click-steps)] = [current-page-number] !!! with decimal
+                this.currentPage = Math.ceil(this.currentPage);
                 //console.log(`CURRENT PAGE: ${this.currentPage}`);   /*IMPORTANT SHORTTIME INFO*/   // ! --> IMPORTANT CONSOLLOG <-- !
                 //console.log(`ITEMS PAGE: ${this.itemsPage}`);   /*IMPORTANT SHORTTIME INFO*/   // ! --> IMPORTANT CONSOLLOG <-- !
                 //if (this.currentPage % 2 > 0) {   // Clean decimal by round up this value
-                /*if (this.lastArrowStatus === 'LEFT') {
-                    this.currentPage = Math.ceil(this.currentPage);
-                } else if (this.lastArrowStatus === 'RIGHT') {
-                    this.currentPage = Math.floor(this.currentPage);
-                }*/
+                    /*if (this.lastArrowStatus === 'LEFT') {
+                        this.currentPage = Math.ceil(this.currentPage);
+                    } else if (this.lastArrowStatus === 'RIGHT') {
+                        this.currentPage = Math.floor(this.currentPage);
+                    }*/
                 //} else {}
-                if (_this.curWidStat > 1) {
-                    var statusBox = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
-                    var stBxChildren = statusBox.children;
+                if (this.curWidStat > 1) {
+                    const statusBox: any = document.querySelectorAll('div.product-slider-status-box')[this.sldStlIdxNumToWdt];
+                    const stBxChildren: HTMLCollection = statusBox.children;
                     if (statusBox.childElementCount > 0) {
-                        for (var i = stBxChildren.length - 1; i >= 0; i--) {
+                        for (let i = stBxChildren.length - 1; i >= 0; i--) {
                             stsBallAR[i] = stBxChildren[i];
-                        }
-                        ;
-                    }
-                    else { }
-                    for (var i = 0; i < _this.statBallsAmount; i++) {
-                        if (i === _this.currentPage) {
+                        };
+                    } else {}
+                    for (let i: number = 0; i < this.statBallsAmount; i++) {
+                        if (i === this.currentPage) {
                             stsBallAR[i].style.border = '2px solid #333';
                             stsBallAR[i].style.transitionDuration = '0.1s';
-                        }
-                        else {
+                        } else {
                             stsBallAR[i].style.border = '2px solid #CCC';
                             stsBallAR[i].style.transitionDuration = '0.1s';
                         }
-                    }
-                    ;
-                }
-                else { }
+                    };
+                } else {}
             }, false);
         });
-        this.evElClick.forEach(function (ev) {
-            _this.pageStartLimit = _this.curWidStat;
-            pdcSldButRgt.addEventListener(ev, function () {
+        this.evElClick.forEach((ev) => {
+            this.pageStartLimit = this.curWidStat;
+            pdcSldButRgt.addEventListener(ev, () => {   // RIGHT
                 // Limit of second statement operand are moving according to "this.curWidStat"
-                if (_this.itemsPage < (pageEndLimit - _this.curWidStat) && isMoved === false) {
-                    _this.itemsPage += _this.curWidStat;
+                if (this.itemsPage < (pageEndLimit - this.curWidStat) && isMoved === false) {
+                    this.itemsPage += this.curWidStat;
                     isMoved = true;
-                    _this.pdcSldmoveVal += ((Number(_this.curPdcSldMovVal) + _this.pdcSldItBd_MgnLft) * -1);
-                    itemsHanger.style.left = _this.pdcSldmoveVal + 'px';
+                    this.pdcSldmoveVal += ((Number(this.curPdcSldMovVal) + this.pdcSldItBd_MgnLft) * -1);
+                    itemsHanger.style.left = this.pdcSldmoveVal + 'px';
                     itemsHanger.style.transitionDuration = tnsDur_Style + 's';
                     //console.log(`RIGHT: ${this.pdcSldmoveVal}`);   // ! --> IMPORTANT CONSOLLOG <-- !
-                    setTimeout(function () {
+                    setTimeout(() => {
                         isMoved = false;
                     }, tnsDur_Timeout);
-                }
-                else { }
-                var stsBallAR = [];
-                _this.currentPage = _this.itemsPage / _this.curWidStat;
-                _this.currentPage = Math.ceil(_this.currentPage);
+                } else {}
+
+                let stsBallAR: any[] = [];
+                this.currentPage = this.itemsPage / this.curWidStat;
+                this.currentPage = Math.ceil(this.currentPage);
                 //console.log(`ITEMS PAGE: ${this.itemsPage}`);   /*IMPORTANT SHORTTIME INFO*/   // ! --> IMPORTANT CONSOLLOG <-- !
                 //console.log(`CURRENT PAGE: ${this.currentPage}`);   /*IMPORTANT SHORTTIME INFO*/   // ! --> IMPORTANT CONSOLLOG <-- !
                 //if (this.currentPage % 2 > 0) {
-                /*if (this.lastArrowStatus === 'LEFT') {
-                    this.currentPage = Math.ceil(this.currentPage);
-                } else if (this.lastArrowStatus === 'RIGHT') {
-                    this.currentPage = Math.floor(this.currentPage);
-                }*/
+                    /*if (this.lastArrowStatus === 'LEFT') {
+                        this.currentPage = Math.ceil(this.currentPage);
+                    } else if (this.lastArrowStatus === 'RIGHT') {
+                        this.currentPage = Math.floor(this.currentPage);
+                    }*/
                 //} else {}
-                if (_this.curWidStat > 1) {
-                    var statusBox = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
-                    var stBxChildren = statusBox.children;
+                if (this.curWidStat > 1) {
+                    const statusBox: any = document.querySelectorAll('div.product-slider-status-box')[this.sldStlIdxNumToWdt];
+                    const stBxChildren: HTMLCollection = statusBox.children;
                     if (statusBox.childElementCount > 0) {
-                        for (var i = stBxChildren.length - 1; i >= 0; i--) {
+                        for (let i = stBxChildren.length - 1; i >= 0; i--) {
                             stsBallAR[i] = stBxChildren[i];
-                        }
-                        ;
-                    }
-                    else { }
-                    for (var i = 0; i < _this.statBallsAmount; i++) {
-                        if (i === _this.currentPage) {
+                        };
+                    } else {}
+                    for (let i: number = 0; i < this.statBallsAmount; i++) {
+                        if (i === this.currentPage) {
                             stsBallAR[i].style.border = '2px solid #333';
                             stsBallAR[i].style.transitionDuration = '0.1s';
-                        }
-                        else {
+                        } else {
                             stsBallAR[i].style.border = '2px solid #CCC';
                             stsBallAR[i].style.transitionDuration = '0.1s';
                         }
-                    }
-                    ;
-                }
-                else { }
+                    };
+                } else {}
             }, false);
         });
         this.createPdcSldPageStatus();
     };
-    ;
-    ProductSlider.prototype.createPdcSldPageStatus = function () {
-        var _this = this;
-        this.evWinLoadRes.forEach(function (ev) {
-            window.addEventListener(ev, function () {
-                var statusBox = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
-                var stBxChildren = statusBox.children;
+    public createPdcSldPageStatus(): void {
+        this.evWinLoadRes.forEach((ev) => {
+            window.addEventListener(ev, () => {
+                const statusBox: any = document.querySelectorAll('div.product-slider-status-box')[this.sldStlIdxNumToWdt];
+                const stBxChildren: HTMLCollection = statusBox.children;
                 if (statusBox.childElementCount > 0) {
-                    for (var i = stBxChildren.length - 1; i >= 0; i--) {
+                    for (let i = stBxChildren.length - 1; i >= 0; i--) {
                         statusBox.removeChild(stBxChildren[i]);
-                    }
-                    ;
-                }
-                else { }
+                    };
+                } else {}
+
                 // To slider status not finished experiment
                 //let statusInfoAR: number[][][] = this.createStatusLimitAR();
                 //console.log(statusInfoAR);
-                _this.statBallsAmount = _this.productsAmount / _this.curWidStat;
-                _this.currentPage = _this.itemsPage / _this.curWidStat;
-                _this.currentPage = Math.ceil(_this.currentPage);
+
+                this.statBallsAmount = this.productsAmount / this.curWidStat;
+                this.currentPage = this.itemsPage / this.curWidStat;
+                this.currentPage = Math.ceil(this.currentPage);
                 //console.log('STATUS BALL AMOUNT: ' + this.statBallsAmount);   // ! --> IMPORTANT CONSOLLOG <-- !
-                if (_this.curWidStat > 1) {
-                    for (var i = 0; i < _this.statBallsAmount; i++) {
-                        var statusBall = document.createElement('div');
+                if (this.curWidStat > 1) {
+                    for (let i: number = 0; i < this.statBallsAmount; i++) {
+                        const statusBall: HTMLDivElement = document.createElement('div');
                         statusBall.setAttribute('class', 'ps-status-ball');
                         statusBox.appendChild(statusBall);
-                    }
-                    ;
-                }
-                else if (_this.curWidStat === 1) { }
-                _this.currentPage = _this.itemsPage / _this.curWidStat;
-                _this.currentPage = Math.ceil(_this.currentPage);
+                    };
+                } else if (this.curWidStat === 1) {}
+                this.currentPage = this.itemsPage / this.curWidStat;
+                this.currentPage = Math.ceil(this.currentPage);
                 //console.log(`CURRENT PAGE: ${this.currentPage}`);   // ! --> IMPORTANT CONSOLLOG <-- !
                 //console.log(`ITEMS PAGE: ${this.itemsPage}`);   // ! --> IMPORTANT CONSOLLOG <-- !
-                var stsBallAR = [];
-                if (_this.curWidStat > 1) {
-                    var statusBox_1 = document.querySelectorAll('div.product-slider-status-box')[_this.sldStlIdxNumToWdt];
-                    var stBxChildren_1 = statusBox_1.children;
-                    if (statusBox_1.childElementCount > 0) {
-                        for (var i = stBxChildren_1.length - 1; i >= 0; i--) {
-                            stsBallAR[i] = stBxChildren_1[i];
-                        }
-                        ;
-                    }
-                    else { }
-                    for (var i = 0; i < _this.statBallsAmount; i++) {
-                        if (i === _this.currentPage) {
+                let stsBallAR: any[] = [];
+                if (this.curWidStat > 1) {
+                    const statusBox: any = document.querySelectorAll('div.product-slider-status-box')[this.sldStlIdxNumToWdt];
+                    const stBxChildren: HTMLCollection = statusBox.children;
+                    if (statusBox.childElementCount > 0) {
+                        for (let i = stBxChildren.length - 1; i >= 0; i--) {
+                            stsBallAR[i] = stBxChildren[i];
+                        };
+                    } else {}
+                    for (let i: number = 0; i < this.statBallsAmount; i++) {
+                        if (i === this.currentPage) {
                             stsBallAR[i].style.border = '2px solid #333';
                             stsBallAR[i].style.transitionDuration = '0.1s';
-                        }
-                        else {
+                        } else {
                             stsBallAR[i].style.border = '2px solid #CCC';
                             stsBallAR[i].style.transitionDuration = '0.1s';
                         }
-                    }
-                    ;
-                }
-                else { }
+                    };
+                } else {}
+
+
             }, false);
         });
     };
-    ;
-    return ProductSlider;
-}());
-var begeinInfoImg_Obj = {
+}
+
+
+
+const begeinInfoImg_Obj: {
+    imgBox: HTMLImageElement,
+    setAttr: Function
+} = {
     imgBox: document.querySelector('img.bi-img-prp'),
-    setAttr: function () {
+    setAttr(): void {
         this.imgBox.setAttribute('src', 'hb-images-begin-info/residential-property-2858226_640.jpg');
         this.imgBox.setAttribute('alt', 'company-build');
     }
+
 };
 begeinInfoImg_Obj.setAttr();
-var productSlider_Sources_Obj = {
+
+
+const productSlider_Sources_Obj: {
+    pdcSldSrc_Prc: string[][],
+    pdcSldSrc_Dsc: string[][],
+    pdcSldSrc_Area: string[][]
+} = {
     pdcSldSrc_Prc: [
-        [
+        [   // Prooduct slider #1
             '830 000 PLN',
             '770 000 PLN',
             '1 730 000 PLN',
@@ -1009,7 +1032,7 @@ var productSlider_Sources_Obj = {
             '1 299 000 PLN',
             '750 000 PLN'
         ],
-        [
+        [   // Prooduct slider #2
             '1 250 000 PLN',
             '890 500 PLN',
             '1 945 999 PLN',
@@ -1020,7 +1043,7 @@ var productSlider_Sources_Obj = {
             '635 000 PLN',
             '945 000 PLN'
         ],
-        [
+        [   // Prooduct slider #3
             '890 000 PLN',
             '930 000 PLN',
             '750 999 PLN',
@@ -1042,7 +1065,7 @@ var productSlider_Sources_Obj = {
         ]
     ],
     pdcSldSrc_Dsc: [
-        [
+        [   // Prooduct slider #1
             'House for sale: Łódź, Wapienna 4',
             'House for sale: Toruń, Drzymały 23',
             'House for sale: Łódź, Rukocka 11',
@@ -1059,7 +1082,7 @@ var productSlider_Sources_Obj = {
             'House for sale: Warszawa, Maja 93',
             'House for sale: Radom, Stara 237'
         ],
-        [
+        [   // Prooduct slider #2
             'House for sale: Warszawa, Mokotów',
             'House for sale: Warszawa, Młynów',
             'House for sale: Warszawa, Filtry',
@@ -1070,7 +1093,7 @@ var productSlider_Sources_Obj = {
             'House for sale: Nowy Sącz Wólki',
             'House for sale: Radom Glinice'
         ],
-        [
+        [   // Prooduct slider #3
             'Apartament for sale: Warszawa',
             'Apartament for sale: Warszawa',
             'Apartament for sale: Warszawa',
@@ -1092,7 +1115,7 @@ var productSlider_Sources_Obj = {
         ]
     ],
     pdcSldSrc_Area: [
-        [
+        [   // Prooduct slider #1
             '179.3 m',
             '162.4 m',
             '254.0 m',
@@ -1109,7 +1132,7 @@ var productSlider_Sources_Obj = {
             '151.5 m',
             '166.0 m'
         ],
-        [
+        [   // Prooduct slider #2
             '152.2 m',
             '143.1 m',
             '220.5 m',
@@ -1120,7 +1143,7 @@ var productSlider_Sources_Obj = {
             '113.5 m',
             '178.7 m'
         ],
-        [
+        [   // Prooduct slider #3
             '120.0 m',
             '114.3 m',
             '98.4 m',
@@ -1142,21 +1165,28 @@ var productSlider_Sources_Obj = {
         ]
     ]
 };
+
+
+
 // SERIES PRODUCTION: FACTORY
-var sliderFactory_Obj = {
+const sliderFactory_Obj: {
+    sliderAmount: number,
+    createSliders: Function,
+    sliderAR: ProductSlider[]
+} = {
     sliderAmount: document.querySelectorAll('div.product-slider-area').length,
     sliderAR: [],
-    createSliders: function () {
+   createSliders(): void {
         // SERIES PRODUCTION: ARGUMENTS
-        for (var i = 0; i < this.sliderAmount; i++) {
-            var arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[i].length; // Amount of products in product, which has been in choosed slider
-            var arg_2 = i; // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
-            var arg_3 = i; // Informations from slider info object. WARNING: Begin is from 0!
-            var arg_4 = i; // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
-            var arg_5 = 15; //  - space betwen items
-            var arg_6 = 350; // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
-            var arg_7 = i; // - number of slider images file
-            var productSlider = new ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7);
+        for (let i: number = 0; i < this.sliderAmount; i++) {
+            let arg_1: number = productSlider_Sources_Obj.pdcSldSrc_Prc[i].length;  // Amount of products in product, which has been in choosed slider
+            let arg_2: number = i;   // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
+            let arg_3: number = i;   // Informations from slider info object. WARNING: Begin is from 0!
+            let arg_4: number = i;   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
+            let arg_5: number = 15;   //  - space betwen items
+            let arg_6: number = 350;   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
+            let arg_7: number = i;   // - number of slider images file
+            let productSlider = new ProductSlider(arg_1, arg_2, arg_3, arg_4, arg_5, arg_6, arg_7);
             productSlider.setVisibleAreaWidth();
             /*productSlider.createItems_fixedAmount();
             productSlider.createStatusLimitAR();
@@ -1164,35 +1194,73 @@ var sliderFactory_Obj = {
             productSlider.setAEL_PdcSldMoving();
             productSlider.createPdcSldPageStatus();*/
             this.sliderAR.push(productSlider);
-        }
-        ;
+        };
         //console.log(sliderFactory_Obj.sliderAR);   // ! --> IMPORTANT CONSOLLOG <-- !
     }
 };
 sliderFactory_Obj.createSliders();
-var CategoriesGrid = /** @class */ (function () {
-    function CategoriesGrid(arg_1, arg_2, arg_3) {
+
+// arg_1 - This argument is in FORM lop, because they require steady iteration
+//let arg_2: number = 0;   // [product-slider-box] & [product-slider-hanger] elmenet number from choosed slider. If you wand siliar sliders width, you give the same value in each create slider object
+//let arg_3: number = 0;   // Informations from slider info object. WARNING: Begin is from 0!
+//let arg_4: number = 0;   // - slider item width | (0 - this value is setting in "setVisibleAreaWidth" function, where "width" is depend of navbar proper pseudo-width [graphics width without margin/padding{34px*2}])
+//let arg_5: number = 15;   //  - space betwen items
+//let arg_6: number = 350;   // - (dividing from 2 for two slider product box sides) extra area, which is addition to slider product box width to calculate transform area borders
+//sliderFactory_Obj.createSliders();
+
+// HAND CREATING  // IS BAD - IN WORK
+/*let arg_1 = productSlider_Sources_Obj.pdcSldSrc_Prc[0].length;
+let productSlider_1 = new ProductSlider(arg_1, 0, 0, 0, 15, 350);
+productSlider_1.setVisibleAreaWidth();
+productSlider_1.createItems_fixedAmount();
+productSlider_1.reverseResLimVals_Func();
+productSlider_1.setAEL_PdcSldMoving();
+productSlider_1.createPdcSldPageStatus();
+console.log(productSlider_1);*/
+
+
+
+
+
+// Robimy od nowa nową klasę z konstruktorem na rodzaje nieruchomości na sprzedaż i style domów
+
+interface generalInfo_ITF {
+    currentGnBox: number;
+    newsELPosAR: number[];
+    dataTit: string[];
+    itemAmount: number;
+    createEL: Function;
+    hoverAEL_DESKTOP: Function;
+    scrollAEL_MOBILE: Function;
+    checkGIBlockPosAEL_MOBILE: Function;
+}
+
+class CategoriesGrid implements generalInfo_ITF {
+    currentGnBox: number;
+    itemAmount: number;
+    dataTit: string[];
+    constructor(arg_1, arg_2, arg_3) {   // arg_1 - choosed slider data index | arg_2 - items amount on each slider
         this.dataTit = arg_1;
         this.itemAmount = arg_2;
         this.currentGnBox = arg_3;
-    }
-    ;
-    CategoriesGrid.prototype.createEL = function () {
-        var genInfoBoxEL = document.querySelectorAll('div.general-news-box')[this.currentGnBox];
-        var newsELS = [];
-        var imgELS = [];
-        var titELS = [];
-        var txtELS = [];
-        for (var i = 0; i < this.itemAmount; i++) {
-            var newsEL = document.createElement('div');
+    };
+    newsELPosAR: number[];
+    createEL(): void {
+        const genInfoBoxEL = document.querySelectorAll('div.general-news-box')[this.currentGnBox];
+        let newsELS: any[] = [];
+        let imgELS: any[] = [];
+        let titELS: any[] = [];
+        let txtELS: any[] = [];
+        for (let i: number = 0; i < this.itemAmount; i++) {
+            let newsEL = document.createElement('div');
             newsELS.push(newsEL);
-            var imgEL = document.createElement('img');
+            let imgEL = document.createElement('img');
             imgELS.push(imgEL);
-            var titEL = document.createElement('div');
+            let titEL = document.createElement('div');
             titELS.push(titEL);
-            var txtEL = document.createElement('div');
+            let txtEL = document.createElement('div');
             txtELS.push(txtEL);
-            var txtTN = document.createTextNode(this.dataTit[i]);
+            let txtTN = document.createTextNode(this.dataTit[i]);
             newsEL.setAttribute('class', 'news');
             newsEL.setAttribute('id', String(i));
             imgEL.setAttribute('class', 'gn-img-box');
@@ -1205,47 +1273,40 @@ var CategoriesGrid = /** @class */ (function () {
             titEL.appendChild(txtEL);
             txtEL.appendChild(txtTN);
             genInfoBoxEL.appendChild(newsEL);
-        }
-        ;
+        };
         this.hoverAEL_DESKTOP(newsELS, imgELS, titELS, txtELS, this.itemAmount);
         this.checkGIBlockPosAEL_MOBILE(newsELS, this.itemAmount, this.currentGnBox);
         this.scrollAEL_MOBILE(titELS, txtELS, this.itemAmount);
     };
-    ;
-    CategoriesGrid.prototype.hoverAEL_DESKTOP = function (newsELS, imgELS, titELS, txtELS, itmAm) {
-        var _loop_2 = function (i) {
-            ['mouseover'].forEach(function (ev) {
-                newsELS[i].addEventListener(ev, function (e) {
+    hoverAEL_DESKTOP(newsELS, imgELS, titELS, txtELS, itmAm): void {   // Można to zrobić na "target" bez 
+        // pierdzielenia się z pętlami, id i dodawaniem atrybutu id z wartością w tworzeniu 
+        // eleemntów, ale zrobiłem tak, dla treningu kombinowania
+        for (let i: number = 0; i < itmAm; i++) {
+            ['mouseover'].forEach((ev) => {
+                newsELS[i].addEventListener(ev, (e) => {
                     if (window.innerWidth >= RWD_info_Obj.desktop) {
-                        var el = e.currentTarget;
-                        var id = el.id;
-                        var prpEditEl = imgELS[id];
+                        let el = e.currentTarget;
+                        let id = el.id;
+                        let prpEditEl: any = imgELS[id];
                         //console.log(prpEditEl);
-                        prpEditEl.style.filter = 'brightness(80%)';
+                        prpEditEl.style.filter = 'brightness(75%)';
                         prpEditEl.style.transitionDuration = '0.4s';
                         titELS[id].style.height = 70 + 'px';
                         txtELS[id].style.bottom = 0 + 'px';
                         txtELS[id].style.opacity = 1.0;
                         titELS[id].transitionDuration = 0.4 + 's';
                         txtELS[id].transitionDuration = 0.4 + 's';
-                    }
-                    else { }
+                    } else {}
                 }, false);
             });
         };
-        // pierdzielenia się z pętlami, id i dodawaniem atrybutu id z wartością w tworzeniu 
-        // eleemntów, ale zrobiłem tak, dla treningu kombinowania
-        for (var i = 0; i < itmAm; i++) {
-            _loop_2(i);
-        }
-        ;
-        var _loop_3 = function (i) {
-            ['mouseout'].forEach(function (ev) {
-                newsELS[i].addEventListener(ev, function (e) {
+        for (let i: number = 0; i < itmAm; i++) {
+            ['mouseout'].forEach((ev) => {
+                newsELS[i].addEventListener(ev, (e) => {
                     if (window.innerWidth >= RWD_info_Obj.desktop) {
-                        var el = e.currentTarget;
-                        var id = el.id;
-                        var prpEditEl = imgELS[id];
+                        let el = e.currentTarget;
+                        let id = el.id;
+                        let prpEditEl: any = imgELS[id];
                         //console.log(prpEditEl);
                         prpEditEl.style.filter = 'brightness(100%)';
                         prpEditEl.style.transitionDuration = '0.4s';
@@ -1254,33 +1315,25 @@ var CategoriesGrid = /** @class */ (function () {
                         txtELS[id].style.opacity = 0.0;
                         titELS[id].transitionDuration = 0.4 + 's';
                         txtELS[id].transitionDuration = 0.4 + 's';
-                    }
-                    else { }
+                    } else {}
                 }, false);
             });
         };
-        for (var i = 0; i < itmAm; i++) {
-            _loop_3(i);
-        }
-        ;
     };
-    ;
-    CategoriesGrid.prototype.scrollAEL_MOBILE = function (titELS, txtELS, itmAm) {
-        var _this = this;
-        ['load', 'resize', 'scroll'].forEach(function (ev) {
-            window.addEventListener(ev, function () {
+    scrollAEL_MOBILE(titELS, txtELS, itmAm): void {
+        ['load', 'resize', 'scroll'].forEach((ev) => {
+            window.addEventListener(ev, () => {
                 if (window.innerWidth < RWD_info_Obj.desktop) {
-                    for (var i = 0; i < itmAm; i++) {
-                        var catBorder = (window.innerHeight / 1.65);
+                    for (let i: number = 0; i < itmAm; i++) {
+                        let catBorder: number = (window.innerHeight / 1.65);
                         //console.log('CURR' + this.newsELPosAR[i]);
-                        if (_this.newsELPosAR[i] <= catBorder) {
+                        if (this.newsELPosAR[i] <= catBorder) {
                             titELS[i].style.height = 70 + 'px';
                             txtELS[i].style.bottom = 0 + 'px';
                             txtELS[i].style.opacity = 1.0;
                             titELS[i].transitionDuration = 0.4 + 's';
                             txtELS[i].transitionDuration = 0.4 + 's';
-                        }
-                        else if (_this.newsELPosAR[i] > catBorder) {
+                        } else if (this.newsELPosAR[i] > catBorder) {
                             titELS[i].style.height = 0 + 'px';
                             txtELS[i].style.bottom = -10 + 'px';
                             txtELS[i].style.opacity = 0.0;
@@ -1288,9 +1341,8 @@ var CategoriesGrid = /** @class */ (function () {
                             txtELS[i].transitionDuration = 0.4 + 's';
                         }
                     }
-                }
-                else {
-                    for (var i = 0; i < itmAm; i++) {
+                } else {
+                    for (let i: number = 0; i < itmAm; i++) {
                         titELS[i].style.height = 0 + 'px';
                         txtELS[i].style.bottom = 0 + 'px';
                         txtELS[i].style.opacity = 0.0;
@@ -1301,35 +1353,36 @@ var CategoriesGrid = /** @class */ (function () {
             }, false);
         });
     };
-    ;
-    CategoriesGrid.prototype.checkGIBlockPosAEL_MOBILE = function (newsELS, itmAm, currentGnBox) {
-        console.log(currentGnBox);
-        var arr = [];
-        ['load', 'resize', 'scroll'].forEach(function (ev) {
-            window.addEventListener(ev, function () {
-                for (var i = 0; i < itmAm; i++) {
-                    var el = newsELS[i].getBoundingClientRect();
-                    var pos = Math.round(el.top);
+    checkGIBlockPosAEL_MOBILE(newsELS, itmAm, currentGnBox): void {
+        //console.log(currentGnBox);   // ! --> IMPORTANT CONSOLLOG <-- !
+        let arr: number[] = [];
+        ['load', 'resize', 'scroll'].forEach((ev) => {
+            window.addEventListener(ev, () => {
+                for (let i: number = 0; i < itmAm; i++) {
+                    let el = newsELS[i].getBoundingClientRect();
+                    let pos = Math.round(el.top);
                     arr[i] = pos;
                     //console.log(arr[i]);
                 }
             }, false);
         });
         this.newsELPosAR = arr;
-    };
-    return CategoriesGrid;
-}());
-var generalInfoSources_Obj = {
+    }
+}
+
+const generalInfoSources_Obj: {
+    gnTit: string[][],   // Title, ALT
+} = {
     gnTit: [
-        [
+        [   // rodzaje nieruchomości
             'Detached house',
             'Twin house',
             'Terraced development',
             'Block of flat',
             'Skyscrapper',
-            'Tenement'
+            'Tenement'   
         ],
-        [
+        [   // style domów
             'Modern',
             'Minimalist',
             'Country',
@@ -1338,52 +1391,63 @@ var generalInfoSources_Obj = {
             'Eclectic'
         ]
     ]
-};
-var generalInfoFactory_Obj = {
-    createGnInfoEL: function () {
-        var gnBoxEL = document.querySelectorAll('div.general-news-box');
-        for (var i = 0; i < gnBoxEL.length; i++) {
-            var arg_1 = generalInfoSources_Obj.gnTit[i];
-            var arg_2 = generalInfoSources_Obj.gnTit[i].length;
-            var arg_3 = i;
-            var generalInfoObj = new CategoriesGrid(arg_1, arg_2, arg_3);
+}
+
+const generalInfoFactory_Obj: {
+    createGnInfoEL: Function
+} = {
+    createGnInfoEL() {
+        let gnBoxEL: NodeListOf<HTMLDivElement> = document.querySelectorAll('div.general-news-box');
+        for (let i: number = 0; i < gnBoxEL.length; i++) {
+            let arg_1: string[] = generalInfoSources_Obj.gnTit[i];
+            let arg_2: number = generalInfoSources_Obj.gnTit[i].length;
+            let arg_3: number = i;
+            let generalInfoObj = new CategoriesGrid(arg_1, arg_2, arg_3);
             generalInfoObj.createEL();
-        }
-        ;
+        };
     }
 };
 generalInfoFactory_Obj.createGnInfoEL();
-var ourTeam_Obj = {
+
+
+
+
+const ourTeam_Obj: {
+    itemAmount: number,
+    createItems: Function
+} = {
     itemAmount: 4,
-    createItems: function () {
-        for (var i = 0; i < this.itemAmount; i++) {
-            var otBox_EL = document.querySelector('div.our-team-box');
-            var otItem_EL = document.createElement('div');
+    createItems(): void {
+        for (let i: number = 0; i < this.itemAmount; i++) {
+
+            let otBox_EL = document.querySelector('div.our-team-box');
+            let otItem_EL: HTMLDivElement = document.createElement('div');
             otItem_EL.setAttribute('class', 'ot-item');
-            var otImgBox_EL = document.createElement('div');
+            let otImgBox_EL = document.createElement('div');
             otImgBox_EL.setAttribute('class', 'ot-img-box');
-            var otCrcImgDim_EL = document.createElement('div');
+            let otCrcImgDim_EL: HTMLDivElement = document.createElement('div');
             otCrcImgDim_EL.setAttribute('class', 'ot-circle-img-dim');
-            var otCrcImgPrp_EL = document.createElement('img');
+            let otCrcImgPrp_EL: HTMLDivElement = document.createElement('img');
             otCrcImgPrp_EL.setAttribute('class', 'ot-circle-img-prp');
             otCrcImgPrp_EL.setAttribute('src', 'hb-images-worker/img_' + (i + 1) + '.jpg');
             otCrcImgPrp_EL.setAttribute('alt', ourTeam_Sources_Obj.name[i]);
-            var otTitBox_EL = document.createElement('div');
+            let otTitBox_EL: HTMLDivElement = document.createElement('div');
             otTitBox_EL.setAttribute('class', 'ot-tit-box');
-            var otTitPrp_EL = document.createElement('div');
-            var otTitPrp_TN = document.createTextNode(ourTeam_Sources_Obj.name[i]);
+            let otTitPrp_EL: HTMLDivElement = document.createElement('div');
+            let otTitPrp_TN: Text = document.createTextNode(ourTeam_Sources_Obj.name[i]);
             otTitPrp_EL.setAttribute('class', 'ot-tit-prp');
-            var otDesBox_EL = document.createElement('div');
+            let otDesBox_EL: HTMLDivElement = document.createElement('div');
             otDesBox_EL.setAttribute('class', 'ot-des-box');
-            var otDesPrp_EL = document.createElement('div');
-            var otDesPrp_TN = document.createTextNode(ourTeam_Sources_Obj.desc[i]);
+            let otDesPrp_EL: HTMLDivElement = document.createElement('div');
+            let otDesPrp_TN: Text = document.createTextNode(ourTeam_Sources_Obj.desc[i]);
             otDesPrp_EL.setAttribute('class', 'ot-des-prp');
-            var otIcnBox_EL = document.createElement('div');
+            let otIcnBox_EL: HTMLDivElement = document.createElement('div');
             otIcnBox_EL.setAttribute('class', 'ot-icon-box');
-            var otIcnPrp_EL = document.createElement('img');
+            let otIcnPrp_EL: HTMLDivElement = document.createElement('img');
             otIcnPrp_EL.setAttribute('class', 'ot-icon-prp');
             otIcnPrp_EL.setAttribute('src', 'hb-images-worker/social-media-5995266_1280.png');
             otIcnPrp_EL.setAttribute('alt', 'social-media-icons');
+            
             otItem_EL.appendChild(otImgBox_EL);
             otImgBox_EL.appendChild(otCrcImgDim_EL);
             otCrcImgDim_EL.appendChild(otCrcImgPrp_EL);
@@ -1395,12 +1459,16 @@ var ourTeam_Obj = {
             otDesPrp_EL.appendChild(otDesPrp_TN);
             otItem_EL.appendChild(otIcnBox_EL);
             otIcnBox_EL.appendChild(otIcnPrp_EL);
+
             otBox_EL.appendChild(otItem_EL);
-        }
-        ;
+        };
     }
 };
-var ourTeam_Sources_Obj = {
+
+const ourTeam_Sources_Obj: {
+    name: string[],
+    desc: string[]
+} = {
     name: [
         'Walter White',
         'Sarah Black',
@@ -1415,63 +1483,73 @@ var ourTeam_Sources_Obj = {
     ],
 };
 ourTeam_Obj.createItems();
-var clientOpinions_Obj = {
+
+
+
+const clientOpinions_Obj: {
+    mainEl: any,
+    colAm: number,   // liczba kolumn   // ruchoma jako argument
+    colWdt: number,   // szerokość jednej kolumny   // ruchoma w programie
+    colArn: number,   // szerokość strefy kolumn   // stała
+    optItmWidtTypeAR: number[],
+    optItmWidtTypeAR_TransfBord: number[],
+    colAmPerTransfBord: number[],
+    setCol: Function
+} = {
     mainEl: document.getElementsByClassName('opinion-box')[0],
     colAm: 4,
-    colWdt: 250,
+    colWdt: 250,   // default - according to website baner content laying
     colArn: 0,
     optItmWidtTypeAR: [],
     optItmWidtTypeAR_TransfBord: [],
     colAmPerTransfBord: [],
-    setCol: function () {
-        var _this = this;
-        for (var i = 0; i < this.colAm; i++) {
+    setCol() {
+        for (let i: number = 0; i < this.colAm; i++) {
             this.optItmWidtTypeAR[i] = (this.colWdt * (i + 1));
             this.optItmWidtTypeAR_TransfBord[i] = this.optItmWidtTypeAR[i];
-        }
-        ;
+        };
         this.optItmWidtTypeAR = this.optItmWidtTypeAR.reverse();
-        this.optItmWidtTypeAR_TransfBord.map(function (el, i, arr) {
-            return arr[i] = el + 388; // 320 - do krawędzi + (34 x 2) padding
+        this.optItmWidtTypeAR_TransfBord.map((el, i, arr) => {
+            return arr[i] = el + 388;   // 320 - do krawędzi + (34 x 2) padding
         });
         this.optItmWidtTypeAR_TransfBord = this.optItmWidtTypeAR_TransfBord.reverse();
-        var cmaptb_idx = 0;
-        for (var i = this.colAm; i > 0; i--) {
+        let cmaptb_idx: number = 0;
+        for (let i: number = this.colAm; i > 0; i--) {
             this.colAmPerTransfBord[cmaptb_idx] = i;
             cmaptb_idx += 1;
-        }
-        ;
+        };
         this.optItmWidtTypeAR_TransfBord[0] = Infinity;
         this.optItmWidtTypeAR_TransfBord[this.optItmWidtTypeAR_TransfBord.length] = -200;
         //console.log(this.optItmWidtTypeAR);   // ! --> IMPOSTANT CONSOLE_LOF <-- !
         //console.log(this.optItmWidtTypeAR_TransfBord);   // ! --> IMPOSTANT CONSOLE_LOF <-- !
         //console.log(this.colAmPerTransfBord);   // ! --> IMPOSTANT CONSOLE_LOF <-- !
-        ['load', 'resize'].forEach(function (ev) {
-            window.addEventListener(ev, function () {
-                for (var i = 0; i < _this.colAmPerTransfBord.length; i++) {
-                    if (window.innerWidth < _this.optItmWidtTypeAR_TransfBord[i] && window.innerWidth >= _this.optItmWidtTypeAR_TransfBord[i + 1]) {
-                        _this.colAm = _this.colAmPerTransfBord[i];
-                        var mainELWdtVal = _this.optItmWidtTypeAR[i];
-                        _this.mainEl.style.width = mainELWdtVal + 'px';
+        ['load', 'resize'].forEach((ev) => {
+            window.addEventListener(ev, () => {
+                for (let i: number = 0; i < this.colAmPerTransfBord.length; i++) {
+                    if (window.innerWidth < this.optItmWidtTypeAR_TransfBord[i] && window.innerWidth >= this.optItmWidtTypeAR_TransfBord[i + 1]) {
+                        this.colAm = this.colAmPerTransfBord[i];
+                        let mainELWdtVal = this.optItmWidtTypeAR[i];
+                        this.mainEl.style.width = mainELWdtVal + 'px';
                         //console.log(this.optItmWidtTypeAR[i]);   // ! --> IMPOSTANT CONSOLE_LOF <-- !
                         //console.log(this.colAm);   // ! --> IMPOSTANT CONSOLE_LOF <-- !
-                        var mainBox_ChildrenNL = _this.mainEl.children;
+                        let mainBox_ChildrenNL = this.mainEl.children;
                         if (mainBox_ChildrenNL.length > 0) {
-                            for (var i_1 = mainBox_ChildrenNL.length - 1; i_1 >= 0; i_1--) {
-                                _this.mainEl.removeChild(_this.mainEl.lastChild);
-                            }
-                            ;
-                        }
-                        else { }
-                        mainBox_ChildrenNL = _this.mainEl.children;
+                            for (let i: number = mainBox_ChildrenNL.length - 1; i >= 0; i--) {
+                                this.mainEl.removeChild(this.mainEl.lastChild);
+                            };
+                        } else {}
+                        mainBox_ChildrenNL = this.mainEl.children;
                         if (mainBox_ChildrenNL.length === 0) {
                             // Tworzenie masonry kolumn:
-                            for (var i_2 = 0; i_2 < _this.colAm; i_2++) {
+                            for (let i: number = 0; i < this.colAm; i++) {
                                 // Several elements:
-                                var opnColEL = document.createElement('div');
+                                let opnColEL = document.createElement('div');
                                 opnColEL.setAttribute('class', 'option-col');
-                                opnColEL.style.width = _this.colWdt + 'px';
-                                _this.mainEl.appendChild(opnColEL);
+                                opnColEL.style.width = this.colWdt +'px';
+                                this.mainEl.appendChild(opnColEL);
+
+
+
                                 /*let opnTitBoxEL = document.createElement('div');
                                 let opnTitImgBoxEL = document.createElement('div');
                                 //
@@ -1494,42 +1572,38 @@ var clientOpinions_Obj = {
                                 opnDatEL.appendChild(opnDatTN);
                                 opnTextBoxEL.appendChild(opnDatEL);
                                 opnColEL.appendChild(opnTitBoxEL);*/
-                            }
-                            ;
+                            };
                             // Tworzenie masonry elementów:
-                            for (var el = 0; el < clientOpinions_Sources_Obj.name.length; el++) {
-                                var opnColAR = [];
-                                var opnColHgh = [];
-                                for (var i_3 = 0; i_3 < document.querySelectorAll('div.option-col').length; i_3++) {
-                                    opnColAR[i_3] = document.querySelectorAll('div.option-col')[i_3];
-                                    var opnColBoun = opnColAR[i_3].getBoundingClientRect();
-                                    opnColHgh[i_3] = opnColBoun.height;
-                                }
-                                ;
-                                console.log(opnColHgh);
-                                var mostMinVal = Infinity;
-                                for (var i_4 = 0; i_4 < opnColHgh.length; i_4++) {
-                                    if (opnColHgh[i_4] < mostMinVal) {
-                                        mostMinVal = opnColHgh[i_4];
-                                    }
-                                    else { }
-                                }
-                                ;
-                                console.log("MOST_MIN_VAL: ".concat(mostMinVal));
-                                for (var i_5 = 0; i_5 < opnColHgh.length; i_5++) {
-                                    if (opnColHgh[i_5] === mostMinVal) {
-                                        var targetBox = document.querySelectorAll('div.option-col')[i_5];
-                                        var opnItmBoxEL = document.createElement('div');
+                            for (let el: number = 0; el < clientOpinions_Sources_Obj.name.length; el++) {
+                                let opnColAR: any[] = [];
+                                let opnColHgh: number[] = [];
+                                for (let i: number = 0; i < document.querySelectorAll('div.option-col').length; i++) {
+                                    opnColAR[i] = document.querySelectorAll('div.option-col')[i];
+                                    let opnColBoun = opnColAR[i].getBoundingClientRect();
+                                    opnColHgh[i] = opnColBoun.height;
+                                };
+                                //console.log(opnColHgh);   // ! --> IMPORTANT CONSOLLOG <-- !
+                                let mostMinVal: number = Infinity;
+                                for (let i: number = 0; i < opnColHgh.length; i++) {
+                                    if (opnColHgh[i] < mostMinVal) {
+                                        mostMinVal = opnColHgh[i];
+                                    } else {}
+                                };
+                                //console.log(`MOST_MIN_VAL: ${mostMinVal}`);   // ! --> IMPORTANT CONSOLLOG <-- !
+                                for (let i: number = 0; i < opnColHgh.length; i++) {
+                                    if (opnColHgh[i] === mostMinVal) {
+                                        let targetBox = document.querySelectorAll('div.option-col')[i];
+                                        let opnItmBoxEL = document.createElement('div');
                                         opnItmBoxEL.setAttribute('class', 'opn-item-box');
-                                        // User name row:
-                                        var opnTitBoxEL = document.createElement('div');
-                                        var opnTitImgBoxEL = document.createElement('div');
-                                        var opnTitImgBoxTN = document.createTextNode(clientOpinions_Sources_Obj.imgLtr[el]);
-                                        var opnTextBoxEL = document.createElement('div');
-                                        var opnTitPrpEL = document.createElement('div');
-                                        var opnTitPrpTN = document.createTextNode(clientOpinions_Sources_Obj.name[el]);
-                                        var opnDatEL = document.createElement('div');
-                                        var opnDatTN = document.createTextNode(clientOpinions_Sources_Obj.date[el]);
+                                         // User name row:
+                                        let opnTitBoxEL = document.createElement('div');
+                                        let opnTitImgBoxEL = document.createElement('div');
+                                        let opnTitImgBoxTN = document.createTextNode(clientOpinions_Sources_Obj.imgLtr[el]);
+                                        let opnTextBoxEL = document.createElement('div');
+                                        let opnTitPrpEL = document.createElement('div');
+                                        let opnTitPrpTN = document.createTextNode(clientOpinions_Sources_Obj.name[el]);
+                                        let opnDatEL = document.createElement('div');
+                                        let opnDatTN = document.createTextNode(clientOpinions_Sources_Obj.date[el]);
                                         opnTitBoxEL.setAttribute('class', 'opn-tit-box');
                                         opnTitImgBoxEL.setAttribute('class', 'opn-img-box');
                                         opnTitImgBoxEL.style.backgroundColor = clientOpinions_Sources_Obj.imgBchCl[el];
@@ -1545,8 +1619,8 @@ var clientOpinions_Obj = {
                                         opnDatEL.appendChild(opnDatTN);
                                         opnTextBoxEL.appendChild(opnDatEL);
                                         // Stars Box:
-                                        var opnStsBoxEL = document.createElement('div');
-                                        var opnStsPrpEL = document.createElement('img');
+                                        let opnStsBoxEL = document.createElement('div');
+                                        let opnStsPrpEL = document.createElement('img');
                                         opnStsBoxEL.setAttribute('class', 'opn-stars-box');
                                         opnStsPrpEL.setAttribute('class', 'opn-stars-prp');
                                         opnStsPrpEL.setAttribute('src', 'hb-images-opinions/five-stars-7292866_640.png');
@@ -1554,9 +1628,9 @@ var clientOpinions_Obj = {
                                         opnStsBoxEL.appendChild(opnStsPrpEL);
                                         opnItmBoxEL.appendChild(opnStsBoxEL);
                                         // Description box:
-                                        var opnDscBoxEL = document.createElement('div');
-                                        var opnDscPrpEL = document.createElement('div');
-                                        var opnDscPrpTN = document.createTextNode(clientOpinions_Sources_Obj.opinion[el]);
+                                        let opnDscBoxEL = document.createElement('div');
+                                        let opnDscPrpEL = document.createElement('div');
+                                        let opnDscPrpTN = document.createTextNode(clientOpinions_Sources_Obj.opinion[el]);
                                         opnDscBoxEL.setAttribute('class', 'opn-dsc-box');
                                         opnDscPrpEL.setAttribute('class', 'opn-dsc-prp');
                                         opnDscPrpEL.appendChild(opnDscPrpTN);
@@ -1564,26 +1638,29 @@ var clientOpinions_Obj = {
                                         opnItmBoxEL.appendChild(opnDscBoxEL);
                                         // Finaly connect:
                                         targetBox.appendChild(opnItmBoxEL);
-                                        break; //      M E G A   W A Ż N E   I N F O   !
+
+                                        break;   //      M E G A   W A Ż N E   I N F O   !
                                         // break - odnosi się do aktualnie wykonywanego if / else if,
                                         // a nie jak return - do całej funkcji
-                                    }
-                                    else { }
-                                }
-                                ;
-                            }
-                            ;
-                        }
-                        else { }
-                    }
-                    else { }
-                }
-                ;
+
+                                    } else {}
+                                };
+                            };
+                        } else {}
+                    } else {}
+                };
             }, false);
         });
     }
 };
-var clientOpinions_Sources_Obj = {
+const clientOpinions_Sources_Obj: {
+    imgBchCl: string[],   // kolor tła
+    imgLtr: string[],   // litera
+    setLtr: Function,
+    name: string[],   // imię i nazwisko
+    date: string[],   // data
+    opinion: string[]   // opinia
+} = {
     imgBchCl: [
         'crimson',
         'steelblue',
@@ -1629,28 +1706,39 @@ var clientOpinions_Sources_Obj = {
         'I was looking for the perfect home for myself in over Los Santos and I couldn\'t find it, so I decided to contact with your company. Now I living in huge mansion and I\'am so happy! Oooh I thank you very much and especially Carl Johnson!',
         'It\'s amazing. So that I contacted you and the next day you showed me this wonderful parament. Your properties deserve a big five stars!'
     ],
-    setLtr: function () {
-        for (var i = 0; i < this.name.length; i++) {
+    setLtr(): void {
+        for (let i = 0; i < this.name.length; i++) {
             this.imgLtr[i] = this.name[i].slice(0, 1);
-        }
-        ;
+        };
         //console.log(this.imgLtr);
     }
 };
 clientOpinions_Sources_Obj.setLtr();
 clientOpinions_Obj.setCol();
-var footerImg_Obj = {
+
+
+
+
+const footerImg_Obj: {
+    imgBox: HTMLImageElement,
+    setAttr: Function
+} = {
     imgBox: document.querySelector('img.footer-icons-prp'),
-    setAttr: function () {
+    setAttr(): void {
         this.imgBox.setAttribute('src', 'hb-images-worker/social-media-5995266_1280.png');
         this.imgBox.setAttribute('alt', 'social-media-icons');
     }
+
 };
 footerImg_Obj.setAttr();
+
+
+
+
 /* // Patrykowe różne rzeczy
 // Domknięcie - tzw. "Curring". Wiem o co w tym chodzi, ale ciężko mi jesst to opisać.
-// Po prostu zwracana funkcja zagnieżdżona ma zapisany zakres funkcji, w której została
-// zadeklarowana i w ten sposób się domyka - coś w tym stylu i dzięki temu można
+// Po prostu zwracana funkcja zagnieżdżona ma zapisany zakres funkcji, w której została 
+// zadeklarowana i w ten sposób się domyka - coś w tym stylu i dzięki temu można 
 // swobodnie korzystać z uprzednio zadeklarowanych parametrów w funkcji "func_1".
 //let a: number = 2;
 //let b: number = 4;
@@ -1667,8 +1755,8 @@ console.log(two);
 
 let forRes: HTMLElement = document.getElementById('for');
 for (let i: number = 1, m: number = 7; i < 7; i++, m--) {
-    for (let j: number = 2; j < m; j++) {   // pirewszy argument = od ilu znaków
-        // np. "*" zaczynami i później w drugim argumencie do ilu znaków liczymy,
+    for (let j: number = 2; j < m; j++) {   // pirewszy argument = od ilu znaków 
+        // np. "*" zaczynami i później w drugim argumencie do ilu znaków liczymy, 
         //względem iteracji zmiennej (iteracyjnej) "i"
         forRes.innerHTML += '&nbsp&nbsp ';
         // Zero "&nbsp" = wyrównaj do lewej
@@ -1703,4 +1791,4 @@ for (let i: number = 0; i < numbAR.length; i++) {
     } else {}
 }
 //alert('Największa liczba: ' + maxVal);
-*/ 
+*/
